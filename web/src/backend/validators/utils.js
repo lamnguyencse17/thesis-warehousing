@@ -33,5 +33,5 @@ export const isValidQuantity = (quantity) => {
 };
 
 export const isValidUnit = (unit) => {
-    return (!!unit || unit >= 0) && unit < UNIT.length;
+    return (unit == 0 || !!unit) && unit >= 0 && unit < UNIT.length;
 };
