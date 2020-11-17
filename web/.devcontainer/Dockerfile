@@ -2,7 +2,7 @@
 ARG VARIANT=14
 FROM mcr.microsoft.com/vscode/devcontainers/javascript-node:${VARIANT}
 ENV SECRET_KEY=TU%8&sPS5Qz4$rLc#VsQfFvnz3W7nV
-ENV MONGODB_URI=mongodb://db:27017/ownmusic?readPreference=primary&appname=Server&ssl=false
+ENV MONGODB_URI=mongodb://db:27017/thesis?readPreference=primary&appname=Server&ssl=false
 ENV PORT=3000
 ENV BACKEND_SERVER=http://localhost:3000
 ENV FRONTEND_SERVER=http://localhost:8080

@@ -12,7 +12,7 @@ jobs:
           command: echo 'export SECRET_KEY="TU%8&sPS5Qz4$rLc#VsQfFvnz3W7nV"' >> $BASH_ENV
       - run:
           name: "Setup MONGODB_URI"
-          command: echo 'export MONGODB_URI="mongodb://127.0.0.1:27017/ownmusic?readPreference=primary&appname=Server&ssl=false"' >> $BASH_ENV
+          command: echo 'export MONGODB_URI="mongodb://127.0.0.1:27017/thesis?readPreference=primary&appname=Server&ssl=false"' >> $BASH_ENV
       - run:
           name: "Setup BACKEND_SERVER"
           command: echo 'export BACKEND_SERVER="http://localhost:3000"' >> $BASH_ENV
