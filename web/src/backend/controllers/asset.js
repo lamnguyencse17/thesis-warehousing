@@ -3,7 +3,7 @@ import { OK_RESPONSE, HANDLED_ERROR_RESPONSE } from "../constants/http";
 import { validateCreateAsset } from "../validators/assetValidator";
 
 export const getAssetController = async (req, res) => {
-    const assetId = req.params.assetId
+    const assetId = req.params.assetId;
     let { result, status } = await getAssetById(assetId);
     if (!status) {
       return res

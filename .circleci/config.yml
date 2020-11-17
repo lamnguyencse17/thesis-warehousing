@@ -22,20 +22,17 @@ jobs:
       - run:
           name: "Setup EXPRESS_PORT"
           command: echo 'export PORT="3000"' >> $BASH_ENV
-      - run:
-          name: "cd to required folder"
-          command: cd web
       - run:    
           name: "Install node_modules"
-          command: npm install
+          command: cd web && npm install
       - run:
           name: Testing Lint
-          command: npm run eslint
+          command: cd web && npm run eslint
       - run:
           name: Running Test
-          command: npm run test -- --coverage --ci
+          command: cd web && npm run test -- --coverage --ci
       - store_artifacts:
-          path: coverage
+          path: /web/coverage
           destination: coverage
 
 workflows:
