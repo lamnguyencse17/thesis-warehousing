@@ -82,7 +82,7 @@ const appContainer = createBottomTabNavigator({
     screen: QRcodeScreen,
     // navigationOptions: {
     //   headerShown: false,
-    // },
+    // },r
   },
   LoginScreen: {
     screen: LoginScreen,
