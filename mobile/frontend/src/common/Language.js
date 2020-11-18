@@ -16,29 +16,13 @@ export default new LocalizedStrings({
     signup: {
       signup: 'SIGN UP',
     },
-    splash: {
-      connect_with_friend: 'Connect with friends!',
-      description1:
-        'Sed ut perspiciatis unde omnis iste rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae.',
-      get_intouch_instantly: 'Get intouch instantly',
-      description2:
-        'Eaque ipsa quae abed ut perspiciatis unde omnis iste rem aperiam, eaque ipsa quae ab illo inventore verita.',
-      many_platforms_one_chat: 'Many platforms, one chat',
-      description3:
-        'Aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae. Isterem aperiam, eaque ab illo.',
-    },
-    title: {
-      your_single_chat: 'Your single chat',
-      your_group_chat: 'Your group chats',
-      your_contact: 'Your contacts',
-      setting: 'Setting',
-    },
-    error: 'Error',
-    noConnection: 'Your connect was interupted, please check it again!',
-    searchText: 'Search',
-    groupDevice: {
-      recentChat: 'Recent Chats',
-      availableFriends: 'Available Friends',
+    AssetInfo: {
+      name: 'Tên sản phẩm',
+      placeholder: 'Nhập ở đây',
+      quantity: 'Số lượng',
+      unit: 'Đơn vị',
+      description: 'Miêu tả',
+      title: 'Nhập thông tin sản phẩm',
     },
   },
 });

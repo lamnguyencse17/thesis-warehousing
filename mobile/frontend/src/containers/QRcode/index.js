@@ -11,26 +11,25 @@ export default class QRcode extends Component {
   }
 
   onSuccess = (e) => {
-    Linking.openURL(e.data).catch((err) =>
-      console.error('An error occured', err),
-    );
+    console.log(e.target.value);
   };
 
   render() {
     return (
       <QRCodeScanner
         onRead={this.onSuccess}
-        flashMode={RNCamera.Constants.FlashMode.torch}
+        // flashMode={RNCamera.Constants.FlashMode.torch}
+        // reactivate={true}
         topContent={
           <Text style={styles.centerText}>
             <Text style={styles.textBold}>Scan QRCode in to transaction</Text>
           </Text>
         }
-        // bottomContent={
-        //   <TouchableOpacity style={styles.buttonTouchable}>
-        //     <Text style={styles.buttonText}>OK. Got it!</Text>
-        //   </TouchableOpacity>
-        // }
+        bottomContent={
+          <TouchableOpacity style={styles.buttonTouchable}>
+            <Text style={styles.buttonText}>OK. Got it!</Text>
+          </TouchableOpacity>
+        }
       />
     );
   }
