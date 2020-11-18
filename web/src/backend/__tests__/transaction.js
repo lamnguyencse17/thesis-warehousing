@@ -146,9 +146,19 @@ describe("Test Transaction related API", () => {
         expect(response.body).toEqual(
           expect.objectContaining({
             _id: expect.any(String),
-            sender: `${User2._id}`,
-            receiver: `${User1._id}`,
-            assets: expect.arrayContaining([`${Asset._id}`]),
+            assets: expect.arrayContaining([{
+                _id: `${Asset._id}`,
+                name: "Thung Tao",
+              }]),
+            receiver: {
+              _id: `${User1._id}`,
+              name: "Lam Nguyen1",
+            },
+            sender: {
+              _id: `${User2._id}`,
+              name: "Lam Nguyen2",
+            },
+            __v: 0,
           })
         );
         done();
