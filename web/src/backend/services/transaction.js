@@ -12,7 +12,6 @@ export const createTransaction = async ({ receiver, sender, assets }) => {
 };
 
 export const getTransactionById = async (transactionId) => {
-  console.log(transactionId);
   const result = await transactionModel
     .findOne({ _id: mongoose.Types.ObjectId(transactionId) })
     .populate({ path: "sender", select: "name" })

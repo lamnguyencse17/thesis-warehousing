@@ -1,4 +1,4 @@
-import { isEmail, isEmpty, isLength, isInt} from "validator";
+import { isEmail, isEmpty, isLength, isMongoId } from "validator";
 import {UNIT} from "../constants/asset";
 import {
     PASSWORD_MAX_LENGTH,
@@ -34,4 +34,8 @@ export const isValidQuantity = (quantity) => {
 
 export const isValidUnit = (unit) => {
     return (unit == 0 || !!unit) && unit >= 0 && unit < UNIT.length;
+};
+
+export const isValidMongoId = (id) => {
+    return !isEmpty(id) && isMongoId(id);
 };
