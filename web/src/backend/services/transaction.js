@@ -3,11 +3,17 @@ import transactionModel from "../models/transactions";
 
 export const createTransaction = async ({ receiver, sender, assets }) => {
   assets = assets.map((asset) => mongoose.Types.ObjectId(asset));
-  const result = await transactionModel.create({
+  let result = await transactionModel.create({
     receiver: mongoose.Types.ObjectId(receiver),
     sender: mongoose.Types.ObjectId(sender),
     assets,
   });
+  result = await transactionModel
+  .findOne({ _id: mongoose.Types.ObjectId(result._id) })
+  .populate({ path: "sender", select: "name" })
+  .populate({ path: "receiver", select: "name" })
+  .populate({ path: "assets", select: "name" })
+  .lean();
   return { result, status: true };
 };
 

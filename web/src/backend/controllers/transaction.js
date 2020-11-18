@@ -16,7 +16,6 @@ export const createTransactionController = async (req, res) => {
         .status(HANDLED_ERROR_RESPONSE)
         .json({ message: "Something went wrong" });
     }
-    result = result.toObject();
     const transaction = {...result};
     return res.status(OK_RESPONSE).json(transaction);
 };
