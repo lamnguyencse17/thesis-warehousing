@@ -1,8 +1,8 @@
 import axios from "axios"
 
-export const getTransactionRequest = async (transactionId) => {
+export const getAssetRequest = async (assetId) => {
     // use process.env in the feature for BACKEND_API please!
-    const requestUrl = `http://localhost:3000/api/transactions/${transactionId}`
+    const requestUrl = `http://localhost:3000/api/assets/${assetId}`
 // format: {
 //     "_id": "5fb412288173b602387d876a",
 //     "assets": [
@@ -24,7 +24,7 @@ export const getTransactionRequest = async (transactionId) => {
 // STATUS IS FOR HANDLING RETURN FROM AXIOS
     try {
         const res = await axios.get(requestUrl);
-        return { status: true, transaction: res.data };
+        return { status: true, asset: res.data };
     } catch (err) {
         return {
             status: false,
@@ -34,8 +34,8 @@ export const getTransactionRequest = async (transactionId) => {
     }
 }
 
-export const createTransactionRequest = async ({receiver, sender, assets}) => {
-    const requestUrl = "http://localhost:3000/api/transactions/"
+export const createAssetRequest = async ({name, quantity, unit, description}) => {
+    const requestUrl = "http://localhost:3000/api/assets/"
     // format:
     // {
     //     "assets": [
@@ -47,8 +47,8 @@ export const createTransactionRequest = async ({receiver, sender, assets}) => {
     //     "__v": 0
     // }
     try {
-        const res = await axios.post(requestUrl, {receiver, sender, assets});
-        return { status: true, transaction: res.data };
+        const res = await axios.post(requestUrl, {name, quantity, unit, description});
+        return { status: true, asset: res.data };
     } catch (err) {
         return {
             status: false,
