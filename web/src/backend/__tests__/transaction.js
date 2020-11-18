@@ -3,8 +3,13 @@ import app from "../app";
 import mongoose from "mongoose";
 import transactionModel from "../models/transactions";
 import passport from "passport";
+import userModel from "../models/users";
+import assetModel from "../models/assets";
 
-describe("Test User related API", () => {
+describe("Test Transaction related API", () => {
+  let User1;
+  let User2;
+  let Asset;
   let TestObj;
   beforeAll(async () => {
     require("../utils/passport")(passport);
@@ -14,16 +19,32 @@ describe("Test User related API", () => {
       useFindAndModify: false,
       useCreateIndex: true,
     });
+    User1 = await userModel.create({
+      name: "Lam Nguyen1",
+      email: "lamnguyen1@gmail.com",
+      password: "123456",
+    });
+    User2 = await userModel.create({
+      name: "Lam Nguyen2",
+      email: "lamnguyen2@gmail.com",
+      password: "123456",
+    });
+    Asset = await assetModel.create({
+      name: "Thung Tao",
+      quantity: 5,
+      unit: 0,
+      description: "",
+    });
     TestObj = await transactionModel.create({
-      sender: "5fb4b239b32c2c2ba44f23f5",
-      receiver: "5fb411df8173b602387d8768",
-      assets: ["5fb392d6dab9670184275ece"],
+      sender: `${User1._id}`,
+      receiver: `${User2._id}`,
+      assets: [`${Asset._id}`],
     });
   });
 
   afterAll(async (done) => {
     await transactionModel.deleteOne(
-      { sender: "5fb4b239b32c2c2ba44f23f5" },
+      { sender: `${User1._id}` },
       (err) => {
         if (err) {
           console.log(err);
@@ -31,13 +52,16 @@ describe("Test User related API", () => {
       }
     );
     await transactionModel.deleteOne(
-      { sender: "5fb4b239b32c2c2ba44f23f6" },
+      { sender: `${User2._id}` },
       (err) => {
         if (err) {
           console.log(err);
         }
       }
     );
+    await assetModel.deleteOne({_id: mongoose.Types.ObjectId(Asset._id)});
+    await userModel.deleteOne({_id: mongoose.Types.ObjectId(User1._id)});
+    await userModel.deleteOne({_id: mongoose.Types.ObjectId(User2._id)});
     mongoose.disconnect(done);
   });
 
@@ -66,7 +90,7 @@ describe("Test User related API", () => {
   //         });
   // });
 
-  it("Get Asset Info", async (done) => {
+  it("Get Transaction Info", async (done) => {
     request(app)
       .get(`/api/transactions/${TestObj._id}`)
       .set("Content-Type", "application/json")
@@ -77,19 +101,17 @@ describe("Test User related API", () => {
         expect(response.body).toEqual(
           expect.objectContaining({
             _id: expect.any(String),
-            assets: [
-              {
-                _id: "5fb392d6dab9670184275ece",
+            assets: expect.arrayContaining([{
+                _id: `${Asset._id}`,
                 name: "Thung Tao",
-              },
-            ],
+              }]),
             receiver: {
-              _id: "5fb411df8173b602387d8768",
-              name: "Lam Nguyen",
+              _id: `${User2._id}`,
+              name: "Lam Nguyen2",
             },
             sender: {
-              _id: "5fb4b239b32c2c2ba44f23f5",
-              name: "Lam Nguyen",
+              _id: `${User1._id}`,
+              name: "Lam Nguyen1",
             },
             __v: 0,
           })
@@ -112,9 +134,9 @@ describe("Test User related API", () => {
     request(app)
       .post(`/api/transactions/`)
       .send({
-        sender: "5fb4b239b32c2c2ba44f23f6",
-        receiver: "5fb411df8173b602387d8768",
-        assets: ["5fb392d6dab9670184275ece"],
+        sender: `${User2._id}`,
+        receiver: `${User1._id}`,
+        assets: [`${Asset._id}`],
       })
       .set("Content-Type", "application/json")
       .set("Accept", "application/json")
@@ -124,15 +146,15 @@ describe("Test User related API", () => {
         expect(response.body).toEqual(
           expect.objectContaining({
             _id: expect.any(String),
-            sender: "5fb4b239b32c2c2ba44f23f6",
-            receiver: "5fb411df8173b602387d8768",
-            assets: ["5fb392d6dab9670184275ece"],
+            sender: `${User2._id}`,
+            receiver: `${User1._id}`,
+            assets: expect.arrayContaining([`${Asset._id}`]),
           })
         );
         done();
       });
   });
-  it("Create Transaction Asset - Empty Assets", async (done) => {
+  it("Create Transaction - Empty Assets", async (done) => {
     const expecting = ["Assets are empty"];
     request(app)
       .post(`/api/transactions/`)
