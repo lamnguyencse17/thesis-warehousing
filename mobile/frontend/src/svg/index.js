@@ -19,6 +19,7 @@ import _Emoji from './MessageInput/Emoji';
 import _More from './MessageInput/More';
 import _Voice from './MessageInput/Voice';
 import _Camera from './MessageInput/Camera';
+import _DropDown from './DropDown';
 
 export const SvgAuth1 = _SvgAuth1;
 export const SvgAuth2 = _SvgAuth2;
@@ -41,3 +42,4 @@ export const More = _More;
 export const Voice = _Voice;
 export const Camera = _Camera;
 export const Emoji = _Emoji;
+export const DropDown = _DropDown;
