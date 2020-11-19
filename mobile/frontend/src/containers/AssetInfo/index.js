@@ -17,10 +17,10 @@ export default class AssetInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: 'Táo',
+      name: 'Apple',
       quantity: '40',
-      unit: 'Cái',
-      description: 'Tươi ngon',
+      unit: 'ton',
+      description: 'Good',
       isGenerated: false,
       dataCode: null,
       enable: false,
@@ -114,10 +114,10 @@ export default class AssetInfo extends Component {
               {isGenerated == true ? (
                 <QRCode
                   value={JSON.stringify({
-                    name: `${name}`,
-                    quantity: `${quantity}`,
-                    unit: `${unit}`,
-                    description: `${description}`,
+                    name: name,
+                    quantity: quantity,
+                    unit: unit,
+                    description: description,
                   })}
                 />
               ) : null}
