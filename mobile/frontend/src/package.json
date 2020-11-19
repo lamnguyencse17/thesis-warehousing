@@ -1,3 +1,6 @@
 {
-  "name": "@app"
+  "name": "@app",
+  "dependencies": {
+    "axios": "^0.21.0"
+  }
 }
