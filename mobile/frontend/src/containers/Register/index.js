@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, TextInput, TouchableOpacity} from 'react-native';
+import {Text, View, TextInput, TouchableOpacity, Alert} from 'react-native';
 import {Formik} from 'formik';
 import RegisterStyle from './styles';
 import {
@@ -7,6 +7,8 @@ import {
   isValidPassword,
   isValidEmail,
 } from '../../common/Validate';
+import axios from 'axios';
+import {Config} from '@common';
 
 export default class Register extends React.Component {
   constructor(props) {
@@ -27,14 +29,44 @@ export default class Register extends React.Component {
     } else if (!isValidName(values.name)) {
       this.setState({error: 'Invalid Name'});
     } else {
-      // Async call goes here
-      console.log('OK');
+      this.register(values.name, values.email, values.password);
     }
 
-    setTimeout(() => {
-      console.log(values);
-      setSubmitting(false);
-    }, 2000);
+    // setTimeout(() => {
+    //   console.log(values);
+    //   setSubmitting(false);
+    // }, 2000);
+  };
+  register = async (name, email, password) => {
+    const register = await axios.post(`${Config.server}/auth/register`, {
+      name: `${name}`,
+      email: `${email}`,
+      password: `${password}`,
+    });
+    if (register) {
+      Alert.alert(
+        'Register Success',
+        `Hello ${name}`,
+        [
+          {
+            text: 'OK',
+            onPress: () => this.props.navigation.navigate('LoginScreen'),
+          },
+        ],
+        {cancelable: false},
+      );
+    } else {
+      Alert.alert(
+        'Register Fail',
+        [
+          {
+            text: 'OK',
+            onPress: () => this.props.navigation.navigate('LoginScreen'),
+          },
+        ],
+        {cancelable: false},
+      );
+    }
   };
   onFocusTextInput = () => {
     this.setState({error: ''});
@@ -45,7 +77,12 @@ export default class Register extends React.Component {
       <View style={RegisterStyle.container}>
         <Text style={RegisterStyle.logo}>TraceChain</Text>
         <Formik
-          initialValues={{email: '', password: '', name: '', password2: ''}}
+          initialValues={{
+            email: 'manhhung@email.com',
+            password: '123456',
+            name: 'hungtran',
+            password2: '123456',
+          }}
           onSubmit={(values, {setSubmitting}) =>
             this.processRegisterSubmit(values, setSubmitting)
           }>
