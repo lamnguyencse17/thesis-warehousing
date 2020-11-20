@@ -1,1 +1,1 @@
-curl -sSL https://bit.ly/2ysbOFE | bash -s -- 2.2.1 1.4.9 | cd fabri-samples | cd test-network | ./network.sh up createChannel -c mychannel -ca | ./network.sh deployCC -ccn basic -ccl javascript
+curl -sSL https://bit.ly/2ysbOFE | bash -s -- 2.2.1 1.4.9 && cd fabric-samples && cd test-network && ./network.sh up createChannel -c mychannel -ca && ./network.sh deployCC -ccn basic -ccl javascript
