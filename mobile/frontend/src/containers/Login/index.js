@@ -23,17 +23,20 @@ export default class Login extends React.Component {
     } else {
       this.login(values.email, values.password);
     }
-    setTimeout(() => {
-      console.log(values);
-      setSubmitting(false);
-    }, 2000);
+    // setTimeout(() => {
+    //   console.log(values);
+    //   setSubmitting(false);
+    // }, 2000);
   };
-  login = async () => {
-    const login = await axios.post(`${Config.server}/auth/login`);
+  login = async (email, password) => {
+    const login = await axios.post(`${Config.server}/auth/login`, {
+      email: `${email}`,
+      password: `${password}`,
+    });
     if (login) {
       Alert.alert(
         'Login Success',
-        `Hello ${name}`,
+        'Hello',
         [
           {
             text: 'OK',
@@ -42,6 +45,8 @@ export default class Login extends React.Component {
         ],
         {cancelable: false},
       );
+      console.log('cookies', login.cookies);
+      console.log('login', login['set-cookie']);
     } else {
       Alert.alert(
         'Login Fail',
@@ -64,7 +69,7 @@ export default class Login extends React.Component {
       <View style={LoginStyle.container}>
         <Text style={LoginStyle.logo}>TraceChain</Text>
         <Formik
-          initialValues={{email: '', password: ''}}
+          initialValues={{email: 'hung123@gmail.com', password: '123456'}}
           onSubmit={(values, {setSubmitting}) =>
             this.processLoginSubmit(values, setSubmitting)
           }>
