@@ -31,7 +31,6 @@ export default class QRcode extends Component {
     return (
       <QRCodeScanner
         onRead={this.onSuccess}
-        reactivateTimeout={5}
         ref={(node) => {
           this.scanner = node;
         }}

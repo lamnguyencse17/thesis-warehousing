@@ -1,29 +1,54 @@
 import React from 'react';
-import {
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native';
+import {Text, View, TextInput, TouchableOpacity} from 'react-native';
 import {Formik} from 'formik';
-import RegisterStyle from "./styles"
+import RegisterStyle from './styles';
+import {
+  isValidName,
+  isValidPassword,
+  isValidEmail,
+} from '../../common/Validate';
 
 export default class Register extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      error: '',
+    };
+  }
   processRegisterSubmit = (values, setSubmitting) => {
     // Validation goes here
-    // Async call goes here
-    setTimeout(() => {      
+    if (!isValidEmail(values.email)) {
+      this.setState({error: 'Invalid Email'});
+    } else if (
+      !isValidPassword(values.password) ||
+      !isValidPassword(values.password2)
+    ) {
+      this.setState({error: 'Invalid Password'});
+    } else if (!isValidName(values.name)) {
+      this.setState({error: 'Invalid Name'});
+    } else {
+      // Async call goes here
+      console.log('OK');
+    }
+
+    setTimeout(() => {
       console.log(values);
       setSubmitting(false);
     }, 2000);
   };
+  onFocusTextInput = () => {
+    this.setState({error: ''});
+  };
   render() {
+    const {error} = this.state;
     return (
       <View style={RegisterStyle.container}>
         <Text style={RegisterStyle.logo}>TraceChain</Text>
         <Formik
           initialValues={{email: '', password: '', name: '', password2: ''}}
-          onSubmit={(values, {setSubmitting}) => this.processRegisterSubmit(values, setSubmitting)}>
+          onSubmit={(values, {setSubmitting}) =>
+            this.processRegisterSubmit(values, setSubmitting)
+          }>
           {({handleChange, handleSubmit, values, isSubmitting}) => (
             <>
               <View style={RegisterStyle.inputView}>
@@ -34,6 +59,7 @@ export default class Register extends React.Component {
                   placeholderTextColor="#003f5c"
                   onChangeText={handleChange('name')}
                   value={values.name}
+                  onFocus={this.onFocusTextInput}
                 />
               </View>
               <View style={RegisterStyle.inputView}>
@@ -44,6 +70,7 @@ export default class Register extends React.Component {
                   placeholderTextColor="#003f5c"
                   onChangeText={handleChange('email')}
                   value={values.email}
+                  onFocus={this.onFocusTextInput}
                 />
               </View>
               <View style={RegisterStyle.inputView}>
@@ -55,6 +82,7 @@ export default class Register extends React.Component {
                   placeholderTextColor="#003f5c"
                   onChangeText={handleChange('password')}
                   value={values.password}
+                  onFocus={this.onFocusTextInput}
                 />
               </View>
               <View style={RegisterStyle.inputView}>
@@ -66,16 +94,28 @@ export default class Register extends React.Component {
                   placeholderTextColor="#003f5c"
                   onChangeText={handleChange('password2')}
                   value={values.password2}
+                  onFocus={this.onFocusTextInput}
                 />
               </View>
+
               <TouchableOpacity>
                 <Text style={RegisterStyle.forgot}>Forgot Password?</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={RegisterStyle.loginBtn} onPress={handleSubmit} disabled={isSubmitting}>
+              {error == '' ? null : (
+                <Text style={RegisterStyle.errorText}>{error}</Text>
+              )}
+              <TouchableOpacity
+                style={RegisterStyle.loginBtn}
+                onPress={handleSubmit}
+                disabled={isSubmitting}>
                 <Text style={RegisterStyle.loginText}>REGISTER</Text>
               </TouchableOpacity>
               <TouchableOpacity>
-                <Text style={RegisterStyle.loginText} onPress={() => this.props.navigation.navigate("LoginScreen")}>Login</Text>
+                <Text
+                  style={RegisterStyle.loginText}
+                  onPress={() => this.props.navigation.navigate('LoginScreen')}>
+                  Login
+                </Text>
               </TouchableOpacity>
             </>
           )}

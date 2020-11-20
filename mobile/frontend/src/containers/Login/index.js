@@ -1,23 +1,39 @@
-import React, { Fragment } from 'react';
-import {
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native';
-import LoginStyle from "./styles"
+import React, {Fragment} from 'react';
+import {Text, View, TextInput, TouchableOpacity} from 'react-native';
+import LoginStyle from './styles';
 import {Formik} from 'formik';
 
+import {isValidEmail, isValidPassword} from '../../common/Validate';
+
 export default class Login extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      error: '',
+    };
+  }
   processLoginSubmit = (values, setSubmitting) => {
     // Validation goes here
-    // Async call goes here
+    if (!isValidEmail(values.email)) {
+      this.setState({error: 'Invalid Email'});
+      // return;
+    } else if (!isValidPassword(values.password)) {
+      this.setState({error: 'Invalid Password'});
+    } else {
+      // Async call goes here
+
+      console.log('OK');
+    }
     setTimeout(() => {
       console.log(values);
       setSubmitting(false);
     }, 2000);
   };
+  onFocusTextInput = () => {
+    this.setState({error: ''});
+  };
   render() {
+    const {error} = this.state;
     return (
       <View style={LoginStyle.container}>
         <Text style={LoginStyle.logo}>TraceChain</Text>
@@ -26,7 +42,7 @@ export default class Login extends React.Component {
           onSubmit={(values, {setSubmitting}) =>
             this.processLoginSubmit(values, setSubmitting)
           }>
-          {({handleChange, handleSubmit, values, isSubmitting}) => 
+          {({handleChange, handleSubmit, values, isSubmitting}) => (
             <Fragment>
               <View style={LoginStyle.inputView}>
                 <TextInput
@@ -36,6 +52,7 @@ export default class Login extends React.Component {
                   placeholderTextColor="#003f5c"
                   onChangeText={handleChange('email')}
                   value={values.email}
+                  onFocus={this.onFocusTextInput}
                 />
               </View>
               <View style={LoginStyle.inputView}>
@@ -47,11 +64,15 @@ export default class Login extends React.Component {
                   placeholderTextColor="#003f5c"
                   onChangeText={handleChange('password')}
                   value={values.password}
+                  onFocus={this.onFocusTextInput}
                 />
               </View>
               <TouchableOpacity>
                 <Text style={LoginStyle.forgot}>Forgot Password?</Text>
               </TouchableOpacity>
+              {error == '' ? null : (
+                <Text style={LoginStyle.errorText}>{error}</Text>
+              )}
               <TouchableOpacity
                 style={LoginStyle.loginBtn}
                 onPress={handleSubmit}
@@ -59,10 +80,16 @@ export default class Login extends React.Component {
                 <Text style={LoginStyle.loginText}>LOGIN</Text>
               </TouchableOpacity>
               <TouchableOpacity>
-                <Text style={LoginStyle.loginText} onPress={() => this.props.navigation.navigate("RegisterScreen")}>Register</Text>
+                <Text
+                  style={LoginStyle.loginText}
+                  onPress={() =>
+                    this.props.navigation.navigate('RegisterScreen')
+                  }>
+                  Register
+                </Text>
               </TouchableOpacity>
             </Fragment>
-          }
+          )}
         </Formik>
       </View>
     );
