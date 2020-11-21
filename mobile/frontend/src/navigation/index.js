@@ -12,8 +12,9 @@ import {createBottomTabNavigator} from 'react-navigation-tabs';
 
 import AssetInfo from './AssetInfoScreen';
 import QRcodeScreen from './QRcodeScreen';
-import LoginScreen from "./LoginScreen"
-import RegisterScreen from "./RegisterScreen"
+import LoginScreen from './LoginScreen';
+import RegisterScreen from './RegisterScreen';
+import FormInputScreen from './FormInputScreen';
 const defaultHeaderObject = {
   header: (props) => <Header type={'group'} />,
 };
@@ -92,6 +93,12 @@ const appContainer = createBottomTabNavigator({
   },
   RegisterScreen: {
     screen: RegisterScreen,
+    // navigationOptions: {
+    //   headerShown: false,
+    // },
+  },
+  FormInputScreen: {
+    screen: FormInputScreen,
     // navigationOptions: {
     //   headerShown: false,
     // },
