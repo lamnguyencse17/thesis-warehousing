@@ -23,10 +23,6 @@ export default class Login extends React.Component {
     } else {
       this.login(values.email, values.password);
     }
-    // setTimeout(() => {
-    //   console.log(values);
-    //   setSubmitting(false);
-    // }, 2000);
   };
   login = async (email, password) => {
     const login = await axios.post(`${Config.server}/auth/login`, {
@@ -40,13 +36,12 @@ export default class Login extends React.Component {
         [
           {
             text: 'OK',
-            // onPress: () => this.props.navigation.navigate('LoginScreen'),
           },
         ],
         {cancelable: false},
       );
       console.log('cookies', login.cookies);
-      console.log('login', login['set-cookie']);
+      console.log('login', login._lowerCaseResponseHeaders['set-cookie']);
     } else {
       Alert.alert(
         'Login Fail',
