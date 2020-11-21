@@ -12,8 +12,9 @@ import {createBottomTabNavigator} from 'react-navigation-tabs';
 
 import AssetInfo from './AssetInfoScreen';
 import QRcodeScreen from './QRcodeScreen';
-import LoginScreen from "./LoginScreen"
-import RegisterScreen from "./RegisterScreen"
+import LoginScreen from './LoginScreen';
+import RegisterScreen from './RegisterScreen';
+
 const defaultHeaderObject = {
   header: (props) => <Header type={'group'} />,
 };
