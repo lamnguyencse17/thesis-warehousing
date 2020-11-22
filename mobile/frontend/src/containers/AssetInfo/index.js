@@ -54,7 +54,7 @@ export default class AssetInfo extends Component {
 
   render() {
     const {name, quantity, unit, description, isGenerated} = this.state;
-
+    let options = ['Cái', 'Gram', 'Kilogram', 'Tấn', 'Lít', 'Mét Khối'];
     return (
       <ScrollView style={{flex: 1}}>
         <View style={{flex: 1}}>
@@ -84,16 +84,14 @@ export default class AssetInfo extends Component {
               <Picker
                 selectedValue={unit}
                 style={styles.picker}
-                onValueChange={(itemValue, itemIndex) => {
-                  this.setState({quantity: itemValue});
+                onValueChange={(itemIndex) => {
+                  this.setState({unit: itemIndex});
                   this.focusDescription();
-                }}>
-                <Picker.Item label="Cái" value="Cái" />
-                <Picker.Item label="Gram" value="Gram" />
-                <Picker.Item label="Kg" value="Kg" />
-                <Picker.Item label="Tấn" value="Tấn" />
-                <Picker.Item label="Lít" value="Lít" />
-                <Picker.Item label="Mét khối" value="mét khối" />
+                }}
+                value={unit}>
+                {options.map((item, index) => {
+                  return <Picker.Item label={item} value={index} key={index} />;
+                })}
               </Picker>
             </View>
             <Input
