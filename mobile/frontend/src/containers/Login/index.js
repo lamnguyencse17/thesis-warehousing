@@ -1,10 +1,11 @@
 import React, {Fragment} from 'react';
-import {Text, View, TextInput, TouchableOpacity} from 'react-native';
+import {Text, View, TextInput, TouchableOpacity, Alert} from 'react-native';
 import LoginStyle from './styles';
 import {Formik} from 'formik';
 
 import {isValidEmail, isValidPassword} from '../../common/Validate';
-
+import {Config} from '@common';
+import axios from 'axios';
 export default class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -20,14 +21,39 @@ export default class Login extends React.Component {
     } else if (!isValidPassword(values.password)) {
       this.setState({error: 'Invalid Password'});
     } else {
-      // Async call goes here
-
-      console.log('OK');
+      this.login(values.email, values.password);
     }
-    setTimeout(() => {
-      console.log(values);
-      setSubmitting(false);
-    }, 2000);
+  };
+  login = async (email, password) => {
+    const login = await axios.post(`${Config.server}/auth/login`, {
+      email: `${email}`,
+      password: `${password}`,
+    });
+    if (login) {
+      Alert.alert(
+        'Login Success',
+        'Hello',
+        [
+          {
+            text: 'OK',
+          },
+        ],
+        {cancelable: false},
+      );
+      console.log('cookies', login.cookies);
+      console.log('login', login._lowerCaseResponseHeaders['set-cookie']);
+    } else {
+      Alert.alert(
+        'Login Fail',
+        [
+          {
+            text: 'OK',
+            onPress: () => this.props.navigation.navigate('LoginScreen'),
+          },
+        ],
+        {cancelable: false},
+      );
+    }
   };
   onFocusTextInput = () => {
     this.setState({error: ''});
@@ -38,7 +64,7 @@ export default class Login extends React.Component {
       <View style={LoginStyle.container}>
         <Text style={LoginStyle.logo}>TraceChain</Text>
         <Formik
-          initialValues={{email: '', password: ''}}
+          initialValues={{email: 'hung123@gmail.com', password: '123456'}}
           onSubmit={(values, {setSubmitting}) =>
             this.processLoginSubmit(values, setSubmitting)
           }>
