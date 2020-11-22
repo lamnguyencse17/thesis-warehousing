@@ -6,6 +6,8 @@
 
 'use strict';
 
+import { createCipher } from 'crypto';
+
 const { Gateway, Wallets } = require('fabric-network');
 const FabricCAServices = require('fabric-ca-client');
 const path = require('path');
@@ -38,12 +40,18 @@ class LedgerClient {
             });
             this.network = await this.gateway.getNetwork(channelName);
             this.contract = this.network.getContract(chaincodeName);
+            console.log(this.network)
         } catch (error) {
             console.error(`******** FAILED to run the application: ${error}`);
         }
     }
     initLedger = async () => {
-        await this.contract.submitTransaction('InitLedger');
+        try {
+            await this.contract.submitTransaction('InitLedger');
+        }
+        catch(err) {
+            console.log(err)
+        }
         console.log('*** Result: committed');
     }
     queryAll = async () => {

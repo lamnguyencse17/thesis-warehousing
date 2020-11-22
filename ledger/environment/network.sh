@@ -383,7 +383,7 @@ COMPOSE_FILE_COUCH_ORG3=addOrg3/docker/docker-compose-couch-org3.yaml
 COMPOSE_FILE_ORG3=addOrg3/docker/docker-compose-org3.yaml
 #
 # use go as the default language for chaincode
-CC_SRC_LANGUAGE="javascript"
+CC_SRC_LANGUAGE="typescript"
 # Chaincode version
 CC_VERSION="1.0"
 # Chaincode definition sequence
