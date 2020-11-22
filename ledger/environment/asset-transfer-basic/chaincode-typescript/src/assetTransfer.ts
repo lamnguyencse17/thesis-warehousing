@@ -12,46 +12,44 @@ export class AssetTransferContract extends Contract {
     public async InitLedger(ctx: Context): Promise<void> {
         const assets: Asset[] = [
             {
-                ID: 'asset1',
-                Color: 'blue',
-                Size: 5,
-                Owner: 'Tomoko',
-                AppraisedValue: 300,
+                ID: "5fba3fae25f941ad09b95b1f",
+                name: "Thung tao 1",
+                owner: "5fba3fb7bfb9abe89e8b1bb4",
+                quantity: 5,
+                unit: 0,
+                description: "Initial Value Of Ledger"
             },
             {
-                ID: 'asset2',
-                Color: 'red',
-                Size: 5,
-                Owner: 'Brad',
-                AppraisedValue: 400,
+                ID: "5fba402f29c36bec9acb540d",
+                name: "Thung tao 2",
+                owner: "5fba3fb7bfb9abe89e8b1bb4",
+                quantity: 5,
+                unit: 0,
+                description: "Initial Value Of Ledger"
             },
             {
-                ID: 'asset3',
-                Color: 'green',
-                Size: 10,
-                Owner: 'Jin Soo',
-                AppraisedValue: 500,
+                ID: "5fba402a6c1aaa206eb731da",
+                name: "Thung tao 3",
+                owner: "5fba3fb7bfb9abe89e8b1bb4",
+                quantity: 5,
+                unit: 0,
+                description: "Initial Value Of Ledger"
             },
             {
-                ID: 'asset4',
-                Color: 'yellow',
-                Size: 10,
-                Owner: 'Max',
-                AppraisedValue: 600,
+                ID: "5fba4027a798290b270f2957",
+                name: "Thung tao 4",
+                owner: "5fba3fb7bfb9abe89e8b1bb4",
+                quantity: 5,
+                unit: 0,
+                description: "Initial Value Of Ledger"
             },
             {
-                ID: 'asset5',
-                Color: 'black',
-                Size: 15,
-                Owner: 'Adriana',
-                AppraisedValue: 700,
-            },
-            {
-                ID: 'asset6',
-                Color: 'white',
-                Size: 15,
-                Owner: 'Michel',
-                AppraisedValue: 800,
+                ID: "5fba4023fd3764cd36761d91",
+                name: "Thung tao 5",
+                owner: "5fba3fb7bfb9abe89e8b1bb4",
+                quantity: 5,
+                unit: 0,
+                description: "Initial Value Of Ledger"
             },
         ];
 
