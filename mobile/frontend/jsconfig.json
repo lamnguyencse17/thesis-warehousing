@@ -11,7 +11,8 @@
         "@store": ["store"],
         "@utils": ["utils"],
         "@redux": ["redux"],
-        "@svg": ["svg"]
+        "@svg": ["svg"],
+        "@request": ["request"]
       }
     },
     "exclude": ["node_modules"]

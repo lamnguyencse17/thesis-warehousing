@@ -5,7 +5,8 @@ import {Formik} from 'formik';
 
 import {isValidEmail, isValidPassword} from '../../common/Validate';
 import {Config} from '@common';
-import axios from 'axios';
+import {createLoginRequest} from '../../request/user';
+
 export default class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -23,13 +24,17 @@ export default class Login extends React.Component {
     } else {
       this.login(values.email, values.password);
     }
+    setTimeout(() => {
+      console.log(values);
+      setSubmitting(false);
+    }, 2000);
   };
   login = async (email, password) => {
-    const login = await axios.post(`${Config.server}/auth/login`, {
-      email: `${email}`,
-      password: `${password}`,
+    const {status, token, message} = await createLoginRequest({
+      email,
+      password,
     });
-    if (login) {
+    if (status == true) {
       Alert.alert(
         'Login Success',
         'Hello',
@@ -40,15 +45,13 @@ export default class Login extends React.Component {
         ],
         {cancelable: false},
       );
-      console.log('cookies', login.cookies);
-      console.log('login', login._lowerCaseResponseHeaders['set-cookie']);
     } else {
       Alert.alert(
         'Login Fail',
+        `${message}`,
         [
           {
             text: 'OK',
-            onPress: () => this.props.navigation.navigate('LoginScreen'),
           },
         ],
         {cancelable: false},
