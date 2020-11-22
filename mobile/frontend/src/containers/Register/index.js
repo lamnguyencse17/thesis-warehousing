@@ -7,7 +7,7 @@ import {
   isValidPassword,
   isValidEmail,
 } from '../../common/Validate';
-import axios from 'axios';
+import {createRegisterRequest} from '../../request/user';
 import {Config} from '@common';
 
 export default class Register extends React.Component {
@@ -32,18 +32,18 @@ export default class Register extends React.Component {
       this.register(values.name, values.email, values.password);
     }
 
-    // setTimeout(() => {
-    //   console.log(values);
-    //   setSubmitting(false);
-    // }, 2000);
+    setTimeout(() => {
+      console.log(values);
+      setSubmitting(false);
+    }, 2000);
   };
   register = async (name, email, password) => {
-    const register = await axios.post(`${Config.server}/auth/register`, {
-      name: `${name}`,
-      email: `${email}`,
-      password: `${password}`,
+    const {status, user, message} = await createRegisterRequest({
+      name,
+      email,
+      password,
     });
-    if (register) {
+    if (status == true) {
       Alert.alert(
         'Register Success',
         `Hello ${name}`,
@@ -58,10 +58,10 @@ export default class Register extends React.Component {
     } else {
       Alert.alert(
         'Register Fail',
+        `${message}`,
         [
           {
             text: 'OK',
-            onPress: () => this.props.navigation.navigate('LoginScreen'),
           },
         ],
         {cancelable: false},
