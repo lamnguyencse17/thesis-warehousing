@@ -1,0 +1,2 @@
+export const ADD_FORM_RECEIVER = 'ADD_FORM_RECEIVER';
+export const ADD_FORM_PACKAGE = 'ADD_FORM_PACKAGE';

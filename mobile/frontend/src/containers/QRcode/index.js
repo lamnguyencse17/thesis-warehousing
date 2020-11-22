@@ -2,8 +2,11 @@ import React, {Component} from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
 import styles from './styles';
 import QRCodeScanner from 'react-native-qrcode-scanner';
+import {connect} from 'react-redux';
+import QRCode from 'react-native-qrcode-svg';
+import {addFormPackage, addFormReceiver} from '../../redux/actions/AddForm';
 
-export default class QRcode extends Component {
+class QRcodeComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,6 +22,14 @@ export default class QRcode extends Component {
       data = JSON.parse(data);
     }
     this.setState({showModal: true, data: data, reactivate: false});
+    if (!!this.props.navigation.state.params.type) {
+      const {type} = this.props.navigation.state.params;
+      if (type == 'package') {
+        this.props.addFormPackage(data);
+      } else {
+        this.props.addFormReceiver(data);
+      }
+    }
   };
 
   toogleActive = () => {
@@ -26,8 +37,8 @@ export default class QRcode extends Component {
   };
 
   render() {
-    const {data, showModal, active} = this.state;
-    console.log(active);
+    const {data, showModal} = this.state;
+
     return (
       <QRCodeScanner
         onRead={this.onSuccess}
@@ -71,3 +82,12 @@ export default class QRcode extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({});
+
+const mapActionToProps = {
+  addFormPackage,
+  addFormReceiver,
+};
+
+export default connect(mapStateToProps, mapActionToProps)(QRcodeComponent);
