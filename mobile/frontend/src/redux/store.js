@@ -1,19 +1,14 @@
 import {createStore, combineReducers, applyMiddleware, compose} from 'redux';
 import thunk from 'redux-thunk';
 
-// import userReducer from './reducer/userReducer';
-// import chatReducer from './reducer/chatReducer';
-// import toastReducer from './reducer/toastReducer';
-// import roomReducer from './reducer/roomReducer';
+import AddFormReducer from './reducer/AddFormReducer';
+
 const initialState = {};
 
 const middleware = [thunk];
 
 const reducers = combineReducers({
-  // userReducer: userReducer,
-  // chatReducer: chatReducer,
-  // toastReducer: toastReducer,
-  // roomReducer: roomReducer,
+  AddFormReducer: AddFormReducer,
 });
 
 const composeEnhancers =
