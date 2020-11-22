@@ -44,7 +44,7 @@ export default StyleSheet.create({
     color: 'white',
   },
   errorText: {
-    color: 'white',
+    color: 'red',
     fontSize: 16,
   },
 });

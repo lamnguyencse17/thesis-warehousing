@@ -2,13 +2,9 @@ import React from 'react';
 import {Text, View, TextInput, TouchableOpacity, Alert} from 'react-native';
 import {Formik} from 'formik';
 import RegisterStyle from './styles';
-import {
-  isValidName,
-  isValidPassword,
-  isValidEmail,
-} from '../../common/Validate';
+
 import {createRegisterRequest} from '../../request/user';
-import {Config} from '@common';
+import {validateCreateUser} from '../../validators/userValidator';
 
 export default class Register extends React.Component {
   constructor(props) {
@@ -19,15 +15,15 @@ export default class Register extends React.Component {
   }
   processRegisterSubmit = (values, setSubmitting) => {
     // Validation goes here
-    if (!isValidEmail(values.email)) {
-      this.setState({error: 'Invalid Email'});
-    } else if (
-      !isValidPassword(values.password) ||
-      !isValidPassword(values.password2)
-    ) {
-      this.setState({error: 'Invalid Password'});
-    } else if (!isValidName(values.name)) {
-      this.setState({error: 'Invalid Name'});
+    const {email, password, name, password2} = values;
+    const {status, message} = validateCreateUser({
+      email,
+      password,
+      name,
+      password2,
+    });
+    if (status == false) {
+      this.setState({error: message});
     } else {
       this.register(values.name, values.email, values.password);
     }
@@ -78,7 +74,7 @@ export default class Register extends React.Component {
         <Text style={RegisterStyle.logo}>TraceChain</Text>
         <Formik
           initialValues={{
-            email: 'manhhung@email.com',
+            email: 'manh',
             password: '123456',
             name: 'hungtran',
             password2: '123456',
