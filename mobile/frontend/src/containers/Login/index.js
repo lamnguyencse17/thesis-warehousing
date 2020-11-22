@@ -18,7 +18,11 @@ export default class Login extends React.Component {
     const {email, password} = values;
     const {status, message} = validateLogInUser({email, password});
     if (status == false) {
-      this.setState({error: message});
+      if (message.length == 1) {
+        this.setState({error: message});
+      } else {
+        this.setState({error: 'More than one field are invalid'});
+      }
     } else {
       this.login(values.email, values.password);
     }

@@ -23,7 +23,11 @@ export default class Register extends React.Component {
       password2,
     });
     if (status == false) {
-      this.setState({error: message});
+      if (message.length == 1) {
+        this.setState({error: message});
+      } else {
+        this.setState({error: 'More than one field are invalid'});
+      }
     } else {
       this.register(values.name, values.email, values.password);
     }
