@@ -74,10 +74,10 @@ export default class Register extends React.Component {
         <Text style={RegisterStyle.logo}>TraceChain</Text>
         <Formik
           initialValues={{
-            email: 'manh',
-            password: '123456',
-            name: 'hungtran',
-            password2: '123456',
+            email: '',
+            password: '',
+            name: '',
+            password2: '',
           }}
           onSubmit={(values, {setSubmitting}) =>
             this.processRegisterSubmit(values, setSubmitting)
