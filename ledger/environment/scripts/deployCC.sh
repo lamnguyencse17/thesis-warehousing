@@ -31,7 +31,7 @@ println "- VERBOSE: ${C_GREEN}${VERBOSE}${C_RESET}"
 
 CC_SRC_LANGUAGE=$(echo "$CC_SRC_LANGUAGE" | tr [:upper:] [:lower:])
 
-FABRIC_CFG_PATH=$PWD/../config/
+FABRIC_CFG_PATH=$PWD/config/
 
 # User has not provided a path, therefore the CC_NAME must
 # be the short name of a known chaincode sample
@@ -41,37 +41,17 @@ if [ "$CC_SRC_PATH" = "NA" ]; then
   # short name of the known chaincode sample
   if [ "$CC_NAME" = "basic" ]; then
     println $'\e[0;32m'asset-transfer-basic$'\e[0m' chaincode
-    CC_SRC_PATH="../asset-transfer-basic"
-  elif [ "$CC_NAME" = "events" ]; then
-    println $'\e[0;32m'asset-transfer-events$'\e[0m' chaincode
-    CC_SRC_PATH="../asset-transfer-events"
-  elif [ "$CC_NAME" = "secured" ]; then
-    println $'\e[0;32m'asset-transfer-secured-agreeement$'\e[0m' chaincode
-    CC_SRC_PATH="../asset-transfer-secured-agreement"
-  elif [ "$CC_NAME" = "ledger" ]; then
-    println $'\e[0;32m'asset-transfer-ledger-agreeement$'\e[0m' chaincode
-    CC_SRC_PATH="../asset-transfer-ledger-queries"
-  elif [ "$CC_NAME" = "private" ]; then
-    println $'\e[0;32m'asset-transfer-private-data$'\e[0m' chaincode
-    CC_SRC_PATH="../asset-transfer-private-data"
-  elif [ "$CC_NAME" = "sbe" ]; then
-    println $'\e[0;32m'asset-transfer-sbe$'\e[0m' chaincode
-    CC_SRC_PATH="../asset-transfer-sbe"
+    CC_SRC_PATH="./asset-transfer-basic"
   else
     fatalln "The chaincode name ${CC_NAME} is not supported by this script. Supported chaincode names are: basic, events, ledger, private, sbe, secured"
   fi
 
   # now see what language it is written in
-  if [ "$CC_SRC_LANGUAGE" = "go" ]; then
-    CC_SRC_PATH="$CC_SRC_PATH/chaincode-go/"
-  elif [ "$CC_SRC_LANGUAGE" = "java" ]; then
-    CC_SRC_PATH="$CC_SRC_PATH/chaincode-java/"
-  elif [ "$CC_SRC_LANGUAGE" = "javascript" ]; then
+  if [ "$CC_SRC_LANGUAGE" = "javascript" ]; then
     CC_SRC_PATH="$CC_SRC_PATH/chaincode-javascript/"
   elif [ "$CC_SRC_LANGUAGE" = "typescript" ]; then
     CC_SRC_PATH="$CC_SRC_PATH/chaincode-typescript/"
   fi
-
   # check that the language is available for the sample chaincode
   if [ ! -d "$CC_SRC_PATH" ]; then
     fatalln "The smart contract language \"$CC_SRC_LANGUAGE\" is not yet available for the \"$CC_NAME\" sample smart contract"
@@ -82,26 +62,7 @@ elif [ ! -d "$CC_SRC_PATH" ]; then
 fi
 
 # do some language specific preparation to the chaincode before packaging
-if [ "$CC_SRC_LANGUAGE" = "go" ]; then
-  CC_RUNTIME_LANGUAGE=golang
-
-  infoln "Vendoring Go dependencies at $CC_SRC_PATH"
-  pushd $CC_SRC_PATH
-  GO111MODULE=on go mod vendor
-  popd
-  successln "Finished vendoring Go dependencies"
-
-elif [ "$CC_SRC_LANGUAGE" = "java" ]; then
-  CC_RUNTIME_LANGUAGE=java
-
-  infoln "Compiling Java code..."
-  pushd $CC_SRC_PATH
-  ./gradlew installDist
-  popd
-  successln "Finished compiling Java code"
-  CC_SRC_PATH=$CC_SRC_PATH/build/install/$CC_NAME
-
-elif [ "$CC_SRC_LANGUAGE" = "javascript" ]; then
+if [ "$CC_SRC_LANGUAGE" = "javascript" ]; then
   CC_RUNTIME_LANGUAGE=node
 
 elif [ "$CC_SRC_LANGUAGE" = "typescript" ]; then
