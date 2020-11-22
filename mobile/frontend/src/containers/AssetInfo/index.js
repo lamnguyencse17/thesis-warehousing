@@ -84,13 +84,13 @@ export default class AssetInfo extends Component {
               <Picker
                 selectedValue={unit}
                 style={styles.picker}
-                onValueChange={(itemValue) => {
-                  this.setState({unit: itemValue});
+                onValueChange={(itemIndex) => {
+                  this.setState({unit: itemIndex});
                   this.focusDescription();
                 }}
                 value={unit}>
                 {options.map((item, index) => {
-                  return <Picker.Item label={item} value={item} key={index} />;
+                  return <Picker.Item label={item} value={index} key={index} />;
                 })}
               </Picker>
             </View>
