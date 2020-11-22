@@ -12,7 +12,8 @@
         "@utils": ["utils"],
         "@redux": ["redux"],
         "@svg": ["svg"],
-        "@request": ["request"]
+        "@request": ["request"],
+        "@validators": ["validators"]
       }
     },
     "exclude": ["node_modules"]

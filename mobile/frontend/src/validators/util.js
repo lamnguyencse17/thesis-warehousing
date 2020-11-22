@@ -1,5 +1,4 @@
 import {isEmail, isEmpty, isLength, isMongoId} from 'validator';
-import {Config} from './Config';
 
 import {
   UNIT,
@@ -9,7 +8,7 @@ import {
   NAME_MAX_LENGTH,
   ASSET_DESCRIPTION_MAX_LENGTH,
   ASSET_NAME_MAX_LENGTH,
-} from './Utils';
+} from '../common/Constant';
 export const isValidEmail = (email) => {
   return !!email && !isEmpty(email) && isEmail(email);
 };
@@ -22,6 +21,9 @@ export const isValidPassword = (password) => {
   );
 };
 
+export const isValidPasswordConfirm = (password, password2) => {
+  return !!password2 && !isEmpty(password2) && password == password2;
+};
 export const isValidName = (name) => {
   return !!name && !isEmpty(name) && isLength(name, {max: NAME_MAX_LENGTH});
 };

@@ -3,8 +3,7 @@ import {Text, View, TextInput, TouchableOpacity, Alert} from 'react-native';
 import LoginStyle from './styles';
 import {Formik} from 'formik';
 
-import {isValidEmail, isValidPassword} from '../../common/Validate';
-import {Config} from '@common';
+import {validateLogInUser} from '../../validators/userValidator';
 import {createLoginRequest} from '../../request/user';
 
 export default class Login extends React.Component {
@@ -16,11 +15,14 @@ export default class Login extends React.Component {
   }
   processLoginSubmit = (values, setSubmitting) => {
     // Validation goes here
-    if (!isValidEmail(values.email)) {
-      this.setState({error: 'Invalid Email'});
-      // return;
-    } else if (!isValidPassword(values.password)) {
-      this.setState({error: 'Invalid Password'});
+    const {email, password} = values;
+    const {status, message} = validateLogInUser({email, password});
+    if (status == false) {
+      if (message.length == 1) {
+        this.setState({error: message});
+      } else {
+        this.setState({error: 'More than one field are invalid'});
+      }
     } else {
       this.login(values.email, values.password);
     }
@@ -67,7 +69,7 @@ export default class Login extends React.Component {
       <View style={LoginStyle.container}>
         <Text style={LoginStyle.logo}>TraceChain</Text>
         <Formik
-          initialValues={{email: 'hung123@gmail.com', password: '123456'}}
+          initialValues={{email: '', password: ''}}
           onSubmit={(values, {setSubmitting}) =>
             this.processLoginSubmit(values, setSubmitting)
           }>
