@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const createTransferRequest = async ({IDs, newOwner}) => {
+export const createTransactionRequest = async ({IDs, newOwner}) => {
     const url = `${process.env.LEDGER_SERVER}/transfer`;
     try {
         const result = await axios.post(url, {IDs, newOwner});
