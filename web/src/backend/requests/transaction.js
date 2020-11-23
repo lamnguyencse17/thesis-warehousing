@@ -5,13 +5,12 @@ export const createTransactionRequest = async ({IDs, newOwner}) => {
     try {
         const result = await axios.post(url, {IDs, newOwner});
         // This is temp work because Ledger always return code 200
-        if (result.message != "Success"){
+        if (result.data.message != "Success"){
             return {status: false, message: "Transfer Failed" };
         }
         return {status: true};
     }
     catch (err){
-        console.log(err);
         return {
             status: false,
             errCode: err.response.status,

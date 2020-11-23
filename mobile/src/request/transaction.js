@@ -35,7 +35,7 @@ export const getTransactionRequest = async (transactionId) => {
 }
 
 export const createTransactionRequest = async ({receiver, sender, assets}) => {
-    const requestUrl = "http://172.16.8.158:3000/api/transactions/"
+    const requestUrl = "http://192.168.0.119:3000/api/transactions/"
     // format:
     // {
     //     "assets": [
