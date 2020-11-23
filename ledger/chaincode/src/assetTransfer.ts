@@ -20,41 +20,41 @@ export class AssetTransferContract extends Contract {
   public async InitLedger(ctx: Context): Promise<void> {
     const assets: Asset[] = [
       {
-        ID: "5fba3fae25f941ad09b95b1f",
+        ID: "5fb392d6dab9670184275ece",
         name: "Thung tao 1",
-        owner: "5fba3fb7bfb9abe89e8b1bb4",
+        owner: "5fb411df8173b602387d8768",
         quantity: 5,
         unit: 0,
         description: "Initial Value Of Ledger",
       },
       {
-        ID: "5fba402f29c36bec9acb540d",
+        ID: "5fb3973d30f5e20439a8e2b0",
         name: "Thung tao 2",
-        owner: "5fba3fb7bfb9abe89e8b1bb4",
+        owner: "5fb411df8173b602387d8768",
         quantity: 5,
         unit: 0,
         description: "Initial Value Of Ledger",
       },
       {
-        ID: "5fba402a6c1aaa206eb731da",
+        ID: "5fb39787e29be70483d63e3f",
         name: "Thung tao 3",
-        owner: "5fba3fb7bfb9abe89e8b1bb4",
+        owner: "5fb411df8173b602387d8768",
         quantity: 5,
         unit: 0,
         description: "Initial Value Of Ledger",
       },
       {
-        ID: "5fba4027a798290b270f2957",
+        ID: "5fb39797e29be70483d63e40",
         name: "Thung tao 4",
-        owner: "5fba3fb7bfb9abe89e8b1bb4",
+        owner: "5fb411df8173b602387d8768",
         quantity: 5,
         unit: 0,
         description: "Initial Value Of Ledger",
       },
       {
-        ID: "5fba4023fd3764cd36761d91",
+        ID: "5fb397dc41e16304cf4ee662",
         name: "Thung tao 5",
-        owner: "5fba3fb7bfb9abe89e8b1bb4",
+        owner: "5fb411df8173b602387d8768",
         quantity: 5,
         unit: 0,
         description: "Initial Value Of Ledger",
@@ -74,15 +74,23 @@ export class AssetTransferContract extends Contract {
 
   // CreateAsset issues a new asset to the world state with given details.
   @Transaction()
-  public async CreateAsset(ctx: Context, ID: string, name: string, owner: string, quantity: number, unit: number, description: string): Promise<Asset> {
-    const newAsset = {ID, name, owner, quantity, unit, description}
+  public async CreateAsset(
+    ctx: Context,
+    ID: string,
+    name: string,
+    owner: string,
+    quantity: number,
+    unit: number,
+    description: string
+  ): Promise<Asset> {
+    const newAsset = { ID, name, owner, quantity, unit, description };
     try {
       await ctx.stub.putState(
         newAsset.ID,
         Buffer.from(JSON.stringify(newAsset))
       );
     } catch (err) {
-      return err
+      return err;
     }
   }
 
@@ -99,7 +107,7 @@ export class AssetTransferContract extends Contract {
   // UpdateAsset updates an existing asset in the world state with provided parameters.
   @Transaction()
   public async UpdateAsset(ctx: Context, updatedAsset: Asset): Promise<void> {
-    console.log(updatedAsset)
+    console.log(updatedAsset);
     const exists = await this.AssetExists(ctx, updatedAsset.ID);
     if (!exists) {
       throw new Error(`The asset ${updatedAsset.ID} does not exist`);
@@ -143,13 +151,14 @@ export class AssetTransferContract extends Contract {
     ID: string,
     newOwner: string
   ): Promise<void> {
-    try {const assetString = await this.ReadAsset(ctx, ID);
-      const asset = JSON.parse(assetString);
-      asset.owner = newOwner;
-      await ctx.stub.putState(ID, Buffer.from(JSON.stringify(asset)));
-    }catch(err){
-      return err
-    }
+      try {
+        const assetString = await this.ReadAsset(ctx, ID);
+        const asset = JSON.parse(assetString);
+        asset.owner = newOwner;
+        await ctx.stub.putState(ID, Buffer.from(JSON.stringify(asset)));
+      } catch (err) {
+        return err;
+      }
   }
 
   // GetAllAssets returns all assets found in the world state.

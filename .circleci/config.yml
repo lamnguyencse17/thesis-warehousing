@@ -22,6 +22,9 @@ jobs:
       - run:
           name: "Setup EXPRESS_PORT"
           command: echo 'export PORT="3000"' >> $BASH_ENV
+      - run:
+          name: "Setup MODE"
+          command: echo 'export MODE="test"' >> $BASH_ENV 
       - run:    
           name: "Install node_modules"
           command: cd web && npm install
