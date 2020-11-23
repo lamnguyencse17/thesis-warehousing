@@ -11,14 +11,17 @@ export const createTransactionController = async (req, res) => {
       .status(HANDLED_ERROR_RESPONSE)
       .json({ message: validateResult.message });
   }
-  const createTransactionResult = await createTransactionRequest({
-    IDs: assets,
-    newOwner: receiver,
-  });
-  if (!createTransactionResult.status) {
-    return res
-      .status(HANDLED_ERROR_RESPONSE)
-      .json({ message: createTransactionResult.message });
+  // this is for CI Test
+  if (process.env.MODE == "dev"){
+    const createTransactionResult = await createTransactionRequest({
+      IDs: assets,
+      newOwner: receiver,
+    });
+    if (!createTransactionResult.status) {
+      return res
+        .status(HANDLED_ERROR_RESPONSE)
+        .json({ message: createTransactionResult.message });
+    }
   }
   let { result, status } = await createTransaction({
     receiver,
