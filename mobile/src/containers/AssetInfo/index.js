@@ -54,7 +54,6 @@ export default class AssetInfo extends Component {
 
   render() {
     const {name, quantity, unit, description, isGenerated} = this.state;
-    // let options = ['Cái', 'Gram', 'Kilogram', 'Tấn', 'Lít', 'Mét Khối'];
     return (
       <ScrollView style={{flex: 1}}>
         <View style={{flex: 1}}>

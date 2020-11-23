@@ -52,8 +52,6 @@ export const createAssetRequest = async ({
   //     "__v": 0
   // }
   try {
-    console.log('cacwcj');
-    console.log(requestUrl);
     const res = await axios.post(requestUrl, {
       name,
       quantity,

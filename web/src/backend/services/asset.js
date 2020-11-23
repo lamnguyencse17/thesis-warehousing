@@ -11,6 +11,6 @@ export const getAssetById = async (assetId) => {
 };
 
 export const createAsset = async ({name, quantity, unit, description}) => {
-    const result = await assetModel.create({name, quantity, unit, description});
+    const result = await new assetModel({name, quantity, unit, description});
     return { result, status: true };
 };
