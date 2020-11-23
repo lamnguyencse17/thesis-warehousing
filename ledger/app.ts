@@ -20,7 +20,7 @@ const mspOrg1 = 'Org1MSP';
 const walletPath = path.join(__dirname, 'wallet');
 const org1UserId = 'appUser';
 
-function prettyJSONString(inputString) {
+function prettyJSONString(inputString: string) {
     return JSON.stringify(JSON.parse(inputString), null, 2);
 }
 
@@ -59,6 +59,12 @@ class LedgerClient {
 		let result = await this.contract.evaluateTransaction('GetAllAssets');
 		console.log(`*** Result: ${prettyJSONString(result.toString())}`);
     }
+    ccp: any;
+    caClient: any;
+    wallet: any;
+    gateway: any;
+    network: any;
+    contract: any;
 }
 
 const instance = new LedgerClient();

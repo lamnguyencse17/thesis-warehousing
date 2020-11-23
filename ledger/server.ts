@@ -5,7 +5,7 @@ import bodyParser from "body-parser"
 import LedgerClient from "./app";
 import fs from "fs";
 
-const app = express()
+const app: express.Application = express();
 
 fs.rmdirSync("./wallet", { recursive: true });
 
