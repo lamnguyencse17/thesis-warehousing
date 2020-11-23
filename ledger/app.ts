@@ -79,8 +79,9 @@ class LedgerClient {
     return JSON.parse(result);
   };
   createAsset = async (newAsset: IAsset) => {
+    const {ID, name, owner, quantity, unit, description} = newAsset
     try {
-      await this.contract.submitTransaction("CreateAsset", newAsset);
+      await this.contract.submitTransaction("CreateAsset", ID, name, owner, quantity, unit, description);
       return true;
     } catch (err) {
       return false;

@@ -74,7 +74,8 @@ export class AssetTransferContract extends Contract {
 
   // CreateAsset issues a new asset to the world state with given details.
   @Transaction()
-  public async CreateAsset(ctx: Context, newAsset: Asset): Promise<void> {
+  public async CreateAsset(ctx: Context, ID: string, name: string, owner: string, quantity: number, unit: number, description: string): Promise<Asset> {
+    const newAsset = {ID, name, owner, quantity, unit, description}
     try {
       await ctx.stub.putState(
         newAsset.ID,
@@ -98,6 +99,7 @@ export class AssetTransferContract extends Contract {
   // UpdateAsset updates an existing asset in the world state with provided parameters.
   @Transaction()
   public async UpdateAsset(ctx: Context, updatedAsset: Asset): Promise<void> {
+    console.log(updatedAsset)
     const exists = await this.AssetExists(ctx, updatedAsset.ID);
     if (!exists) {
       throw new Error(`The asset ${updatedAsset.ID} does not exist`);
@@ -141,10 +143,13 @@ export class AssetTransferContract extends Contract {
     ID: string,
     newOwner: string
   ): Promise<void> {
-    const assetString = await this.ReadAsset(ctx, ID);
-    const asset = JSON.parse(assetString);
-    asset.owner = newOwner;
-    await ctx.stub.putState(ID, Buffer.from(JSON.stringify(asset)));
+    try {const assetString = await this.ReadAsset(ctx, ID);
+      const asset = JSON.parse(assetString);
+      asset.owner = newOwner;
+      await ctx.stub.putState(ID, Buffer.from(JSON.stringify(asset)));
+    }catch(err){
+      return err
+    }
   }
 
   // GetAllAssets returns all assets found in the world state.
