@@ -12,7 +12,7 @@ export const createTransactionController = async (req, res) => {
       .json({ message: validateResult.message });
   }
   // this is for CI Test
-  if (process.env.MODE != "dev"){
+  if (process.env.MODE != "test"){
     const createTransactionResult = await createTransactionRequest({
       IDs: assets,
       newOwner: receiver,
