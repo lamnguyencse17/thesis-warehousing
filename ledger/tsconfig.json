@@ -1,0 +1,29 @@
+{
+    "compilerOptions": {
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "target": "es5",
+        "declaration": true,
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "lib": [
+          "dom",
+          "es2015",
+          "es2016",
+          "es2017"
+        ],
+        "allowJs": true,
+        "jsx": "react",
+        "sourceMap": true,
+        "outDir": "./dist",
+        "strict": true ,
+        "esModuleInterop": true
+    },
+    "include": [
+        "./**/*"
+    ],
+    "exclude": [
+        "nodem_modules",
+        "./**/*.spec.ts"
+    ]
+}
