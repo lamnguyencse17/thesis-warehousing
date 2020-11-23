@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import {View, Text, TouchableOpacity, FlatList} from 'react-native';
+import {View, Text, TouchableOpacity, FlatList, Button} from 'react-native';
 
 import styles from './styles';
 import {connect} from 'react-redux';
+import { createTransactionRequest } from '../../request/transaction';
 
 class FormInput extends Component {
   constructor(props) {
@@ -29,6 +30,18 @@ class FormInput extends Component {
       </View>
     );
   };
+  handleSubmitTransaction = async () => {
+    // const assetIds = this.state.packageData.map(asset => asset._id)
+    const assets = ["5fb392d6dab9670184275ece", "5fb3973d30f5e20439a8e2b0"]
+    const receiver = "5fb411eb8173b602387d8769"
+    const sender = "5fb411df8173b602387d8768"
+    const createTransactionResult = await createTransactionRequest({receiver, sender, assets})
+    if (!createTransactionResult.status){
+      console.log(createTransactionResult.message)
+      return;
+    }
+    console.log("Success")
+  }
   render() {
     const {packageData} = this.props.addFormData;
     return (
@@ -61,6 +74,7 @@ class FormInput extends Component {
             </View>
           ) : null}
         </View>
+        <Button title="Submit Transaction" onPress={this.handleSubmitTransaction}/>
       </View>
     );
   }
