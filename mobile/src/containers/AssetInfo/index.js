@@ -13,13 +13,14 @@ import styles from './styles';
 
 import QRCode from 'react-native-qrcode-svg';
 import {Picker} from '@react-native-picker/picker';
+import {createAssetRequest} from '../../request/asset';
 export default class AssetInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
       name: 'Apple',
       quantity: '40',
-      unit: 'ton',
+      unit: '3',
       description: 'Good',
       isGenerated: false,
       dataCode: null,
@@ -40,10 +41,23 @@ export default class AssetInfo extends Component {
     this.setState({quantity: itemValue});
   };
 
+  createAssetAndGenerate = async () => {
+    let {name, description} = this.state;
+
+    let unit = parseInt(this.state.unit);
+    let quantity = parseInt(this.state.quantity);
+    const {status, asset} = await createAssetRequest({
+      name,
+      quantity,
+      unit,
+      description,
+    });
+    if (status) {
+      this.generateQRCode();
+    }
+  };
+
   generateQRCode = () => {
-    let {name, quantity, unit, description} = this.state;
-    var data = [name, quantity, unit, description];
-    this.setState({dataCode: data.toString()});
     this.setState({isGenerated: true});
   };
   toggleEnable = () => {
@@ -105,8 +119,10 @@ export default class AssetInfo extends Component {
           <View style={{flex: 0.3}}>
             <TouchableOpacity
               style={styles.generateButton}
-              onPress={this.generateQRCode}>
-              <Text style={{textAlign: 'center'}}>Generate QR code</Text>
+              onPress={this.createAssetAndGenerate}>
+              <Text style={{textAlign: 'center'}}>
+                Create Asset and Generate QR code
+              </Text>
             </TouchableOpacity>
             <View style={styles.QRCodeView}>
               {isGenerated == true ? (

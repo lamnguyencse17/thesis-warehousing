@@ -26,12 +26,12 @@ export default StyleSheet.create({
   },
   generateButton: {
     height: 40,
-    width: Styles.width / 2,
+    width: (Styles.width * 3) / 4,
     borderRadius: 20,
     backgroundColor: '#9ACBF1',
     justifyContent: 'center',
     alignSelf: 'center',
-    marginTop: 10,
+    marginTop: 5,
   },
   QRCodeView: {
     alignSelf: 'center',

@@ -22,7 +22,10 @@ class QRcodeComponent extends Component {
       data = JSON.parse(data);
     }
     this.setState({showModal: true, data: data, reactivate: false});
-    if (!!this.props.navigation.state.params.type) {
+    if (
+      this.props.navigation.state.params &&
+      !!this.props.navigation.state.params.type
+    ) {
       const {type} = this.props.navigation.state.params;
       if (type == 'package') {
         this.props.addFormPackage(data);
