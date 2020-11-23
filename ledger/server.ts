@@ -17,11 +17,32 @@ LedgerClient.initInstance().then(()=> {
     LedgerClient.initLedger()
 })
 
-app.use("/", (req, res) => {
-    LedgerClient.queryAll()
-    return res.send("done");
+app.get("/asset/:ID", async (req, res) => {
+    const asset = await LedgerClient.queryAsset(req.params.ID)
+    return res.json(asset)
+})
+
+app.post("/asset/", async (req, res) => {
+    const status = await LedgerClient.createAsset(req.body);
+    if (!status){
+        return res.json({message: "Asset Create Failed"});
+    }
+    return res.json({message: "Success", ID: req.body.ID});
+})
+
+app.post("/transfer", async (req, res) => {
+    const status = await LedgerClient.transferAsset(req.body)
+    if (!status){
+        return res.json({message: "Asset Create Failed"});
+    }
+    return res.json({message: "Success"});
+})
+
+app.use("/", async (req, res) => {
+    const transactions = await LedgerClient.queryAll()
+    return res.json(transactions);
 })
 
 app.listen(3001, () => {
-    console.log("listening")
+    console.log("listening on port 3001")
 })

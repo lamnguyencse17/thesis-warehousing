@@ -81,7 +81,7 @@ export class AssetTransferContract extends Contract {
         Buffer.from(JSON.stringify(newAsset))
       );
     } catch (err) {
-      console.log(err);
+      return err
     }
   }
 
