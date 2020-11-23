@@ -41,20 +41,9 @@ if [ "$CC_SRC_PATH" = "NA" ]; then
   # short name of the known chaincode sample
   if [ "$CC_NAME" = "basic" ]; then
     println $'\e[0;32m'asset-transfer-basic$'\e[0m' chaincode
-    CC_SRC_PATH="./asset-transfer-basic"
+    CC_SRC_PATH="../chaincode"
   else
     fatalln "The chaincode name ${CC_NAME} is not supported by this script. Supported chaincode names are: basic, events, ledger, private, sbe, secured"
-  fi
-
-  # now see what language it is written in
-  if [ "$CC_SRC_LANGUAGE" = "javascript" ]; then
-    CC_SRC_PATH="$CC_SRC_PATH/chaincode-javascript/"
-  elif [ "$CC_SRC_LANGUAGE" = "typescript" ]; then
-    CC_SRC_PATH="$CC_SRC_PATH/chaincode-typescript/"
-  fi
-  # check that the language is available for the sample chaincode
-  if [ ! -d "$CC_SRC_PATH" ]; then
-    fatalln "The smart contract language \"$CC_SRC_LANGUAGE\" is not yet available for the \"$CC_NAME\" sample smart contract"
   fi
 ## Make sure that the path the chaincode exists if provided
 elif [ ! -d "$CC_SRC_PATH" ]; then
@@ -62,10 +51,7 @@ elif [ ! -d "$CC_SRC_PATH" ]; then
 fi
 
 # do some language specific preparation to the chaincode before packaging
-if [ "$CC_SRC_LANGUAGE" = "javascript" ]; then
-  CC_RUNTIME_LANGUAGE=node
-
-elif [ "$CC_SRC_LANGUAGE" = "typescript" ]; then
+if [ "$CC_SRC_LANGUAGE" = "typescript" ]; then
   CC_RUNTIME_LANGUAGE=node
 
   infoln "Compiling TypeScript code into JavaScript..."
