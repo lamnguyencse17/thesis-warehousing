@@ -35,7 +35,7 @@ export const getTransactionRequest = async (transactionId) => {
 }
 
 export const createTransactionRequest = async ({receiver, sender, assets}) => {
-    const requestUrl = "http://localhost:3000/api/transactions/"
+    const requestUrl = "http://172.16.8.158:3000/api/transactions/"
     // format:
     // {
     //     "assets": [
@@ -46,6 +46,7 @@ export const createTransactionRequest = async ({receiver, sender, assets}) => {
     //     "sender": "5fb411eb8173b602387d8770",
     //     "__v": 0
     // }
+    console.log({receiver, sender, assets})
     try {
         const res = await axios.post(requestUrl, {receiver, sender, assets});
         return { status: true, transaction: res.data };
