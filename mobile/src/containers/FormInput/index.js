@@ -32,9 +32,9 @@ class FormInput extends Component {
   };
   handleSubmitTransaction = async () => {
     // const assetIds = this.state.packageData.map(asset => asset._id)
-    const assets = ["5fbbaf04965b9b5860ff2ecc", "5fbbaf04965b9b5860ff2ecd"]
-    const receiver = "5fbbaf04965b9b5860ff2eca"
-    const sender = "5fbbaf04965b9b5860ff2ecb"
+    const assets = ["5fb392d6dab9670184275ece", "5fb3973d30f5e20439a8e2b0"]
+    const receiver = "5fb411eb8173b602387d8769"
+    const sender = "5fb411df8173b602387d8768"
     const createTransactionResult = await createTransactionRequest({receiver, sender, assets})
     if (!createTransactionResult.status){
       console.log(createTransactionResult.message)
