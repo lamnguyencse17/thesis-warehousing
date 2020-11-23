@@ -3,7 +3,8 @@ import {Text, TouchableOpacity, View} from 'react-native';
 import styles from './styles';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import {connect} from 'react-redux';
-import QRCode from 'react-native-qrcode-svg';
+import {Config} from '@common';
+
 import {addFormPackage, addFormReceiver} from '../../redux/actions/AddForm';
 
 class QRcodeComponent extends Component {
@@ -73,7 +74,9 @@ class QRcodeComponent extends Component {
                   <Text style={styles.text}>
                     Số lượng: {`${data.quantity}`}
                   </Text>
-                  <Text style={styles.text}>Đơn vị: {`${data.unit}`}</Text>
+                  <Text style={styles.text}>
+                    Đơn vị: {`${Config.options[data.unit]}`}
+                  </Text>
                 </View>
               </View>
             </View>

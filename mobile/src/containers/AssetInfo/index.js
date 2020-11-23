@@ -1,14 +1,7 @@
 import React, {Component} from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  KeyboardAvoidingView,
-  ScrollView,
-  SafeAreaView,
-} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
 import {Input} from '@components';
-import {Language} from '@common';
+import {Language, Config} from '@common';
 import styles from './styles';
 
 import QRCode from 'react-native-qrcode-svg';
@@ -19,12 +12,10 @@ export default class AssetInfo extends Component {
     super(props);
     this.state = {
       name: 'Apple',
-      quantity: '40',
-      unit: '3',
+      quantity: '',
+      unit: '0',
       description: 'Good',
       isGenerated: false,
-      dataCode: null,
-      enable: false,
     };
     this.onNameEditHandle = (name) => this.setState({name: name});
     this.onQuantityEditHandle = (quantity) =>
@@ -60,15 +51,10 @@ export default class AssetInfo extends Component {
   generateQRCode = () => {
     this.setState({isGenerated: true});
   };
-  toggleEnable = () => {
-    if (this.state.enable == false) {
-      return true;
-    }
-  };
 
   render() {
     const {name, quantity, unit, description, isGenerated} = this.state;
-    let options = ['Cái', 'Gram', 'Kilogram', 'Tấn', 'Lít', 'Mét Khối'];
+    // let options = ['Cái', 'Gram', 'Kilogram', 'Tấn', 'Lít', 'Mét Khối'];
     return (
       <ScrollView style={{flex: 1}}>
         <View style={{flex: 1}}>
@@ -103,7 +89,7 @@ export default class AssetInfo extends Component {
                   this.focusDescription();
                 }}
                 value={unit}>
-                {options.map((item, index) => {
+                {Config.options.map((item, index) => {
                   return <Picker.Item label={item} value={index} key={index} />;
                 })}
               </Picker>
@@ -129,8 +115,8 @@ export default class AssetInfo extends Component {
                 <QRCode
                   value={JSON.stringify({
                     name: name,
-                    quantity: quantity,
-                    unit: unit,
+                    quantity: parseInt(quantity),
+                    unit: parseInt(unit),
                     description: description,
                   })}
                 />
