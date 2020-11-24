@@ -6,7 +6,6 @@ import cookieParser from "cookie-parser";
 import path from "path";
 
 const app = express();
-require("dotenv").config();
 app.use(morgan("tiny"));
 app.use(cookieParser());
 app.use(bodyParser.json());

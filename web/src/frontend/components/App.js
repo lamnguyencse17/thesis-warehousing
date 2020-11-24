@@ -20,21 +20,21 @@ class App extends Component {
       }
     });
   }
-//   async componentDidMount() {
-//     const { setUser, history, token, location } = this.props;
-//     let isLogin = await setUser();
-//     if (!isLogin) {
-//       history.push("/");
-//     } else {
-//       if (
-//         // token &&
-//         // token != "" &&
-//         ["/login", "/signup", "/"].includes(location.pathname)
-//       ) {
-//         history.push("/main");
-//       }
-//     }
-//   }
+  //   async componentDidMount() {
+  //     const { setUser, history, token, location } = this.props;
+  //     let isLogin = await setUser();
+  //     if (!isLogin) {
+  //       history.push("/");
+  //     } else {
+  //       if (
+  //         // token &&
+  //         // token != "" &&
+  //         ["/login", "/signup", "/"].includes(location.pathname)
+  //       ) {
+  //         history.push("/main");
+  //       }
+  //     }
+  //   }
 
   render() {
     // const { token } = this.props;
@@ -42,11 +42,7 @@ class App extends Component {
       <>
         <Suspense fallback={<div className="loader"></div>}>
           <Switch>
-          <Route
-              path="/"
-              render={() => <Landing {...this.props} />}
-              exact
-            />
+            <Route path="/" render={() => <Landing {...this.props} />} exact />
             {/* <Route path="/main" render={() => <Main {...this.props} />} exact />
             <Route
               path="/"

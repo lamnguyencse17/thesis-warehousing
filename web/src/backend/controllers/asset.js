@@ -43,18 +43,19 @@ export const createAssetController = async (req, res) => {
   }
 
   let ID = asset._id;
-
-  let assetRequest = await createAssetRequest({
-    ID,
-    name,
-    quantity,
-    unit,
-    description,
-  });
-  if (!assetRequest.status) {
-    return res
-      .status(HANDLED_ERROR_RESPONSE)
-      .json({ message: "Something went wrong" });
+  if (process.env.MODE != "test") {
+    let assetRequest = await createAssetRequest({
+      ID,
+      name,
+      quantity,
+      unit,
+      description,
+    });
+    if (!assetRequest.status) {
+      return res
+        .status(HANDLED_ERROR_RESPONSE)
+        .json({ message: "Something went wrong" });
+    }
   }
   asset.save();
   asset = asset.toObject();

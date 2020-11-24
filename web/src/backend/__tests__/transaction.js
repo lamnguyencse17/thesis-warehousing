@@ -43,25 +43,19 @@ describe("Test Transaction related API", () => {
   });
 
   afterAll(async (done) => {
-    await transactionModel.deleteOne(
-      { sender: `${User1._id}` },
-      (err) => {
-        if (err) {
-          console.log(err);
-        }
+    await transactionModel.deleteOne({ sender: `${User1._id}` }, (err) => {
+      if (err) {
+        console.log(err);
       }
-    );
-    await transactionModel.deleteOne(
-      { sender: `${User2._id}` },
-      (err) => {
-        if (err) {
-          console.log(err);
-        }
+    });
+    await transactionModel.deleteOne({ sender: `${User2._id}` }, (err) => {
+      if (err) {
+        console.log(err);
       }
-    );
-    await assetModel.deleteOne({_id: mongoose.Types.ObjectId(Asset._id)});
-    await userModel.deleteOne({_id: mongoose.Types.ObjectId(User1._id)});
-    await userModel.deleteOne({_id: mongoose.Types.ObjectId(User2._id)});
+    });
+    await assetModel.deleteOne({ _id: mongoose.Types.ObjectId(Asset._id) });
+    await userModel.deleteOne({ _id: mongoose.Types.ObjectId(User1._id) });
+    await userModel.deleteOne({ _id: mongoose.Types.ObjectId(User2._id) });
     mongoose.disconnect(done);
   });
 
@@ -101,10 +95,12 @@ describe("Test Transaction related API", () => {
         expect(response.body).toEqual(
           expect.objectContaining({
             _id: expect.any(String),
-            assets: expect.arrayContaining([{
+            assets: expect.arrayContaining([
+              {
                 _id: `${Asset._id}`,
                 name: "Thung Tao",
-              }]),
+              },
+            ]),
             receiver: {
               _id: `${User2._id}`,
               name: "Lam Nguyen2",
@@ -146,10 +142,12 @@ describe("Test Transaction related API", () => {
         expect(response.body).toEqual(
           expect.objectContaining({
             _id: expect.any(String),
-            assets: expect.arrayContaining([{
+            assets: expect.arrayContaining([
+              {
                 _id: `${Asset._id}`,
                 name: "Thung Tao",
-              }]),
+              },
+            ]),
             receiver: {
               _id: `${User1._id}`,
               name: "Lam Nguyen1",

@@ -9,11 +9,11 @@ export const createTransaction = async ({ receiver, sender, assets }) => {
     assets,
   });
   result = await transactionModel
-  .findOne({ _id: mongoose.Types.ObjectId(result._id) })
-  .populate({ path: "sender", select: "name" })
-  .populate({ path: "receiver", select: "name" })
-  .populate({ path: "assets", select: "name" })
-  .lean();
+    .findOne({ _id: mongoose.Types.ObjectId(result._id) })
+    .populate({ path: "sender", select: "name" })
+    .populate({ path: "receiver", select: "name" })
+    .populate({ path: "assets", select: "name" })
+    .lean();
   return { result, status: true };
 };
 
