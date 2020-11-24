@@ -1,4 +1,4 @@
-import { createAsset, getAssetById, saveNewAsset } from "../services/asset";
+import { createAsset, getAssetById } from "../services/asset";
 import { OK_RESPONSE, HANDLED_ERROR_RESPONSE } from "../constants/http";
 import { validateCreateAsset } from "../validators/assetValidator";
 
