@@ -1,4 +1,4 @@
-import { createAsset, getAssetById } from "../services/asset";
+import { createAsset, getAssetById, saveNewAsset } from "../services/asset";
 import { OK_RESPONSE, HANDLED_ERROR_RESPONSE } from "../constants/http";
 import { validateCreateAsset } from "../validators/assetValidator";
 
@@ -29,13 +29,13 @@ export const createAssetController = async (req, res) => {
       .status(HANDLED_ERROR_RESPONSE)
       .json({ message: validateResult.message });
   }
-  let { result, status } = await createAsset({
+  let newAssetModel = await createAsset({
     name,
     quantity,
     unit,
     description,
   });
-  if (!status) {
+  if (newAssetModel.status !== true) {
     return res
       .status(HANDLED_ERROR_RESPONSE)
       .json({ message: "Something went wrong" });
@@ -48,12 +48,13 @@ export const createAssetController = async (req, res) => {
     unit,
     description,
   });
-  if (assetRequest.status == true) {
-    result = result.toObject();
-    const asset = { ...result };
-    return res.status(OK_RESPONSE).json(asset);
+  if (assetRequest.status !== true) {
+    return res
+      .status(HANDLED_ERROR_RESPONSE)
+      .json({ message: "Something went wrong" });
   }
-  return res
-    .status(HANDLED_ERROR_RESPONSE)
-    .json({ message: "Something went wrong" });
+  const saveNewAsset = await saveNewAsset(newAssetModel.result);
+  result = saveNewAsset.result.toObject();
+  const asset = { ...result };
+  return res.status(OK_RESPONSE).json(asset);
 };
