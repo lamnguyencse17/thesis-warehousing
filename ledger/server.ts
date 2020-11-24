@@ -19,15 +19,15 @@ LedgerClient.initInstance().then(() => {
 
 app.get("/asset/:ID", async (req, res) => {
   const asset = await LedgerClient.queryAsset(req.params.ID);
-  return res.json(asset);
+  return res.status(200).json(asset);
 });
 
 app.post("/asset/", async (req, res) => {
   const status = await LedgerClient.createAsset(req.body);
   if (!status) {
-    return res.json({ message: "Asset Create Failed" });
+    return res.status(400).json({ message: "Asset Create Failed" });
   }
-  return res.json({ message: "Success", ID: req.body.ID });
+  return res.status(200).json({ message: "Success", ID: req.body.ID });
 });
 
 app.post("/transfer", async (req, res) => {
@@ -35,14 +35,14 @@ app.post("/transfer", async (req, res) => {
   const IDstrings = JSON.stringify(IDs);
   const status = await LedgerClient.transferAsset(IDstrings, newOwner);
   if (!status) {
-    return res.json({ message: "Asset Create Failed" });
+    return res.status(400).json({ message: "Asset Create Failed" });
   }
-  return res.json({ message: "Success" });
+  return res.status(200).json({ message: "Success" });
 });
 
 app.use("/", async (req, res) => {
   const transactions = await LedgerClient.queryAll();
-  return res.json(transactions);
+  return res.status(200).json(transactions);
 });
 
 app.listen(3001, () => {
