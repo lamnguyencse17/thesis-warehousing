@@ -1,3 +1,4 @@
+import { composeWithMongoose } from "graphql-compose-mongoose";
 import mongoose from "mongoose";
 
 const Assets = mongoose.Schema;
@@ -10,4 +11,6 @@ export const AssetSchema = new Assets({
 });
 
 const assetModel = mongoose.model("Assets", AssetSchema);
+
 export default assetModel;
+export const assetTC = composeWithMongoose(assetModel);

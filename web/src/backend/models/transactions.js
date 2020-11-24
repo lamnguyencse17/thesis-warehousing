@@ -1,3 +1,4 @@
+import { composeWithMongoose } from "graphql-compose-mongoose";
 import mongoose from "mongoose";
 
 const Transactions = mongoose.Schema;
@@ -10,3 +11,4 @@ export const TransactionsSchema = new Transactions({
 
 const transactionModel = mongoose.model("Transactions", TransactionsSchema);
 export default transactionModel;
+export const transactionTC = composeWithMongoose(transactionModel);
