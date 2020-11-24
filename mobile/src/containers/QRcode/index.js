@@ -3,7 +3,8 @@ import {Text, TouchableOpacity, View} from 'react-native';
 import styles from './styles';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import {connect} from 'react-redux';
-import QRCode from 'react-native-qrcode-svg';
+import {Config} from '@common';
+
 import {addFormPackage, addFormReceiver} from '../../redux/actions/AddForm';
 
 class QRcodeComponent extends Component {
@@ -22,7 +23,10 @@ class QRcodeComponent extends Component {
       data = JSON.parse(data);
     }
     this.setState({showModal: true, data: data, reactivate: false});
-    if (!!this.props.navigation.state.params.type) {
+    if (
+      this.props.navigation.state.params &&
+      !!this.props.navigation.state.params.type
+    ) {
       const {type} = this.props.navigation.state.params;
       if (type == 'package') {
         this.props.addFormPackage(data);
@@ -70,7 +74,9 @@ class QRcodeComponent extends Component {
                   <Text style={styles.text}>
                     Số lượng: {`${data.quantity}`}
                   </Text>
-                  <Text style={styles.text}>Đơn vị: {`${data.unit}`}</Text>
+                  <Text style={styles.text}>
+                    Đơn vị: {`${Config.options[data.unit]}`}
+                  </Text>
                 </View>
               </View>
             </View>

@@ -1,29 +1,21 @@
 import React, {Component} from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  KeyboardAvoidingView,
-  ScrollView,
-  SafeAreaView,
-} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
 import {Input} from '@components';
-import {Language} from '@common';
+import {Language, Config} from '@common';
 import styles from './styles';
 
 import QRCode from 'react-native-qrcode-svg';
 import {Picker} from '@react-native-picker/picker';
+import {createAssetRequest} from '../../request/asset';
 export default class AssetInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
       name: 'Apple',
-      quantity: '40',
-      unit: 'ton',
+      quantity: '',
+      unit: '0',
       description: 'Good',
       isGenerated: false,
-      dataCode: null,
-      enable: false,
     };
     this.onNameEditHandle = (name) => this.setState({name: name});
     this.onQuantityEditHandle = (quantity) =>
@@ -40,21 +32,28 @@ export default class AssetInfo extends Component {
     this.setState({quantity: itemValue});
   };
 
-  generateQRCode = () => {
-    let {name, quantity, unit, description} = this.state;
-    var data = [name, quantity, unit, description];
-    this.setState({dataCode: data.toString()});
-    this.setState({isGenerated: true});
-  };
-  toggleEnable = () => {
-    if (this.state.enable == false) {
-      return true;
+  createAssetAndGenerate = async () => {
+    let {name, description} = this.state;
+
+    let unit = parseInt(this.state.unit);
+    let quantity = parseInt(this.state.quantity);
+    const {status, asset} = await createAssetRequest({
+      name,
+      quantity,
+      unit,
+      description,
+    });
+    if (status) {
+      this.generateQRCode();
     }
+  };
+
+  generateQRCode = () => {
+    this.setState({isGenerated: true});
   };
 
   render() {
     const {name, quantity, unit, description, isGenerated} = this.state;
-    let options = ['Cái', 'Gram', 'Kilogram', 'Tấn', 'Lít', 'Mét Khối'];
     return (
       <ScrollView style={{flex: 1}}>
         <View style={{flex: 1}}>
@@ -89,7 +88,7 @@ export default class AssetInfo extends Component {
                   this.focusDescription();
                 }}
                 value={unit}>
-                {options.map((item, index) => {
+                {Config.options.map((item, index) => {
                   return <Picker.Item label={item} value={index} key={index} />;
                 })}
               </Picker>
@@ -105,16 +104,18 @@ export default class AssetInfo extends Component {
           <View style={{flex: 0.3}}>
             <TouchableOpacity
               style={styles.generateButton}
-              onPress={this.generateQRCode}>
-              <Text style={{textAlign: 'center'}}>Generate QR code</Text>
+              onPress={this.createAssetAndGenerate}>
+              <Text style={{textAlign: 'center'}}>
+                Create Asset and Generate QR code
+              </Text>
             </TouchableOpacity>
             <View style={styles.QRCodeView}>
               {isGenerated == true ? (
                 <QRCode
                   value={JSON.stringify({
                     name: name,
-                    quantity: quantity,
-                    unit: unit,
+                    quantity: parseInt(quantity),
+                    unit: parseInt(unit),
                     description: description,
                   })}
                 />
