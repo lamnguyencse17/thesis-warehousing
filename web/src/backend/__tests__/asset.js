@@ -118,7 +118,6 @@ describe("Test User related API", () => {
             quantity: 5,
             unit: 0,
             description: "Thung Tao Test",
-            __v: 0,
           })
         );
         done();
