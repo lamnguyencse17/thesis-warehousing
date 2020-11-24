@@ -72,16 +72,17 @@ class LedgerClient {
       "\n--> Evaluate Transaction: GetAllAssets, function returns all the current assets on the ledger"
     );
     let result = await this.contract.evaluateTransaction("GetAllAssets");
-    console.log(`*** Result: ${prettyJSONString(result.toString())}`);
+    return JSON.parse(result)
   };
   queryAsset = async (ID: string) => {
     const result = await this.contract.evaluateTransaction("ReadAsset", ID);
     return JSON.parse(result);
   };
   createAsset = async (newAsset: IAsset) => {
-    const {ID, name, owner, quantity, unit, description} = newAsset
+    const {ID} = newAsset
+    const newAssetString = JSON.stringify(newAsset);
     try {
-      await this.contract.submitTransaction("CreateAsset", ID, name, owner, quantity, unit, description);
+      await this.contract.submitTransaction("CreateAsset", newAssetString, ID);
       return true;
     } catch (err) {
       return false;
