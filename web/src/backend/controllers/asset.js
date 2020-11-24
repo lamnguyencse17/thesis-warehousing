@@ -29,18 +29,21 @@ export const createAssetController = async (req, res) => {
       .status(HANDLED_ERROR_RESPONSE)
       .json({ message: validateResult.message });
   }
-  let newAssetModel = await createAsset({
+
+  let { asset, status } = await createAsset({
     name,
     quantity,
     unit,
     description,
   });
-  if (newAssetModel.status !== true) {
+  if (!status) {
     return res
       .status(HANDLED_ERROR_RESPONSE)
       .json({ message: "Something went wrong" });
   }
-  let ID = result._id;
+
+  let ID = asset._id;
+
   let assetRequest = await createAssetRequest({
     ID,
     name,
@@ -48,13 +51,12 @@ export const createAssetController = async (req, res) => {
     unit,
     description,
   });
-  if (assetRequest.status !== true) {
-    return res
-      .status(HANDLED_ERROR_RESPONSE)
-      .json({ message: "Something went wrong" });
+  if (assetRequest.status == true) {
+    asset.save();
+    asset = asset.toObject();
+    return res.status(OK_RESPONSE).json(asset);
   }
-  const saveNewAsset = await saveNewAsset(newAssetModel.result);
-  result = saveNewAsset.result.toObject();
-  const asset = { ...result };
-  return res.status(OK_RESPONSE).json(asset);
+  return res
+    .status(HANDLED_ERROR_RESPONSE)
+    .json({ message: "Something went wrong" });
 };

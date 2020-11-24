@@ -13,15 +13,6 @@ export const getAssetById = async (assetId) => {
 };
 
 export const createAsset = async ({ name, quantity, unit, description }) => {
-  const result = await new assetModel({ name, quantity, unit, description });
-  return { result, status: true };
-};
-
-export const saveNewAsset = async (assetModel) => {
-  const result = assetModel.save();
-  let status = true;
-  if (!result) {
-    status = false;
-  }
-  return { result, status };
+  let asset = await new assetModel({ name, quantity, unit, description });
+  return { asset, status: true };
 };
