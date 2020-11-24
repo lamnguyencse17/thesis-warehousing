@@ -1,6 +1,9 @@
 import express from "express";
 
-const { getAssetController, createAssetController } = require("../controllers/asset");
+const {
+  getAssetController,
+  createAssetController,
+} = require("../controllers/asset");
 const router = express.Router();
 
 router.get("/:assetId", getAssetController);

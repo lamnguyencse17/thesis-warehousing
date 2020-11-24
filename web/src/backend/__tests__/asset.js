@@ -33,10 +33,10 @@ describe("Test User related API", () => {
       }
     });
     await assetModel.deleteOne({ name: "Thung Tao Test 2" }, (err) => {
-        if (err) {
-          console.log(err);
-        }
-      });
+      if (err) {
+        console.log(err);
+      }
+    });
     mongoose.disconnect(done);
   });
 
@@ -70,7 +70,7 @@ describe("Test User related API", () => {
       .get(`/api/assets/${TestObj._id}`)
       .set("Content-Type", "application/json")
       .set("Accept", "application/json")
-    //   .set("Cookie", savedCookies)
+      //   .set("Cookie", savedCookies)
       .then((response) => {
         expect(response.statusCode).toBe(200);
         expect(response.body).toEqual(
@@ -91,7 +91,7 @@ describe("Test User related API", () => {
       .get(`/api/assets/5fb392d6dab9670184275ecd`)
       .set("Content-Type", "application/json")
       .set("Accept", "application/json")
-    //   .set("Cookie", savedCookies)
+      //   .set("Cookie", savedCookies)
       .then((response) => {
         expect(response.statusCode).toBe(400);
         done();
@@ -99,15 +99,16 @@ describe("Test User related API", () => {
   });
   it("Create New Asset - Success", async (done) => {
     request(app)
-      .post(`/api/assets/`).send({
+      .post(`/api/assets/`)
+      .send({
         name: "Thung Tao Test 2",
         quantity: 5,
         unit: 0,
-        description: "Thung Tao Test"
-     })
+        description: "Thung Tao Test",
+      })
       .set("Content-Type", "application/json")
       .set("Accept", "application/json")
-    //   .set("Cookie", savedCookies)
+      //   .set("Cookie", savedCookies)
       .then((response) => {
         expect(response.statusCode).toBe(200);
         expect(response.body).toEqual(
@@ -124,79 +125,91 @@ describe("Test User related API", () => {
       });
   });
   it("Create New Asset - Missing name", async (done) => {
-      const expecting = ["Invalid name"];
+    const expecting = ["Invalid name"];
     request(app)
-      .post(`/api/assets/`).send({
+      .post(`/api/assets/`)
+      .send({
         quantity: 5,
         unit: 0,
-        description: "Thung Tao Test"
-     })
+        description: "Thung Tao Test",
+      })
       .set("Content-Type", "application/json")
       .set("Accept", "application/json")
-    //   .set("Cookie", savedCookies)
-    .then(response => {
+      //   .set("Cookie", savedCookies)
+      .then((response) => {
         expect(response.statusCode).toBe(400);
-        expect(response.body).toEqual(expect.objectContaining({
-            message: expect.arrayContaining(expecting)
-        }));
+        expect(response.body).toEqual(
+          expect.objectContaining({
+            message: expect.arrayContaining(expecting),
+          })
+        );
         done();
-    });
+      });
   });
   it("Create New Asset - Missing quantity", async (done) => {
     const expecting = ["Invalid quantity"];
-  request(app)
-    .post(`/api/assets/`).send({
-    name: "Thung Tao Test 2",
-      unit: 0,
-      description: "Thung Tao Test"
-   })
-    .set("Content-Type", "application/json")
-    .set("Accept", "application/json")
-  //   .set("Cookie", savedCookies)
-  .then(response => {
-      expect(response.statusCode).toBe(400);
-      expect(response.body).toEqual(expect.objectContaining({
-          message: expect.arrayContaining(expecting)
-      }));
-      done();
+    request(app)
+      .post(`/api/assets/`)
+      .send({
+        name: "Thung Tao Test 2",
+        unit: 0,
+        description: "Thung Tao Test",
+      })
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json")
+      //   .set("Cookie", savedCookies)
+      .then((response) => {
+        expect(response.statusCode).toBe(400);
+        expect(response.body).toEqual(
+          expect.objectContaining({
+            message: expect.arrayContaining(expecting),
+          })
+        );
+        done();
+      });
   });
-});
-it("Create New Asset - Invalid unit", async (done) => {
+  it("Create New Asset - Invalid unit", async (done) => {
     const expecting = ["Invalid unit"];
-  request(app)
-    .post(`/api/assets/`).send({
-    name: "Thung Tao Test 2",
-    quantity: 5,
-      unit: -2,
-      description: "Thung Tao Test"
-   })
-    .set("Content-Type", "application/json")
-    .set("Accept", "application/json")
-  //   .set("Cookie", savedCookies)
-  .then(response => {
-      expect(response.statusCode).toBe(400);
-      expect(response.body).toEqual(expect.objectContaining({
-          message: expect.arrayContaining(expecting)
-      }));
-      done();
+    request(app)
+      .post(`/api/assets/`)
+      .send({
+        name: "Thung Tao Test 2",
+        quantity: 5,
+        unit: -2,
+        description: "Thung Tao Test",
+      })
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json")
+      //   .set("Cookie", savedCookies)
+      .then((response) => {
+        expect(response.statusCode).toBe(400);
+        expect(response.body).toEqual(
+          expect.objectContaining({
+            message: expect.arrayContaining(expecting),
+          })
+        );
+        done();
+      });
   });
-});
-it("Create New Asset - Missing 2 value", async (done) => {
+  it("Create New Asset - Missing 2 value", async (done) => {
     const expecting = ["Invalid unit", "Invalid quantity"];
-  request(app)
-    .post(`/api/assets/`).send({
-    name: "Thung Tao Test 2",
-      description: "Thung Tao Test"
-   })
-    .set("Content-Type", "application/json")
-    .set("Accept", "application/json")
-  //   .set("Cookie", savedCookies)
-  .then(response => {
-      expect(response.statusCode).toBe(400);
-      expect(response.body).toEqual(expect.objectContaining({
-          message: expect.arrayContaining(expecting)
-      }));
-      done();
+    request(app)
+      .post(`/api/assets/`)
+      .send({
+        name: "Thung Tao Test 2",
+        description: "Thung Tao Test",
+      })
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json")
+      //   .set("Cookie", savedCookies)
+      .then((response) => {
+        expect(response.statusCode).toBe(400);
+        expect(response.body).toEqual(
+          expect.objectContaining({
+            message: expect.arrayContaining(expecting),
+          })
+        );
+        done();
+      });
   });
-});
 });
