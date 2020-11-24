@@ -51,12 +51,12 @@ export const createAssetController = async (req, res) => {
     unit,
     description,
   });
-  if (assetRequest.status == true) {
-    asset.save();
-    asset = asset.toObject();
-    return res.status(OK_RESPONSE).json(asset);
+  if (!assetRequest.status) {
+    return res
+      .status(HANDLED_ERROR_RESPONSE)
+      .json({ message: "Something went wrong" });
   }
-  return res
-    .status(HANDLED_ERROR_RESPONSE)
-    .json({ message: "Something went wrong" });
+  asset.save();
+  asset = asset.toObject();
+  return res.status(OK_RESPONSE).json(asset);
 };
