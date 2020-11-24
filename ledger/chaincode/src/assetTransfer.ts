@@ -76,17 +76,19 @@ export class AssetTransferContract extends Contract {
   @Transaction()
   public async CreateAsset(
     ctx: Context,
-    ID: string,
-    name: string,
-    owner: string,
-    quantity: number,
-    unit: number,
-    description: string
+    newAsset: string,
+    ID: string
+    // ID: string,
+    // name: string,
+    // owner: string,
+    // quantity: number,
+    // unit: number,
+    // description: string
   ): Promise<Asset> {
-    const newAsset = { ID, name, owner, quantity, unit, description };
+    // const newAsset = { ID, name, owner, quantity, unit, description };
     try {
       await ctx.stub.putState(
-        newAsset.ID,
+        ID,
         Buffer.from(JSON.stringify(newAsset))
       );
     } catch (err) {
@@ -148,14 +150,17 @@ export class AssetTransferContract extends Contract {
   @Transaction()
   public async TransferAsset(
     ctx: Context,
-    ID: string,
+    IDstrings: string,
     newOwner: string
   ): Promise<void> {
       try {
-        const assetString = await this.ReadAsset(ctx, ID);
-        const asset = JSON.parse(assetString);
-        asset.owner = newOwner;
-        await ctx.stub.putState(ID, Buffer.from(JSON.stringify(asset)));
+        const IDs = JSON.parse(IDstrings)
+        for (let ID of IDs){
+          let assetString = await this.ReadAsset(ctx, ID);
+          let asset = JSON.parse(assetString);
+          asset.owner = newOwner;
+          await ctx.stub.putState(ID, Buffer.from(JSON.stringify(asset)));
+        }
       } catch (err) {
         return err;
       }
