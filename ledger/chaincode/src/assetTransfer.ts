@@ -89,7 +89,7 @@ export class AssetTransferContract extends Contract {
     try {
       await ctx.stub.putState(
         ID,
-        Buffer.from(JSON.stringify(newAsset))
+        Buffer.from(newAsset)
       );
     } catch (err) {
       return err;

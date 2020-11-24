@@ -11,6 +11,7 @@ export default class AssetInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      _id: "",
       name: 'Apple',
       quantity: '',
       unit: '0',
@@ -44,7 +45,10 @@ export default class AssetInfo extends Component {
       description,
     });
     if (status) {
-      this.generateQRCode();
+      this.setState({...this.state, ...asset, quantity: asset.quantity.toString(), unit: asset.unit.toString() }, () => {
+        console.log(this.state);
+        this.generateQRCode();
+      })
     }
   };
 
@@ -53,7 +57,7 @@ export default class AssetInfo extends Component {
   };
 
   render() {
-    const {name, quantity, unit, description, isGenerated} = this.state;
+    const {name, quantity, unit, description, isGenerated, _id} = this.state;
     return (
       <ScrollView style={{flex: 1}}>
         <View style={{flex: 1}}>
@@ -113,6 +117,7 @@ export default class AssetInfo extends Component {
               {isGenerated == true ? (
                 <QRCode
                   value={JSON.stringify({
+                    _id: _id,
                     name: name,
                     quantity: parseInt(quantity),
                     unit: parseInt(unit),
