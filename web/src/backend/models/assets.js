@@ -10,4 +10,5 @@ export const AssetSchema = new Assets({
 });
 
 const assetModel = mongoose.model("Assets", AssetSchema);
+
 export default assetModel;
