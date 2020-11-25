@@ -17,12 +17,12 @@ export default new LocalizedStrings({
       signup: 'SIGN UP',
     },
     AssetInfo: {
-      name: 'Tên sản phẩm',
-      placeholder: 'Nhập ở đây',
-      quantity: 'Số lượng',
-      unit: 'Đơn vị',
-      description: 'Miêu tả',
-      title: 'Nhập thông tin sản phẩm',
+      name: 'Name',
+      placeholder: 'Text here',
+      quantity: 'Quantity',
+      unit: 'Unit',
+      description: 'Description',
+      title: 'Create Asset',
     },
   },
 });

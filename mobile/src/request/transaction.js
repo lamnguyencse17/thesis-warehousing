@@ -1,5 +1,5 @@
 import axios from "axios"
-
+import {Config} from '@common';
 export const getTransactionRequest = async (transactionId) => {
     // use process.env in the feature for BACKEND_API please!
     const requestUrl = `http://localhost:3000/api/transactions/${transactionId}`
@@ -35,7 +35,7 @@ export const getTransactionRequest = async (transactionId) => {
 }
 
 export const createTransactionRequest = async ({receiver, sender, assets}) => {
-    const requestUrl = "http://192.168.0.119:3000/api/transactions/"
+    const requestUrl = `${Config.server}transactions/`
     // format:
     // {
     //     "assets": [
