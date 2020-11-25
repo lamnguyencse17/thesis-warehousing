@@ -21,4 +21,3 @@ export const TransactionsSchema = new Transactions({
 
 const transactionModel = mongoose.model("Transactions", TransactionsSchema);
 export default transactionModel;
-export const transactionTC = composeWithMongoose(transactionModel);
