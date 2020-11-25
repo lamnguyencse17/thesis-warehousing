@@ -1,4 +1,3 @@
-import { composeWithMongoose } from "graphql-compose-mongoose";
 import mongoose from "mongoose";
 
 const Transactions = mongoose.Schema;
