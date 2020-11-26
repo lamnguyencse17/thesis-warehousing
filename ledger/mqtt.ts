@@ -1,6 +1,7 @@
 import mqtt, { Client } from "mqtt";
 import { ITransaction } from "./types/transaction";
 import { IAsset } from "./types/asset";
+import { ASSET_TOPIC, TRANSACTION_TOPIC } from "./types/topics";
 
 let client:mqttClient;
 
@@ -14,7 +15,7 @@ class mqttClient {
 
   public initConnection = () => {
     this.client.on("connect", () => {
-      this.client.subscribe("transactions", (err) => {
+      this.client.subscribe(TRANSACTION_TOPIC, (err) => {
         if (err){
           console.log(err)
           return;
@@ -25,7 +26,7 @@ class mqttClient {
   }
   public publishTransaction = (transaction:ITransaction): Promise<void> => {
     return new Promise((resolve, reject) => {
-      this.client.publish("transactions", JSON.stringify(transaction), (err) => {
+      this.client.publish(TRANSACTION_TOPIC, JSON.stringify(transaction), (err) => {
         if (err){
           reject(err)
         }
@@ -35,7 +36,7 @@ class mqttClient {
   }
   public publishAsset = (asset:IAsset): Promise<void> => {
     return new Promise((resolve, reject) => {
-      this.client.publish("asset", JSON.stringify(asset), (err) => {
+      this.client.publish(ASSET_TOPIC, JSON.stringify(asset), (err) => {
         if (err){
           reject(err)
         }

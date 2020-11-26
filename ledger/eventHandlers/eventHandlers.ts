@@ -1,5 +1,7 @@
 import { ContractEvent } from "fabric-network";
 import CreateAssetHandler from "./CreateAssetEvent";
+import TransferAssetHandler from "./TransferAssetEvent";
+import { CREATE_ASSET_EVENT, TRANSFER_ASSET_EVENT } from "../types/events";
 
 export default async (event: ContractEvent): Promise<void> => {
   const { eventName, chaincodeId } = event;
@@ -8,11 +10,15 @@ export default async (event: ContractEvent): Promise<void> => {
   if (!!payload) {
     parsedPayload = JSON.parse(payload.toString());
   }
-  if (eventName === "CreateAsset" && !!payload) {
-    CreateAssetHandler(parsedPayload);
+  switch(eventName){
+    case CREATE_ASSET_EVENT:{
+      CreateAssetHandler(parsedPayload);
+      break;
+    }
+    case TRANSFER_ASSET_EVENT:{
+      TransferAssetHandler(parsedPayload);
+      break;
+    }
   }
-  // console.log(chaincodeId);
-  // console.log(eventName);
-  // console.log(payload?.toString());
 };
 
