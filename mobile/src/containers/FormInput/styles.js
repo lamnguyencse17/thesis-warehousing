@@ -39,4 +39,10 @@ export default StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
   },
+  toggleModal: {},
+  turnOffModal: {
+    fontSize: 16,
+    padding: 5,
+    color: '#FFF',
+  },
 });
