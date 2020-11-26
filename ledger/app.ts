@@ -19,7 +19,7 @@ const channelName = "mychannel";
 const chaincodeName = "basic";
 const mspOrg1 = "Org1MSP";
 const walletPath = path.join(__dirname, "wallet");
-const org1UserId = "33";
+const org1UserId = "4";
 
 
 function prettyJSONString(inputString: string) {

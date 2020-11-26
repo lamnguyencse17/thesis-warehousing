@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 LedgerClient.initInstance().then(() => {
   LedgerClient.initLedger();
-  MqttClient?.initConnection()
+  MqttClient.initConnection()
 });
 
 app.get("/asset/:ID", async (req, res) => {

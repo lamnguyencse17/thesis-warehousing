@@ -1,19 +1,20 @@
 import mqtt, { Client } from "mqtt";
 import { ITransaction } from "./types/transaction";
+import { IAsset } from "./types/asset";
 
-let client:mqttClient|null;
+let client:mqttClient;
 
 
 
 class mqttClient {
-  private client: Client|null
+  private client: Client
   constructor(){
-    this.client = null
-  }
-  public initConnection = () => {
     this.client = mqtt.connect("mqtt://localhost:1883")
+  }
+
+  public initConnection = () => {
     this.client.on("connect", () => {
-      this.client?.subscribe("transactions", (err) => {
+      this.client.subscribe("transactions", (err) => {
         if (err){
           console.log(err)
           return;
@@ -22,11 +23,24 @@ class mqttClient {
       })
     })
   }
-  public publishTransaction = (transaction:ITransaction) => {
-    this.client?.publish("transactions", JSON.stringify(transaction), (err) => {
-      if (err){
-        console.log(err)
-      }
+  public publishTransaction = (transaction:ITransaction): Promise<void> => {
+    return new Promise((resolve, reject) => {
+      this.client.publish("transactions", JSON.stringify(transaction), (err) => {
+        if (err){
+          reject(err)
+        }
+        resolve()
+      })
+    })
+  }
+  public publishAsset = (asset:IAsset): Promise<void> => {
+    return new Promise((resolve, reject) => {
+      this.client.publish("asset", JSON.stringify(asset), (err) => {
+        if (err){
+          reject(err)
+        }
+        resolve()
+      })
     })
   }
 }
