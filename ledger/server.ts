@@ -3,6 +3,7 @@ import morgan from "morgan";
 import cors from "cors";
 import bodyParser from "body-parser";
 import LedgerClient from "./app";
+import MqttClient from "./mqtt";
 import fs from "fs";
 
 const app: express.Application = express();
@@ -13,8 +14,10 @@ app.use(morgan("tiny"));
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
 LedgerClient.initInstance().then(() => {
   LedgerClient.initLedger();
+  MqttClient?.initConnection()
 });
 
 app.get("/asset/:ID", async (req, res) => {
