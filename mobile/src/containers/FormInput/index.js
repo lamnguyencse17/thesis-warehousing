@@ -12,17 +12,20 @@ import styles from './styles';
 
 import {createTransactionRequest} from '../../request/transaction';
 import QRCode from '../QRcode';
+
 export default class FormInput extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      receiverData: [],
-      packageData: [],
+      receiver: [],
+      assets: [],
       visible: false,
+      type: '',
     };
   }
-  toggleQRCode = () => {
+  toggleQRCode = (type) => () => {
     this.setState((prevState) => ({visible: !prevState.visible}));
+    this.setState({type: type});
   };
 
   _keyExtractor = (item, index) => index.toString();
@@ -52,24 +55,36 @@ export default class FormInput extends Component {
     console.log('Success');
   };
 
-  addDataToPackage = (data) => {
-    const {packageData} = this.state;
-    let tempPackageData = [...packageData, data];
-    this.setState({packageData: tempPackageData});
+  addDataToAssets = (data) => {
+    if (typeof data.name == 'undefined') {
+      return;
+    }
+    let tempAssets = [...this.state.assets, data];
+    this.setState({assets: tempAssets});
+  };
+
+  addDataToReceiver = (data) => {
+    if (typeof data.receiver == 'undefined') {
+      return;
+    }
+    this.setState({receiver: data});
   };
 
   render() {
-    // const {packageData} = this.props.addFormData;
-    const {visible, packageData} = this.state;
+    const {visible, assets, type, receiver} = this.state;
     return (
       <View style={styles.container}>
         <Modal visible={visible} animationType="slide">
-          <QRCode addDataToPackage={this.addDataToPackage} />
-          <Button
-            title="Submit to package"
-            onPress={this.toggleQRCode}
-            style={styles.toggleModal}
+          <QRCode
+            addDataToAssets={this.addDataToAssets}
+            addDataToReceiver={this.addDataToReceiver}
+            type={type}
           />
+          <TouchableOpacity
+            onPress={this.toggleQRCode('')}
+            style={styles.generateButton}>
+            <Text style={{textAlign: 'center'}}>DONE</Text>
+          </TouchableOpacity>
         </Modal>
         <View style={styles.header}>
           <Text style={styles.headerText}>FORM CONFIRM TRANSACTION</Text>
@@ -77,32 +92,39 @@ export default class FormInput extends Component {
         <View style={styles.ReceiverView}>
           <View style={{flexDirection: 'row'}}>
             <Text style={styles.sectionText}>Information of receiver: </Text>
-            <TouchableOpacity onPress={this.toggleQRCode}>
+            <TouchableOpacity onPress={this.toggleQRCode('receiver')}>
               <Text style={styles.buttonText}>Scan QR</Text>
             </TouchableOpacity>
           </View>
+          {receiver.length == 0 ? null : (
+            <View style={styles.textReceiver}>
+              <Text>ID: {receiver._id}</Text>
+              <Text>Receiver: {receiver.receiver}</Text>
+            </View>
+          )}
         </View>
-        <View style={styles.PackageView}>
+        <View>
           <View style={{flexDirection: 'row'}}>
             <Text style={styles.sectionText}>Information of package: </Text>
-            <TouchableOpacity onPress={this.toggleQRCode}>
+            <TouchableOpacity onPress={this.toggleQRCode('asset')}>
               <Text style={styles.buttonText}>Scan QR</Text>
             </TouchableOpacity>
           </View>
-          {!!packageData !== [] ? (
-            <View style={styles.dataOfPackage}>
+          {assets.length == 0 ? null : (
+            <View>
               <FlatList
-                data={packageData}
+                data={assets}
                 keyExtractor={this._keyExtractor}
                 renderItem={({item, index}) => this.renderItem(item, index)}
               />
             </View>
-          ) : null}
+          )}
         </View>
-        <Button
-          title="Submit Transaction"
+        <TouchableOpacity
           onPress={this.handleSubmitTransaction}
-        />
+          style={[styles.buttonSubmit]}>
+          <Text style={{textAlign: 'center'}}>SUBMIT TRANSACTION</Text>
+        </TouchableOpacity>
       </View>
     );
   }
