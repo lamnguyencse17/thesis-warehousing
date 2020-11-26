@@ -7,11 +7,12 @@ import styles from './styles';
 import QRCode from 'react-native-qrcode-svg';
 import {Picker} from '@react-native-picker/picker';
 import {createAssetRequest} from '../../request/asset';
+
 export default class AssetInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      _id: "",
+      _id: '',
       name: 'Apple',
       quantity: '',
       unit: '0',
@@ -45,10 +46,18 @@ export default class AssetInfo extends Component {
       description,
     });
     if (status) {
-      this.setState({...this.state, ...asset, quantity: asset.quantity.toString(), unit: asset.unit.toString() }, () => {
-        console.log(this.state);
-        this.generateQRCode();
-      })
+      this.setState(
+        {
+          ...this.state,
+          ...asset,
+          quantity: asset.quantity.toString(),
+          unit: asset.unit.toString(),
+        },
+        () => {
+          console.log(this.state);
+          this.generateQRCode();
+        },
+      );
     }
   };
 
