@@ -12,7 +12,7 @@ import styles from './styles';
 
 import {createTransactionRequest} from '../../request/transaction';
 import QRCode from '../QRcode';
-import {Styles} from '@common';
+
 export default class FormInput extends Component {
   constructor(props) {
     super(props);
@@ -39,8 +39,8 @@ export default class FormInput extends Component {
     );
   };
   handleSubmitTransaction = async () => {
-    // const assetIds = this.state.assets.map(asset => asset._id)
-    const {assets} = this.state;
+    // const assetIds = this.state.packageData.map(asset => asset._id)
+    const assets = ['5fb392d6dab9670184275ece', '5fb3973d30f5e20439a8e2b0'];
     const receiver = '5fb411eb8173b602387d8769';
     const sender = '5fb411df8173b602387d8768';
     const createTransactionResult = await createTransactionRequest({
@@ -59,8 +59,7 @@ export default class FormInput extends Component {
     if (typeof data.name == 'undefined') {
       return;
     }
-    const {assets} = this.state;
-    let tempAssets = [...assets, data];
+    let tempAssets = [...this.state.assets, data];
     this.setState({assets: tempAssets});
   };
 
