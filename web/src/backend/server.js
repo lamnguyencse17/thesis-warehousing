@@ -3,6 +3,7 @@ import passport from "passport";
 import app from "./app";
 import graphqlServer from "./graphql";
 import {createServer} from "http";
+import mqttService from "./mqtt";
 
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
@@ -18,8 +19,9 @@ graphqlServer.applyMiddleware({app});
 const server = createServer(app);
 graphqlServer.installSubscriptionHandlers(server);
 
-server.listen(3000,() =>
+server.listen(3000,() =>{
   console.log(
     `Graphql started, listening on port ${graphqlServer.graphqlPath} for incoming requests.`,
-  ),
-);
+  );
+  mqttService();
+});
