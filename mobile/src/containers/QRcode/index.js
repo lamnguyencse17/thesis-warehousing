@@ -22,10 +22,10 @@ export default class QRcodeComponent extends Component {
       data = JSON.parse(data);
     }
     this.setState({showModal: true, data: data, reactivate: false});
-    if (typeof this.props.type != 'undefined' && this.props.type == 'asset') {
+    if (this.props.type !== 'undefined' && this.props.type == 'asset') {
       this.setState({type: this.props.type});
       this.props.addDataToAssets(data);
-    } else if (typeof this.props.addDataToReceiver == 'function') {
+    } else if (this.props.addDataToReceiver === 'function') {
       this.setState({type: this.props.type});
       this.props.addDataToReceiver(data);
     }
