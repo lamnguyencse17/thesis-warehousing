@@ -29,7 +29,6 @@ export default StyleSheet.create({
   PackageView: {
     flex: 0.6,
   },
-  dataOfPackage: {},
   itemView: {
     flexDirection: 'row',
     marginLeft: 30,
@@ -44,5 +43,32 @@ export default StyleSheet.create({
     fontSize: 16,
     padding: 5,
     color: '#FFF',
+  },
+  buttonSubmit: {
+    position: 'absolute',
+    top: 10,
+  },
+  generateButton: {
+    height: 40,
+    width: Styles.width / 4,
+    borderRadius: 20,
+    backgroundColor: '#9ACBF1',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    marginBottom: 20,
+  },
+  buttonSubmit: {
+    height: 40,
+    width: Styles.width / 2,
+    borderRadius: 20,
+    backgroundColor: '#9ACBF1',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    position: 'absolute',
+    bottom: 60,
+  },
+  textReceiver: {
+    marginHorizontal: 30,
+    marginTop: 5,
   },
 });
