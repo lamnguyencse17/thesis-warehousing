@@ -91,6 +91,7 @@ export class AssetTransferContract extends Contract {
         ID,
         Buffer.from(newAsset)
       );
+      ctx.stub.setEvent('CreateAsset', Buffer.from(newAsset));
     } catch (err) {
       return err;
     }

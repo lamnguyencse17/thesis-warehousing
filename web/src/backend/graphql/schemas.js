@@ -1,7 +1,7 @@
 import userSchema from './schemas/user';
 import assetSchema from './schemas/asset';
 import transactionSchema from './schemas/transaction';
-import { gql } from 'apollo-server';
+import { gql } from 'apollo-server-express';
 
 const Schema = gql`
   type Query {
