@@ -1,4 +1,4 @@
-const { ApolloServer } = require('apollo-server');
+const { ApolloServer } = require('apollo-server-express');
 import schemas from "./graphql/schemas";
 import resolvers from "./graphql/resolvers";
 
