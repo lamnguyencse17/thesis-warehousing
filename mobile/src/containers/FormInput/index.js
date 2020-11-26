@@ -24,9 +24,6 @@ export default class FormInput extends Component {
   toggleQRCode = () => {
     this.setState((prevState) => ({visible: !prevState.visible}));
   };
-  scanQrCode = (type) => () => {
-    this.toggleQRCode();
-  };
 
   _keyExtractor = (item, index) => index.toString();
 
@@ -80,7 +77,7 @@ export default class FormInput extends Component {
         <View style={styles.ReceiverView}>
           <View style={{flexDirection: 'row'}}>
             <Text style={styles.sectionText}>Information of receiver: </Text>
-            <TouchableOpacity onPress={this.scanQrCode('receiver')}>
+            <TouchableOpacity onPress={this.toggleQRCode}>
               <Text style={styles.buttonText}>Scan QR</Text>
             </TouchableOpacity>
           </View>
@@ -88,7 +85,7 @@ export default class FormInput extends Component {
         <View style={styles.PackageView}>
           <View style={{flexDirection: 'row'}}>
             <Text style={styles.sectionText}>Information of package: </Text>
-            <TouchableOpacity onPress={this.scanQrCode('package')}>
+            <TouchableOpacity onPress={this.toggleQRCode}>
               <Text style={styles.buttonText}>Scan QR</Text>
             </TouchableOpacity>
           </View>
