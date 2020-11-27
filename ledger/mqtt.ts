@@ -2,7 +2,7 @@ import mqtt, { Client } from "mqtt";
 import { ITransaction } from "./types/transaction";
 import { IAsset } from "./types/asset";
 import { ASSET_TOPIC, TRANSACTION_TOPIC } from "./types/topics";
-import { IAssetPayload } from "./types/payload";
+import { IAssetPayload, ITransactionPayload } from "./types/payload";
 
 let client:mqttClient;
 
@@ -25,7 +25,7 @@ class mqttClient {
       })
     })
   }
-  public publishTransaction = (transaction:ITransaction): Promise<void> => {
+  public publishTransaction = (transaction:ITransactionPayload): Promise<void> => {
     return new Promise((resolve, reject) => {
       this.client.publish(TRANSACTION_TOPIC, JSON.stringify(transaction), (err) => {
         if (err){

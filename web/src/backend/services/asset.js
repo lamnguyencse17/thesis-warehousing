@@ -22,6 +22,7 @@ export const syncAsset = async ({ _id, name, quantity, unit, description }) => {
   if (!asset) {
     try {
       const newAsset = await assetModel.create({ _id: mongoose.Types.ObjectId(_id), name, quantity, unit, description });
+      return newAsset;
     } catch (err) {
       console.log(err);
     }
