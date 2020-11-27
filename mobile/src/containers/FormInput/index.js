@@ -39,7 +39,7 @@ export default class FormInput extends Component {
     );
   };
   handleSubmitTransaction = async () => {
-    const assetIds = assets.map((asset) => asset._id);
+    const assetIds = this.state.assets.map((asset) => asset._id);
     const receiver = receiver._id;
     const sender = '5fb411df8173b602387d8768';
     const createTransactionResult = await createTransactionRequest({
