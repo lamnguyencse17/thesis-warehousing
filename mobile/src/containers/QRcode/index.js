@@ -25,7 +25,11 @@ export default class QRcodeComponent extends Component {
     if (this.props.type !== 'undefined' && this.props.type === 'asset') {
       this.setState({type: 'asset'});
       this.props.addDataToAssets(data);
-    } else if (this.props.addDataToReceiver === 'function') {
+    } else if (
+      this.props.type !== 'undefined' &&
+      this.props.type === 'receiver'
+    ) {
+      this.setState({type: 'receiver'});
       this.props.addDataToReceiver(data);
     }
   };
@@ -75,7 +79,7 @@ export default class QRcodeComponent extends Component {
                 Thông tin người nhận
               </Text>
               <View>
-                <Text style={styles.text}>Người nhận {data.receiver}</Text>
+                <Text style={styles.text}>Người nhận: {data.receiver}</Text>
                 <Text style={styles.text}>ID: {data._id}</Text>
               </View>
             </View>
