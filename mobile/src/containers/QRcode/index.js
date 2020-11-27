@@ -12,6 +12,7 @@ export default class QRcodeComponent extends Component {
       data: null,
       showModal: false,
       active: false,
+      type: '',
     };
   }
 
@@ -21,10 +22,15 @@ export default class QRcodeComponent extends Component {
       data = JSON.parse(data);
     }
     this.setState({showModal: true, data: data, reactivate: false});
-    if (typeof this.props.addDataToPackage == 'function') {
-      this.props.addDataToPackage(data);
-    } else {
-      return;
+    if (this.props.type !== 'undefined' && this.props.type === 'asset') {
+      this.setState({type: 'asset'});
+      this.props.addDataToAssets(data);
+    } else if (
+      this.props.type !== 'undefined' &&
+      this.props.type === 'receiver'
+    ) {
+      this.setState({type: 'receiver'});
+      this.props.addDataToReceiver(data);
     }
   };
 
@@ -33,8 +39,7 @@ export default class QRcodeComponent extends Component {
   };
 
   render() {
-    const {data, showModal} = this.state;
-
+    const {data, showModal, type} = this.state;
     return (
       <QRCodeScanner
         onRead={this.onSuccess}
@@ -50,26 +55,32 @@ export default class QRcodeComponent extends Component {
           </View>
         }
         bottomContent={
-          showModal == false ? null : (
+          showModal == false ? null : type == 'asset' ? (
             <View style={styles.bottomView}>
               <Text style={[styles.text, styles.title]}>
                 Thông tin sản phẩm
               </Text>
               <View style={styles.contentView}>
                 <View>
-                  <Text style={styles.text}>Sản phẩm: {`${data.name}`}</Text>
-                  <Text style={styles.text}>
-                    Miêu tả: {`${data.description}`}
-                  </Text>
+                  <Text style={styles.text}>Sản phẩm: {data.name}</Text>
+                  <Text style={styles.text}>Miêu tả: {data.description}</Text>
                 </View>
                 <View>
+                  <Text style={styles.text}>Số lượng: {data.quantity}</Text>
                   <Text style={styles.text}>
-                    Số lượng: {`${data.quantity}`}
-                  </Text>
-                  <Text style={styles.text}>
-                    Đơn vị: {`${Config.options[data.unit]}`}
+                    Đơn vị: {Config.options[data.unit]}
                   </Text>
                 </View>
+              </View>
+            </View>
+          ) : (
+            <View style={styles.bottomView}>
+              <Text style={[styles.text, styles.title]}>
+                Thông tin người nhận
+              </Text>
+              <View>
+                <Text style={styles.text}>Người nhận: {data.receiver}</Text>
+                <Text style={styles.text}>ID: {data._id}</Text>
               </View>
             </View>
           )
