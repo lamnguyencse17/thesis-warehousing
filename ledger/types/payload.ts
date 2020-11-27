@@ -7,6 +7,7 @@ export interface IAssetPayload {
   description: string;
 }
 export interface ITransactionPayload {
+_id?: string;
   assets: string[];
   newOwner: string;
 }

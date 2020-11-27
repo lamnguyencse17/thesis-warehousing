@@ -9,5 +9,7 @@ export const convertAsset =  (payload:IAsset): IAssetPayload => {
 }
 
 export const convertTransaction = (payload:ITransaction): ITransactionPayload => {
-    return payload
+    let transactionPayload = {...payload, _id: payload.ID};
+    delete transactionPayload.ID;
+    return transactionPayload
 }
