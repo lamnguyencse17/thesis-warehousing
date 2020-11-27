@@ -39,14 +39,13 @@ export default class FormInput extends Component {
     );
   };
   handleSubmitTransaction = async () => {
-    // const assetIds = this.state.packageData.map(asset => asset._id)
-    const assets = ['5fb392d6dab9670184275ece', '5fb3973d30f5e20439a8e2b0'];
-    const receiver = '5fb411eb8173b602387d8769';
+    const assetIds = assets.map((asset) => asset._id);
+    const receiver = receiver._id;
     const sender = '5fb411df8173b602387d8768';
     const createTransactionResult = await createTransactionRequest({
       receiver,
       sender,
-      assets,
+      assetIds,
     });
     if (!createTransactionResult.status) {
       console.log(createTransactionResult.message);
@@ -56,7 +55,7 @@ export default class FormInput extends Component {
   };
 
   addDataToAssets = (data) => {
-    if (typeof data.name == 'undefined') {
+    if (data.name === 'undefined') {
       return;
     }
     let tempAssets = [...this.state.assets, data];
@@ -64,9 +63,10 @@ export default class FormInput extends Component {
   };
 
   addDataToReceiver = (data) => {
-    if (typeof data.receiver == 'undefined') {
+    if (data.receiver === 'undefined') {
       return;
     }
+
     this.setState({receiver: data});
   };
 
