@@ -1,5 +1,5 @@
 import { createTransaction, getTransactionById } from "../services/transaction";
-import { OK_RESPONSE, HANDLED_ERROR_RESPONSE } from "../constants/http";
+import { HANDLED_ERROR_RESPONSE, OK_RESPONSE } from "../constants/http";
 import { validateCreateTransaction } from "../validators/transactionValidator";
 import { createTransactionRequest } from "../requests/transaction";
 
@@ -12,10 +12,22 @@ export const createTransactionController = async (req, res) => {
       .json({ message: validateResult.message });
   }
   // this is for CI Test
+  let { result, status } = await createTransaction({
+    receiver,
+    sender,
+    assets
+  });
+  if (!status) {
+    return res
+      .status(HANDLED_ERROR_RESPONSE)
+      .json({ message: "Something went wrong" });
+  }
   if (process.env.MODE != "test") {
     const createTransactionResult = await createTransactionRequest({
+      ID: result._id,
       IDs: assets,
       newOwner: receiver,
+      oldOwner: sender
     });
     if (!createTransactionResult.status) {
       return res
@@ -23,18 +35,18 @@ export const createTransactionController = async (req, res) => {
         .json({ message: createTransactionResult.message });
     }
   }
-  let { result, status } = await createTransaction({
-    receiver,
-    sender,
-    assets,
+  await result.save((err) => {
+    if (err) {
+      console.log(err);
+      return res.status(HANDLED_ERROR_RESPONSE).json({ message: err });
+    }
+    result.populate({ path: "sender", select: "name" })
+      .populate({ path: "receiver", select: "name" })
+      .populate({ path: "assets", select: "name" }).execPopulate().then((transaction) => {
+      return res.status(OK_RESPONSE).json(transaction);
+    });
   });
-  if (!status) {
-    return res
-      .status(HANDLED_ERROR_RESPONSE)
-      .json({ message: "Something went wrong" });
-  }
-  const transaction = { ...result };
-  return res.status(OK_RESPONSE).json(transaction);
+
 };
 
 export const getTransactionController = async (req, res) => {

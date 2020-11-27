@@ -23,7 +23,9 @@
         "./**/*"
     ],
     "exclude": [
-        "nodem_modules",
-        "./**/*.spec.ts"
+        "node_modules",
+        "./**/*.spec.ts",
+        "chaincode",
+        "environment"
     ]
 }

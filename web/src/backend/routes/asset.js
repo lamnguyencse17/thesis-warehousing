@@ -2,7 +2,7 @@ import express from "express";
 
 const {
   getAssetController,
-  createAssetController,
+  createAssetController
 } = require("../controllers/asset");
 const router = express.Router();
 

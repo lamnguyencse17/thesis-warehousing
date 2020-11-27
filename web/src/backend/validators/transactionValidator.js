@@ -21,7 +21,7 @@ export const validateCreateTransaction = ({ receiver, sender, assets }) => {
       status = false;
       message.push("Invalid asset");
       // eslint-disable-next-line no-useless-return
-      return;
+
     }
   });
   return { status, message };

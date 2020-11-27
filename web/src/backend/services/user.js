@@ -5,7 +5,7 @@ export const createUser = async ({ email, password, name }) => {
   const result = await userModel.create({
     name,
     email,
-    password,
+    password
   });
   return { result, status: true };
 };

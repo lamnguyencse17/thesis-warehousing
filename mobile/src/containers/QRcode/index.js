@@ -37,7 +37,6 @@ export default class QRcodeComponent extends Component {
 
   render() {
     const {data, showModal, type} = this.state;
-    console.log(type);
     return (
       <QRCodeScanner
         onRead={this.onSuccess}

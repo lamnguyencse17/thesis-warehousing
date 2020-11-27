@@ -1,4 +1,4 @@
-import { isValidEmail, isValidPassword, isValidName } from "./utils";
+import { isValidEmail, isValidName, isValidPassword } from "./utils";
 
 export const validateCreateUser = ({ email, password, name }) => {
   let status = true;

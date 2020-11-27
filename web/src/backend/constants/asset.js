@@ -4,5 +4,5 @@ export const UNIT = [
   "KILOGRAM",
   "TON",
   "LITER",
-  "CUBIC METER",
+  "CUBIC METER"
 ];

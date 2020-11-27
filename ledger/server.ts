@@ -3,6 +3,7 @@ import morgan from "morgan";
 import cors from "cors";
 import bodyParser from "body-parser";
 import LedgerClient from "./app";
+import MqttClient from "./mqtt";
 import fs from "fs";
 
 const app: express.Application = express();
@@ -13,8 +14,10 @@ app.use(morgan("tiny"));
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
 LedgerClient.initInstance().then(() => {
   LedgerClient.initLedger();
+  MqttClient.initConnection()
 });
 
 app.get("/asset/:ID", async (req, res) => {
@@ -31,9 +34,9 @@ app.post("/asset/", async (req, res) => {
 });
 
 app.post("/transfer", async (req, res) => {
-  const { IDs, newOwner } = req.body;
+  const { ID, IDs, newOwner, oldOwner } = req.body;
   const IDstrings = JSON.stringify(IDs);
-  const status = await LedgerClient.transferAsset(IDstrings, newOwner);
+  const status = await LedgerClient.transferAsset(ID, IDstrings, newOwner, oldOwner);
   if (!status) {
     return res.status(400).json({ message: "Asset Create Failed" });
   }

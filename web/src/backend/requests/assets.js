@@ -1,12 +1,12 @@
 import axios from "axios";
 
 export const createAssetRequest = async ({
-  ID,
-  name,
-  quantity,
-  unit,
-  description,
-}) => {
+                                           ID,
+                                           name,
+                                           quantity,
+                                           unit,
+                                           description
+                                         }) => {
   const url = `${process.env.LEDGER_SERVER}/asset/`;
   try {
     const result = await axios.post(url, {
@@ -14,7 +14,7 @@ export const createAssetRequest = async ({
       name,
       quantity,
       unit,
-      description,
+      description
     });
     // This is temp work because Ledger always return code 200
     if (result.data.message != "Success") {
@@ -25,7 +25,7 @@ export const createAssetRequest = async ({
     return {
       status: false,
       errCode: err.response.status,
-      message: err.response.data.message,
+      message: err.response.data.message
     };
   }
 };

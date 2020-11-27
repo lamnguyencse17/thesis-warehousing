@@ -3,18 +3,21 @@ import transactionModel from "../models/transactions";
 
 export const createTransaction = async ({ receiver, sender, assets }) => {
   assets = assets.map((asset) => mongoose.Types.ObjectId(asset));
-  let result = await transactionModel.create({
+  let result = await new transactionModel({
     receiver: mongoose.Types.ObjectId(receiver),
     sender: mongoose.Types.ObjectId(sender),
-    assets,
+    assets
   });
-  result = await transactionModel
-    .findOne({ _id: mongoose.Types.ObjectId(result._id) })
+
+  return { result, status: true };
+};
+
+export const populateTransaction = async (transaction) => {
+  return await transaction
     .populate({ path: "sender", select: "name" })
     .populate({ path: "receiver", select: "name" })
     .populate({ path: "assets", select: "name" })
     .lean();
-  return { result, status: true };
 };
 
 export const getTransactionById = async (transactionId) => {
@@ -29,4 +32,21 @@ export const getTransactionById = async (transactionId) => {
     status = false;
   }
   return { result, status };
+};
+
+export const syncTransaction = async ({ _id, receiver, sender, assets }) => {
+  let transaction = await transactionModel.findOne({ _id: mongoose.Types.ObjectId(_id) }).lean();
+  if (!transaction) {
+    try {
+      const newTransaction = await transactionModel.create({
+        _id: mongoose.Types.ObjectId(_id),
+        receiver,
+        sender,
+        assets
+      });
+      return newTransaction;
+    } catch (err) {
+      console.log(err);
+    }
+  }
 };

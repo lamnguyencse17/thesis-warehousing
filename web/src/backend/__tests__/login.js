@@ -11,12 +11,12 @@ describe("Test Login API functionalities", () => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useFindAndModify: false,
-      useCreateIndex: true,
+      useCreateIndex: true
     });
     await userModel.create({
       name: "Test User",
       password: await hashPassword("123456"),
-      email: "testUser0@gmail.com",
+      email: "testUser0@gmail.com"
     });
   });
 
@@ -33,25 +33,25 @@ describe("Test Login API functionalities", () => {
       .post("/api/auth/login")
       .send({
         password: "123456",
-        email: "testUser0@gmail.com",
+        email: "testUser0@gmail.com"
       })
       .set("Content-Type", "application/json")
       .set("Accept", "application/json")
       .then((response) => {
         const cookies = setCookie.parse(response, {
-          map: true,
+          map: true
         });
         expect(response.statusCode).toBe(200);
         expect(response.body).toEqual(
           expect.objectContaining({
-            token: expect.any(String),
+            token: expect.any(String)
           })
         );
         expect(cookies.token).toEqual(
           expect.objectContaining({
             name: "token",
             value: expect.any(String),
-            httpOnly: true,
+            httpOnly: true
           })
         );
         done();
@@ -62,7 +62,7 @@ describe("Test Login API functionalities", () => {
       .post("/api/auth/login")
       .send({
         password: "123456",
-        email: "lamnguyen1000@gmail.com",
+        email: "lamnguyen1000@gmail.com"
       })
       .set("Content-Type", "application/json")
       .set("Accept", "application/json")
@@ -70,7 +70,7 @@ describe("Test Login API functionalities", () => {
         expect(response.statusCode).toBe(400);
         expect(response.body).toEqual(
           expect.objectContaining({
-            message: "User is not found",
+            message: "User is not found"
           })
         );
         done();
@@ -81,7 +81,7 @@ describe("Test Login API functionalities", () => {
       .post("/api/auth/login")
       .send({
         password: "1234567",
-        email: "testUser0@gmail.com",
+        email: "testUser0@gmail.com"
       })
       .set("Content-Type", "application/json")
       .set("Accept", "application/json")
@@ -89,7 +89,7 @@ describe("Test Login API functionalities", () => {
         expect(response.statusCode).toBe(400);
         expect(response.body).toEqual(
           expect.objectContaining({
-            message: "Password is incorrect",
+            message: "Password is incorrect"
           })
         );
         done();
@@ -100,7 +100,7 @@ describe("Test Login API functionalities", () => {
     request(app)
       .post("/api/auth/login")
       .send({
-        password: "123456",
+        password: "123456"
       })
       .set("Content-Type", "application/json")
       .set("Accept", "application/json")
@@ -108,7 +108,7 @@ describe("Test Login API functionalities", () => {
         expect(response.statusCode).toBe(400);
         expect(response.body).toEqual(
           expect.objectContaining({
-            message: expect.arrayContaining(expecting),
+            message: expect.arrayContaining(expecting)
           })
         );
         done();
@@ -119,7 +119,7 @@ describe("Test Login API functionalities", () => {
     request(app)
       .post("/api/auth/login")
       .send({
-        email: "testUser@gmail.com",
+        email: "testUser@gmail.com"
       })
       .set("Content-Type", "application/json")
       .set("Accept", "application/json")
@@ -127,7 +127,7 @@ describe("Test Login API functionalities", () => {
         expect(response.statusCode).toBe(400);
         expect(response.body).toEqual(
           expect.objectContaining({
-            message: expect.arrayContaining(expecting),
+            message: expect.arrayContaining(expecting)
           })
         );
         done();
@@ -144,7 +144,7 @@ describe("Test Login API functionalities", () => {
         expect(response.statusCode).toBe(400);
         expect(response.body).toEqual(
           expect.objectContaining({
-            message: expect.arrayContaining(expecting),
+            message: expect.arrayContaining(expecting)
           })
         );
         done();

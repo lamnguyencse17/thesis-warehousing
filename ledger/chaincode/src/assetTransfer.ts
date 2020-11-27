@@ -78,12 +78,6 @@ export class AssetTransferContract extends Contract {
     ctx: Context,
     newAsset: string,
     ID: string
-    // ID: string,
-    // name: string,
-    // owner: string,
-    // quantity: number,
-    // unit: number,
-    // description: string
   ): Promise<Asset> {
     // const newAsset = { ID, name, owner, quantity, unit, description };
     try {
@@ -91,6 +85,7 @@ export class AssetTransferContract extends Contract {
         ID,
         Buffer.from(newAsset)
       );
+      ctx.stub.setEvent('CreateAsset', Buffer.from(newAsset));
     } catch (err) {
       return err;
     }
@@ -109,19 +104,11 @@ export class AssetTransferContract extends Contract {
   // UpdateAsset updates an existing asset in the world state with provided parameters.
   @Transaction()
   public async UpdateAsset(ctx: Context, updatedAsset: Asset): Promise<void> {
-    console.log(updatedAsset);
     const exists = await this.AssetExists(ctx, updatedAsset.ID);
     if (!exists) {
       throw new Error(`The asset ${updatedAsset.ID} does not exist`);
     }
-    // overwriting original asset with new asset
-    // const updatedAsset = {
-    //     ID: id,
-    //     Color: color,
-    //     Size: size,
-    //     Owner: owner,
-    //     AppraisedValue: appraisedValue,
-    // };
+    ctx.stub.setEvent('UpdateAsset', Buffer.from(updatedAsset));
     return ctx.stub.putState(
       updatedAsset.ID,
       Buffer.from(JSON.stringify(updatedAsset))
@@ -135,6 +122,8 @@ export class AssetTransferContract extends Contract {
     if (!exists) {
       throw new Error(`The asset ${ID} does not exist`);
     }
+    const assetJSON = await ctx.stub.getState(ID);
+    ctx.stub.setEvent('DeleteAsset', Buffer.from(assetJSON));
     return ctx.stub.deleteState(ID);
   }
 
@@ -150,8 +139,10 @@ export class AssetTransferContract extends Contract {
   @Transaction()
   public async TransferAsset(
     ctx: Context,
+    ID: string,
     IDstrings: string,
-    newOwner: string
+    newOwner: string,
+    oldOwner: string
   ): Promise<void> {
       try {
         const IDs = JSON.parse(IDstrings)
@@ -161,6 +152,8 @@ export class AssetTransferContract extends Contract {
           asset.owner = newOwner;
           await ctx.stub.putState(ID, Buffer.from(JSON.stringify(asset)));
         }
+        const eventInfo = JSON.stringify({ID, assets: JSON.parse(IDstrings), newOwner, oldOwner})
+        ctx.stub.setEvent('TransferAsset', Buffer.from(eventInfo));
       } catch (err) {
         return err;
       }
