@@ -58,7 +58,7 @@ export default class FormInput extends Component {
     if (data.name === 'undefined') {
       return;
     }
-    let tempAssets = [...this.state.assets, data];
+    const tempAssets = [...this.state.assets, data];
     this.setState({assets: tempAssets});
   };
 
