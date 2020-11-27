@@ -35,8 +35,9 @@ export const createTransactionController = async (req, res) => {
         .json({ message: createTransactionResult.message });
     }
   }
-  result.save();
-  return res.status(OK_RESPONSE).json(result);
+  await result.save();
+  const transaction = await getTransactionById(result._id);
+  return res.status(OK_RESPONSE).json(transaction);
 };
 
 export const getTransactionController = async (req, res) => {
