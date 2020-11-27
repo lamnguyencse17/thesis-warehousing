@@ -141,7 +141,8 @@ export class AssetTransferContract extends Contract {
     ctx: Context,
     ID: string,
     IDstrings: string,
-    newOwner: string
+    newOwner: string,
+    oldOwner: string
   ): Promise<void> {
       try {
         const IDs = JSON.parse(IDstrings)
@@ -151,7 +152,7 @@ export class AssetTransferContract extends Contract {
           asset.owner = newOwner;
           await ctx.stub.putState(ID, Buffer.from(JSON.stringify(asset)));
         }
-        const eventInfo = JSON.stringify({ID, assets: JSON.parse(IDstrings), newOwner})
+        const eventInfo = JSON.stringify({ID, assets: JSON.parse(IDstrings), newOwner, oldOwner})
         ctx.stub.setEvent('TransferAsset', Buffer.from(eventInfo));
       } catch (err) {
         return err;

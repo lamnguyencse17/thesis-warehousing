@@ -27,6 +27,7 @@ export const createTransactionController = async (req, res) => {
       ID: result._id,
       IDs: assets,
       newOwner: receiver,
+      oldOwner: sender
     });
     if (!createTransactionResult.status) {
       return res
@@ -35,8 +36,7 @@ export const createTransactionController = async (req, res) => {
     }
   }
   result.save();
-  const transaction = await populateTransaction(result);
-  return res.status(OK_RESPONSE).json(transaction);
+  return res.status(OK_RESPONSE).json(result);
 };
 
 export const getTransactionController = async (req, res) => {

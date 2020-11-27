@@ -19,7 +19,7 @@ const channelName = "mychannel";
 const chaincodeName = "basic";
 const mspOrg1 = "Org1MSP";
 const walletPath = path.join(__dirname, "wallet");
-const org1UserId = "9";
+const org1UserId = "1";
 
 
 function prettyJSONString(inputString: string) {
@@ -98,9 +98,9 @@ class LedgerClient {
     }
   };
 
-  transferAsset = async (ID: string, newOwner: string) => {
+  transferAsset = async (ID: string, IDs:string, newOwner: string, oldOwner: string) => {
     try {
-      await this.contract.submitTransaction("TransferAsset", ID, newOwner);
+      await this.contract.submitTransaction("TransferAsset", ID, IDs, newOwner, oldOwner);
       return true;
     } catch (err) {
       return false;

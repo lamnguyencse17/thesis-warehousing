@@ -34,9 +34,9 @@ app.post("/asset/", async (req, res) => {
 });
 
 app.post("/transfer", async (req, res) => {
-  const { ID, IDs, newOwner } = req.body;
+  const { ID, IDs, newOwner, oldOwner } = req.body;
   const IDstrings = JSON.stringify(IDs);
-  const status = await LedgerClient.transferAsset(ID, IDstrings, newOwner);
+  const status = await LedgerClient.transferAsset(ID, IDstrings, newOwner, oldOwner);
   if (!status) {
     return res.status(400).json({ message: "Asset Create Failed" });
   }
