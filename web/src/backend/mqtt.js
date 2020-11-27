@@ -1,4 +1,5 @@
 import mqtt from "mqtt";
+import { syncAsset } from "./services/asset";
 
 const mqttService = () => {
     const client = mqtt.connect("mqtt://localhost:1883");
@@ -15,10 +16,14 @@ const mqttService = () => {
         });
         console.log("MQTT Ready");
     });
-    client.on("message", (topic, message) => {
-        console.log(topic);
+    client.on("message", async (topic, message) => {
         const payload = JSON.parse(message.toString());
         console.log(payload);
+        switch (topic){
+            case "assets": {
+                await syncAsset(payload);
+            }
+        }
     });
 };
 
