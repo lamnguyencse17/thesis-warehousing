@@ -9,7 +9,7 @@ describe("Test Register API", () => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useFindAndModify: false,
-      useCreateIndex: true,
+      useCreateIndex: true
     });
   });
 
@@ -27,7 +27,7 @@ describe("Test Register API", () => {
       .send({
         name: "Test User",
         password: "123456",
-        email: "testuser@gmail.com",
+        email: "testuser@gmail.com"
       })
       .set("Content-Type", "application/json")
       .set("Accept", "application/json")
@@ -36,7 +36,7 @@ describe("Test Register API", () => {
         expect(response.body).toEqual(
           expect.objectContaining({
             name: "Test User",
-            email: "testuser@gmail.com",
+            email: "testuser@gmail.com"
           })
         );
         done();
@@ -46,7 +46,7 @@ describe("Test Register API", () => {
     await userModel.create({
       name: "Test User",
       password: "123456",
-      email: "testuser@gmail.com",
+      email: "testuser@gmail.com"
     });
 
     request(app)
@@ -54,7 +54,7 @@ describe("Test Register API", () => {
       .send({
         name: "Test User",
         password: "123456",
-        email: "testuser@gmail.com",
+        email: "testuser@gmail.com"
       })
       .set("Content-Type", "application/json")
       .set("Accept", "application/json")
@@ -62,7 +62,7 @@ describe("Test Register API", () => {
         expect(response.statusCode).toBe(400);
         expect(response.body).toEqual(
           expect.objectContaining({
-            message: "Duplicate Email!",
+            message: "Duplicate Email!"
           })
         );
         done();
@@ -74,7 +74,7 @@ describe("Test Register API", () => {
       .post("/api/auth/register")
       .send({
         name: "Test User",
-        password: "123456",
+        password: "123456"
       })
       .set("Content-Type", "application/json")
       .set("Accept", "application/json")
@@ -82,7 +82,7 @@ describe("Test Register API", () => {
         expect(response.statusCode).toBe(400);
         expect(response.body).toEqual(
           expect.objectContaining({
-            message: expect.arrayContaining(expecting),
+            message: expect.arrayContaining(expecting)
           })
         );
         done();
@@ -94,7 +94,7 @@ describe("Test Register API", () => {
       .post("/api/auth/register")
       .send({
         password: "123456",
-        email: "testuser@gmail.com",
+        email: "testuser@gmail.com"
       })
       .set("Content-Type", "application/json")
       .set("Accept", "application/json")
@@ -102,7 +102,7 @@ describe("Test Register API", () => {
         expect(response.statusCode).toBe(400);
         expect(response.body).toEqual(
           expect.objectContaining({
-            message: expect.arrayContaining(expecting),
+            message: expect.arrayContaining(expecting)
           })
         );
         done();
@@ -114,7 +114,7 @@ describe("Test Register API", () => {
       .post("/api/auth/register")
       .send({
         name: "Test User",
-        email: "testuser@gmail.com",
+        email: "testuser@gmail.com"
       })
       .set("Content-Type", "application/json")
       .set("Accept", "application/json")
@@ -122,7 +122,7 @@ describe("Test Register API", () => {
         expect(response.statusCode).toBe(400);
         expect(response.body).toEqual(
           expect.objectContaining({
-            message: expect.arrayContaining(expecting),
+            message: expect.arrayContaining(expecting)
           })
         );
         done();
@@ -133,7 +133,7 @@ describe("Test Register API", () => {
     request(app)
       .post("/api/auth/register")
       .send({
-        name: "Test User",
+        name: "Test User"
       })
       .set("Content-Type", "application/json")
       .set("Accept", "application/json")
@@ -141,7 +141,7 @@ describe("Test Register API", () => {
         expect(response.statusCode).toBe(400);
         expect(response.body).toEqual(
           expect.objectContaining({
-            message: expect.arrayContaining(expecting),
+            message: expect.arrayContaining(expecting)
           })
         );
         done();
@@ -158,7 +158,7 @@ describe("Test Register API", () => {
         expect(response.statusCode).toBe(400);
         expect(response.body).toEqual(
           expect.objectContaining({
-            message: expect.arrayContaining(expecting),
+            message: expect.arrayContaining(expecting)
           })
         );
         done();

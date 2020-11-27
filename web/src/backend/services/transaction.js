@@ -6,9 +6,9 @@ export const createTransaction = async ({ receiver, sender, assets }) => {
   let result = await new transactionModel({
     receiver: mongoose.Types.ObjectId(receiver),
     sender: mongoose.Types.ObjectId(sender),
-    assets,
+    assets
   });
-  
+
   return { result, status: true };
 };
 
@@ -38,7 +38,12 @@ export const syncTransaction = async ({ _id, receiver, sender, assets }) => {
   let transaction = await transactionModel.findOne({ _id: mongoose.Types.ObjectId(_id) }).lean();
   if (!transaction) {
     try {
-      const newTransaction = await transactionModel.create({ _id: mongoose.Types.ObjectId(_id), receiver, sender, assets });
+      const newTransaction = await transactionModel.create({
+        _id: mongoose.Types.ObjectId(_id),
+        receiver,
+        sender,
+        assets
+      });
       return newTransaction;
     } catch (err) {
       console.log(err);

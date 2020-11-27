@@ -1,5 +1,5 @@
-import { createTransaction, getTransactionById, populateTransaction } from "../services/transaction";
-import { OK_RESPONSE, HANDLED_ERROR_RESPONSE } from "../constants/http";
+import { createTransaction, getTransactionById } from "../services/transaction";
+import { HANDLED_ERROR_RESPONSE, OK_RESPONSE } from "../constants/http";
 import { validateCreateTransaction } from "../validators/transactionValidator";
 import { createTransactionRequest } from "../requests/transaction";
 
@@ -15,7 +15,7 @@ export const createTransactionController = async (req, res) => {
   let { result, status } = await createTransaction({
     receiver,
     sender,
-    assets,
+    assets
   });
   if (!status) {
     return res
@@ -35,9 +35,18 @@ export const createTransactionController = async (req, res) => {
         .json({ message: createTransactionResult.message });
     }
   }
-  await result.save();
-  const transaction = await getTransactionById(result._id);
-  return res.status(OK_RESPONSE).json(transaction);
+  await result.save((err) => {
+    if (err) {
+      console.log(err);
+      return res.status(HANDLED_ERROR_RESPONSE).json({ message: err });
+    }
+    result.populate({ path: "sender", select: "name" })
+      .populate({ path: "receiver", select: "name" })
+      .populate({ path: "assets", select: "name" }).execPopulate().then((transaction) => {
+      return res.status(OK_RESPONSE).json(transaction);
+    });
+  });
+
 };
 
 export const getTransactionController = async (req, res) => {

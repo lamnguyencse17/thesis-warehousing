@@ -6,7 +6,7 @@ describe("Test Login User Validator", () => {
     expect(validateLogInUser(passCase)).toEqual(
       expect.objectContaining({
         status: true,
-        message: [],
+        message: []
       })
     );
     done();
@@ -16,7 +16,7 @@ describe("Test Login User Validator", () => {
     expect(validateLogInUser(testcase)).toEqual(
       expect.objectContaining({
         status: false,
-        message: ["Invalid email"],
+        message: ["Invalid email"]
       })
     );
     done();
@@ -26,7 +26,7 @@ describe("Test Login User Validator", () => {
     expect(validateLogInUser(testcase)).toEqual(
       expect.objectContaining({
         status: false,
-        message: ["Invalid password"],
+        message: ["Invalid password"]
       })
     );
     done();
@@ -36,7 +36,7 @@ describe("Test Login User Validator", () => {
     expect(validateLogInUser(testcase)).toEqual(
       expect.objectContaining({
         status: false,
-        message: ["Invalid email", "Invalid password"],
+        message: ["Invalid email", "Invalid password"]
       })
     );
     done();
@@ -48,12 +48,12 @@ describe("Test Register User Validator", () => {
     const passCase = {
       email: "lamnguyen@gmail.com",
       password: "123456",
-      name: "Lam",
+      name: "Lam"
     };
     expect(validateCreateUser(passCase)).toEqual(
       expect.objectContaining({
         status: true,
-        message: [],
+        message: []
       })
     );
     done();
@@ -63,7 +63,7 @@ describe("Test Register User Validator", () => {
     expect(validateCreateUser(testCase)).toEqual(
       expect.objectContaining({
         status: false,
-        message: ["Invalid email"],
+        message: ["Invalid email"]
       })
     );
     done();
@@ -73,7 +73,7 @@ describe("Test Register User Validator", () => {
     expect(validateCreateUser(testCase)).toEqual(
       expect.objectContaining({
         status: false,
-        message: ["Invalid password"],
+        message: ["Invalid password"]
       })
     );
     done();
@@ -83,7 +83,7 @@ describe("Test Register User Validator", () => {
     expect(validateCreateUser(testCase)).toEqual(
       expect.objectContaining({
         status: false,
-        message: ["Invalid name"],
+        message: ["Invalid name"]
       })
     );
     done();
@@ -93,7 +93,7 @@ describe("Test Register User Validator", () => {
     expect(validateCreateUser(testCase)).toEqual(
       expect.objectContaining({
         status: false,
-        message: ["Invalid email", "Invalid password"],
+        message: ["Invalid email", "Invalid password"]
       })
     );
     done();
@@ -103,7 +103,7 @@ describe("Test Register User Validator", () => {
     expect(validateCreateUser(testCase)).toEqual(
       expect.objectContaining({
         status: false,
-        message: ["Invalid name", "Invalid email", "Invalid password"],
+        message: ["Invalid name", "Invalid email", "Invalid password"]
       })
     );
     done();

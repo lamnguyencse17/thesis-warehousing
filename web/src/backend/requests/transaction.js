@@ -13,7 +13,7 @@ export const createTransactionRequest = async ({ ID, IDs, newOwner, oldOwner }) 
     return {
       status: false,
       errCode: err.response.status,
-      message: err.response.data.message,
+      message: err.response.data.message
     };
   }
 };

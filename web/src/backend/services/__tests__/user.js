@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import userModel from "../../models/users";
-import { getUserById, getUserByEmail, createUser } from "../user";
+import { createUser, getUserByEmail, getUserById } from "../user";
 import { hashPassword } from "../../utils/password";
 
 describe("Test User Service", () => {
@@ -10,12 +10,12 @@ describe("Test User Service", () => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useFindAndModify: false,
-      useCreateIndex: true,
+      useCreateIndex: true
     });
     testUser = await userModel.create({
       name: "Test User",
       password: await hashPassword("123456"),
-      email: "testUser@gmail.com",
+      email: "testUser@gmail.com"
     });
   });
 
@@ -41,7 +41,7 @@ describe("Test User Service", () => {
         name: "Test User",
         password: expect.any(String),
         email: "testUser@gmail.com",
-        __v: 0,
+        __v: 0
       })
     );
     done();
@@ -60,7 +60,7 @@ describe("Test User Service", () => {
         name: "Test User",
         password: expect.any(String),
         email: "testUser@gmail.com",
-        __v: 0,
+        __v: 0
       })
     );
     done();
@@ -74,7 +74,7 @@ describe("Test User Service", () => {
     const user = await createUser({
       name: "Test User 2",
       password: await hashPassword("123456"),
-      email: "testUser2@gmail.com",
+      email: "testUser2@gmail.com"
     });
     expect(user.status).toBeTruthy();
     expect(user.result).toEqual(
@@ -83,7 +83,7 @@ describe("Test User Service", () => {
         name: "Test User 2",
         password: expect.any(String),
         email: "testUser2@gmail.com",
-        __v: 0,
+        __v: 0
       })
     );
     done();

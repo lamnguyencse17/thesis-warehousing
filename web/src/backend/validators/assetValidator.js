@@ -1,9 +1,4 @@
-import {
-  isValidAssetDescription,
-  isValidAssetName,
-  isValidQuantity,
-  isValidUnit,
-} from "./utils";
+import { isValidAssetDescription, isValidAssetName, isValidQuantity, isValidUnit } from "./utils";
 
 export const validateCreateAsset = ({ description, unit, name, quantity }) => {
   let status = true;

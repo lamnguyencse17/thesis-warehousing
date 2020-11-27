@@ -1,11 +1,8 @@
-import { OK_RESPONSE, HANDLED_ERROR_RESPONSE } from "../constants/http";
+import { HANDLED_ERROR_RESPONSE, OK_RESPONSE } from "../constants/http";
 import { createUser, getUserByEmail, getUserById } from "../services/user";
-import { hashPassword, comparePassword } from "../utils/password";
+import { comparePassword, hashPassword } from "../utils/password";
 import createToken from "../utils/token";
-import {
-  validateCreateUser,
-  validateLogInUser,
-} from "../validators/userValidator";
+import { validateCreateUser, validateLogInUser } from "../validators/userValidator";
 
 export const registerController = async (req, res) => {
   const { email, name } = req.body;
@@ -54,10 +51,10 @@ export const logInController = async (req, res) => {
     .status(OK_RESPONSE)
     .cookie("token", token, {
       maxAge: 3600000,
-      httpOnly: true,
+      httpOnly: true
     })
     .json({
-      token,
+      token
     });
 };
 
