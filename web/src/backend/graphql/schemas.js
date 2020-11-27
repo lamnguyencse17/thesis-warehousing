@@ -4,12 +4,12 @@ import transactionSchema from "./schemas/transaction";
 import { gql } from "apollo-server-express";
 
 const Schema = gql`
-    type Query {
-        _: Boolean
-    }
-    type Mutation {
-        _: Boolean
-    }
+	type Query {
+		_: Boolean
+	}
+	type Mutation {
+		_: Boolean
+	}
 `;
 
 export default [Schema, userSchema, assetSchema, transactionSchema];

@@ -5,7 +5,6 @@ import compression from "compression";
 import cookieParser from "cookie-parser";
 // import path from "path";
 
-
 const app = express();
 app.use(morgan("tiny"));
 app.use(cookieParser());
