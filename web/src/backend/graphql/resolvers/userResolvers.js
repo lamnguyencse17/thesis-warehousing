@@ -1,9 +1,9 @@
 export default {
-  // Query: {
-  //     user: () => {},
-  //     users: () => {}
-  // },
-  // Mutation: {
-  //     // createTransaction: () => {},
-  // }
+	// Query: {
+	//     user: () => {},
+	//     users: () => {}
+	// },
+	// Mutation: {
+	//     // createTransaction: () => {},
+	// }
 };
