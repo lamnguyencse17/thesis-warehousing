@@ -1,4 +1,4 @@
-import axios from "axios"
+import axios from "axios";
 
 export const createAssetRequest = async ({
 	ID,
@@ -8,7 +8,7 @@ export const createAssetRequest = async ({
 	description,
 	owner,
 }) => {
-	const url = `${process.env.LEDGER_SERVER}/asset/`
+	const url = `${process.env.LEDGER_SERVER}/asset/`;
 	try {
 		await axios.post(url, {
 			ID,
@@ -17,13 +17,13 @@ export const createAssetRequest = async ({
 			unit,
 			description,
 			owner,
-		})
-		return { status: true }
+		});
+		return { status: true };
 	} catch (err) {
 		return {
 			status: false,
 			errCode: err.response.status,
 			message: err.response.data.message,
-		}
+		};
 	}
-}
+};

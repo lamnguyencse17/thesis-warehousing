@@ -1,16 +1,16 @@
-import assetModel from "../models/assets"
-import mongoose from "mongoose"
+import assetModel from "../models/assets";
+import mongoose from "mongoose";
 
 export const getAssetById = async (assetId) => {
 	const result = await assetModel.findOne({
 		_id: mongoose.Types.ObjectId(assetId),
-	})
-	let status = true
+	});
+	let status = true;
 	if (!result) {
-		status = false
+		status = false;
 	}
-	return { result, status }
-}
+	return { result, status };
+};
 
 export const createAsset = async ({
 	name,
@@ -25,9 +25,9 @@ export const createAsset = async ({
 		unit,
 		description,
 		owner: mongoose.Types.ObjectId(owner),
-	})
-	return { asset, status: true }
-}
+	});
+	return { asset, status: true };
+};
 
 export const syncAsset = async ({
 	_id,
@@ -37,7 +37,7 @@ export const syncAsset = async ({
 	description,
 	owner,
 }) => {
-	let asset = await assetModel.exists({ _id: mongoose.Types.ObjectId(_id) })
+	let asset = await assetModel.exists({ _id: mongoose.Types.ObjectId(_id) });
 	if (!asset) {
 		try {
 			const newAsset = await assetModel.create({
@@ -47,10 +47,10 @@ export const syncAsset = async ({
 				unit,
 				description,
 				owner: mongoose.Types.ObjectId(owner),
-			})
-			return newAsset
+			});
+			return newAsset;
 		} catch (err) {
-			console.log(err)
+			console.log(err);
 		}
 	}
-}
+};

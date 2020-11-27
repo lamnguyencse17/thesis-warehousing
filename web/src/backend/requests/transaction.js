@@ -1,4 +1,4 @@
-import axios from "axios"
+import axios from "axios";
 
 export const createTransactionRequest = async ({
 	ID,
@@ -6,15 +6,15 @@ export const createTransactionRequest = async ({
 	newOwner,
 	oldOwner,
 }) => {
-	const url = `${process.env.LEDGER_SERVER}/transfer`
+	const url = `${process.env.LEDGER_SERVER}/transfer`;
 	try {
-		await axios.post(url, { ID, IDs, newOwner, oldOwner })
-		return { status: true }
+		await axios.post(url, { ID, IDs, newOwner, oldOwner });
+		return { status: true };
 	} catch (err) {
 		return {
 			status: false,
 			errCode: err.response.status,
 			message: err.response.data.message,
-		}
+		};
 	}
-}
+};

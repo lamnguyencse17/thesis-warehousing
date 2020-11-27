@@ -6,4 +6,5 @@
 	"singleQuote": false,
 	"useTabs": true,
 	"endOfLine": "auto"
+	"semi":true
 }

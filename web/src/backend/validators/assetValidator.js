@@ -4,7 +4,7 @@ import {
 	isValidMongoId,
 	isValidQuantity,
 	isValidUnit,
-} from "./utils"
+} from "./utils";
 
 export const validateCreateAsset = ({
 	description,
@@ -13,29 +13,29 @@ export const validateCreateAsset = ({
 	quantity,
 	owner,
 }) => {
-	let status = true
-	let message = []
+	let status = true;
+	let message = [];
 	if (!isValidAssetName(name)) {
-		status = false
-		message.push("Invalid name")
+		status = false;
+		message.push("Invalid name");
 	}
 	if (!isValidMongoId(owner)) {
-		status = false
-		message.push("Invalid owner")
+		status = false;
+		message.push("Invalid owner");
 	}
 	if (description) {
 		if (!isValidAssetDescription(description)) {
-			status = false
-			message.push("Invalid description")
+			status = false;
+			message.push("Invalid description");
 		}
 	}
 	if (!isValidQuantity(quantity)) {
-		status = false
-		message.push("Invalid quantity")
+		status = false;
+		message.push("Invalid quantity");
 	}
 	if (!isValidUnit(unit)) {
-		status = false
-		message.push("Invalid unit")
+		status = false;
+		message.push("Invalid unit");
 	}
-	return { status, message }
-}
+	return { status, message };
+};

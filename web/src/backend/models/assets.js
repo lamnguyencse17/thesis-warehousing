@@ -1,7 +1,7 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 
-const Assets = mongoose.Schema
-const ObjectId = mongoose.Schema.Types.ObjectId
+const Assets = mongoose.Schema;
+const ObjectId = mongoose.Schema.Types.ObjectId;
 
 export const AssetSchema = new Assets(
 	{
@@ -13,8 +13,8 @@ export const AssetSchema = new Assets(
 		owner: { type: ObjectId, ref: "User", required: true },
 	},
 	{ _id: false }
-)
+);
 
-const assetModel = mongoose.model("Assets", AssetSchema)
+const assetModel = mongoose.model("Assets", AssetSchema);
 
-export default assetModel
+export default assetModel;

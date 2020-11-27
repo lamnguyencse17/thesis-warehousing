@@ -1,52 +1,52 @@
-import request from "supertest"
-import app from "../app"
-import mongoose from "mongoose"
-import assetModel from "../models/assets"
-import passport from "passport"
-import userModel from "../models/users"
-import { hashPassword } from "../utils/password"
+import request from "supertest";
+import app from "../app";
+import mongoose from "mongoose";
+import assetModel from "../models/assets";
+import passport from "passport";
+import userModel from "../models/users";
+import { hashPassword } from "../utils/password";
 
-let savedCookies
+let savedCookies;
 
 describe("Test Asset related API", () => {
-	process.env.MODE = "test"
-	let TestObj
-	let testUser
+	process.env.MODE = "test";
+	let TestObj;
+	let testUser;
 	beforeAll(async () => {
-		require("../utils/passport")(passport)
+		require("../utils/passport")(passport);
 		await mongoose.connect(process.env.MONGODB_URI, {
 			useNewUrlParser: true,
 			useUnifiedTopology: true,
 			useFindAndModify: false,
 			useCreateIndex: true,
-		})
+		});
 		testUser = await userModel.create({
 			name: "Test User",
 			password: await hashPassword("123456"),
 			email: "testUser0@gmail.com",
-		})
+		});
 		TestObj = await assetModel.create({
 			name: "Thung Tao Test",
 			quantity: 3,
 			unit: 0,
 			description: "Thung Tao Test",
 			owner: testUser._id,
-		})
-	})
+		});
+	});
 
 	afterAll(async (done) => {
 		await assetModel.deleteOne({ name: "Thung Tao Test" }, (err) => {
 			if (err) {
-				console.log(err)
+				console.log(err);
 			}
-		})
+		});
 		await assetModel.deleteOne({ name: "Thung Tao Test 2" }, (err) => {
 			if (err) {
-				console.log(err)
+				console.log(err);
 			}
-		})
-		mongoose.disconnect(done)
-	})
+		});
+		mongoose.disconnect(done);
+	});
 
 	// it('Login With Agent', async (done) => {
 	//     request(app).post("/api/auth/login").send({
@@ -80,7 +80,7 @@ describe("Test Asset related API", () => {
 			.set("Accept", "application/json")
 			//   .set("Cookie", savedCookies)
 			.then((response) => {
-				expect(response.statusCode).toBe(200)
+				expect(response.statusCode).toBe(200);
 				expect(JSON.stringify(response.body)).toEqual(
 					JSON.stringify({
 						_id: TestObj._id,
@@ -91,10 +91,10 @@ describe("Test Asset related API", () => {
 						owner: testUser._id,
 						__v: 0,
 					})
-				)
-				done()
-			})
-	})
+				);
+				done();
+			});
+	});
 	it("Get Asset Info - Bad ID", async (done) => {
 		request(app)
 			.get(`/api/assets/5fb392d6dab9670184275ecd`)
@@ -102,10 +102,10 @@ describe("Test Asset related API", () => {
 			.set("Accept", "application/json")
 			//   .set("Cookie", savedCookies)
 			.then((response) => {
-				expect(response.statusCode).toBe(400)
-				done()
-			})
-	})
+				expect(response.statusCode).toBe(400);
+				done();
+			});
+	});
 	it("Create New Asset - Success", async (done) => {
 		request(app)
 			.post(`/api/assets/`)
@@ -120,8 +120,8 @@ describe("Test Asset related API", () => {
 			.set("Accept", "application/json")
 			//   .set("Cookie", savedCookies)
 			.then((response) => {
-				expect(response.statusCode).toBe(200)
-				delete response.body._id
+				expect(response.statusCode).toBe(200);
+				delete response.body._id;
 				expect(JSON.stringify(response.body)).toEqual(
 					JSON.stringify({
 						name: "Thung Tao Test 2",
@@ -130,12 +130,12 @@ describe("Test Asset related API", () => {
 						description: "Thung Tao Test",
 						owner: testUser._id,
 					})
-				)
-				done()
-			})
-	})
+				);
+				done();
+			});
+	});
 	it("Create New Asset - Missing name", async (done) => {
-		const expecting = ["Invalid name"]
+		const expecting = ["Invalid name"];
 		request(app)
 			.post(`/api/assets/`)
 			.send({
@@ -148,17 +148,17 @@ describe("Test Asset related API", () => {
 			.set("Accept", "application/json")
 			//   .set("Cookie", savedCookies)
 			.then((response) => {
-				expect(response.statusCode).toBe(400)
+				expect(response.statusCode).toBe(400);
 				expect(response.body).toEqual(
 					expect.objectContaining({
 						message: expect.arrayContaining(expecting),
 					})
-				)
-				done()
-			})
-	})
+				);
+				done();
+			});
+	});
 	it("Create New Asset - Missing quantity", async (done) => {
-		const expecting = ["Invalid quantity"]
+		const expecting = ["Invalid quantity"];
 		request(app)
 			.post(`/api/assets/`)
 			.send({
@@ -171,17 +171,17 @@ describe("Test Asset related API", () => {
 			.set("Accept", "application/json")
 			//   .set("Cookie", savedCookies)
 			.then((response) => {
-				expect(response.statusCode).toBe(400)
+				expect(response.statusCode).toBe(400);
 				expect(response.body).toEqual(
 					expect.objectContaining({
 						message: expect.arrayContaining(expecting),
 					})
-				)
-				done()
-			})
-	})
+				);
+				done();
+			});
+	});
 	it("Create New Asset - Invalid unit", async (done) => {
-		const expecting = ["Invalid unit"]
+		const expecting = ["Invalid unit"];
 		request(app)
 			.post(`/api/assets/`)
 			.send({
@@ -195,17 +195,17 @@ describe("Test Asset related API", () => {
 			.set("Accept", "application/json")
 			//   .set("Cookie", savedCookies)
 			.then((response) => {
-				expect(response.statusCode).toBe(400)
+				expect(response.statusCode).toBe(400);
 				expect(response.body).toEqual(
 					expect.objectContaining({
 						message: expect.arrayContaining(expecting),
 					})
-				)
-				done()
-			})
-	})
+				);
+				done();
+			});
+	});
 	it("Create New Asset - Missing 2 value", async (done) => {
-		const expecting = ["Invalid unit", "Invalid quantity"]
+		const expecting = ["Invalid unit", "Invalid quantity"];
 		request(app)
 			.post(`/api/assets/`)
 			.send({
@@ -217,13 +217,13 @@ describe("Test Asset related API", () => {
 			.set("Accept", "application/json")
 			//   .set("Cookie", savedCookies)
 			.then((response) => {
-				expect(response.statusCode).toBe(400)
+				expect(response.statusCode).toBe(400);
 				expect(response.body).toEqual(
 					expect.objectContaining({
 						message: expect.arrayContaining(expecting),
 					})
-				)
-				done()
-			})
-	})
-})
+				);
+				done();
+			});
+	});
+});

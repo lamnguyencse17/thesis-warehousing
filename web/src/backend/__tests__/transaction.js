@@ -1,65 +1,65 @@
-import request from "supertest"
-import app from "../app"
-import mongoose from "mongoose"
-import transactionModel from "../models/transactions"
-import passport from "passport"
-import userModel from "../models/users"
-import assetModel from "../models/assets"
+import request from "supertest";
+import app from "../app";
+import mongoose from "mongoose";
+import transactionModel from "../models/transactions";
+import passport from "passport";
+import userModel from "../models/users";
+import assetModel from "../models/assets";
 
 describe("Test Transaction related API", () => {
-	process.env.MODE = "test"
-	let User1
-	let User2
-	let Asset
-	let TestObj
+	process.env.MODE = "test";
+	let User1;
+	let User2;
+	let Asset;
+	let TestObj;
 	beforeAll(async () => {
-		require("../utils/passport")(passport)
+		require("../utils/passport")(passport);
 		await mongoose.connect(process.env.MONGODB_URI, {
 			useNewUrlParser: true,
 			useUnifiedTopology: true,
 			useFindAndModify: false,
 			useCreateIndex: true,
-		})
+		});
 		User1 = await userModel.create({
 			name: "Lam Nguyen1",
 			email: "lamnguyen1@gmail.com",
 			password: "123456",
-		})
+		});
 		User2 = await userModel.create({
 			name: "Lam Nguyen2",
 			email: "lamnguyen2@gmail.com",
 			password: "123456",
-		})
+		});
 		Asset = await assetModel.create({
 			name: "Thung Tao",
 			quantity: 5,
 			unit: 0,
 			description: "",
 			owner: User1._id,
-		})
+		});
 		TestObj = await transactionModel.create({
 			sender: `${User1._id}`,
 			receiver: `${User2._id}`,
 			assets: [`${Asset._id}`],
-		})
-	})
+		});
+	});
 
 	afterAll(async (done) => {
 		await transactionModel.deleteOne({ sender: `${User1._id}` }, (err) => {
 			if (err) {
-				console.log(err)
+				console.log(err);
 			}
-		})
+		});
 		await transactionModel.deleteOne({ sender: `${User2._id}` }, (err) => {
 			if (err) {
-				console.log(err)
+				console.log(err);
 			}
-		})
-		await assetModel.deleteOne({ _id: mongoose.Types.ObjectId(Asset._id) })
-		await userModel.deleteOne({ _id: mongoose.Types.ObjectId(User1._id) })
-		await userModel.deleteOne({ _id: mongoose.Types.ObjectId(User2._id) })
-		mongoose.disconnect(done)
-	})
+		});
+		await assetModel.deleteOne({ _id: mongoose.Types.ObjectId(Asset._id) });
+		await userModel.deleteOne({ _id: mongoose.Types.ObjectId(User1._id) });
+		await userModel.deleteOne({ _id: mongoose.Types.ObjectId(User2._id) });
+		mongoose.disconnect(done);
+	});
 
 	// it('Login With Agent', async (done) => {
 	//     request(app).post("/api/auth/login").send({
@@ -93,7 +93,7 @@ describe("Test Transaction related API", () => {
 			.set("Accept", "application/json")
 			//   .set("Cookie", savedCookies)
 			.then((response) => {
-				expect(response.statusCode).toBe(200)
+				expect(response.statusCode).toBe(200);
 				expect(response.body).toEqual(
 					expect.objectContaining({
 						_id: expect.any(String),
@@ -113,10 +113,10 @@ describe("Test Transaction related API", () => {
 						},
 						__v: 0,
 					})
-				)
-				done()
-			})
-	})
+				);
+				done();
+			});
+	});
 	it("Get Transaction Info - Bad ID", async (done) => {
 		request(app)
 			.get(`/api/transactions/5fb392d6dab9670184275ecd`)
@@ -124,10 +124,10 @@ describe("Test Transaction related API", () => {
 			.set("Accept", "application/json")
 			//   .set("Cookie", savedCookies)
 			.then((response) => {
-				expect(response.statusCode).toBe(400)
-				done()
-			})
-	})
+				expect(response.statusCode).toBe(400);
+				done();
+			});
+	});
 	it("Create Transaction Asset - Success", async (done) => {
 		request(app)
 			.post(`/api/transactions/`)
@@ -140,7 +140,7 @@ describe("Test Transaction related API", () => {
 			.set("Accept", "application/json")
 			//   .set("Cookie", savedCookies)
 			.then((response) => {
-				expect(response.statusCode).toBe(200)
+				expect(response.statusCode).toBe(200);
 				expect(response.body).toEqual(
 					expect.objectContaining({
 						_id: expect.any(String),
@@ -160,12 +160,12 @@ describe("Test Transaction related API", () => {
 						},
 						__v: 0,
 					})
-				)
-				done()
-			})
-	})
+				);
+				done();
+			});
+	});
 	it("Create Transaction - Empty Assets", async (done) => {
-		const expecting = ["Assets are empty"]
+		const expecting = ["Assets are empty"];
 		request(app)
 			.post(`/api/transactions/`)
 			.send({
@@ -177,17 +177,17 @@ describe("Test Transaction related API", () => {
 			.set("Accept", "application/json")
 			//   .set("Cookie", savedCookies)
 			.then((response) => {
-				expect(response.statusCode).toBe(400)
+				expect(response.statusCode).toBe(400);
 				expect(response.body).toEqual(
 					expect.objectContaining({
 						message: expect.arrayContaining(expecting),
 					})
-				)
-				done()
-			})
-	})
+				);
+				done();
+			});
+	});
 	it("Create Transaction Asset - Failed ID", async (done) => {
-		const expecting = ["Invalid sender"]
+		const expecting = ["Invalid sender"];
 		request(app)
 			.post(`/api/transactions/`)
 			.send({
@@ -199,15 +199,15 @@ describe("Test Transaction related API", () => {
 			.set("Accept", "application/json")
 			//   .set("Cookie", savedCookies)
 			.then((response) => {
-				expect(response.statusCode).toBe(400)
+				expect(response.statusCode).toBe(400);
 				expect(response.body).toEqual(
 					expect.objectContaining({
 						message: expect.arrayContaining(expecting),
 					})
-				)
-				done()
-			})
-	})
+				);
+				done();
+			});
+	});
 	//   it("Create New Asset - Missing name", async (done) => {
 	//     const expecting = ["Invalid name"];
 	//     request(app)
@@ -296,4 +296,4 @@ describe("Test Transaction related API", () => {
 	//         done();
 	//       });
 	//   });
-})
+});

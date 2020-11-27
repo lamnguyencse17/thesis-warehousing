@@ -1,6 +1,6 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 
-const Transactions = mongoose.Schema
+const Transactions = mongoose.Schema;
 
 export const TransactionsSchema = new Transactions(
 	{
@@ -20,7 +20,7 @@ export const TransactionsSchema = new Transactions(
 		],
 	},
 	{ _id: false }
-)
+);
 
-const transactionModel = mongoose.model("Transactions", TransactionsSchema)
-export default transactionModel
+const transactionModel = mongoose.model("Transactions", TransactionsSchema);
+export default transactionModel;
