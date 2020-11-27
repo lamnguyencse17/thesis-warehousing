@@ -1,12 +1,12 @@
-import express from "express";
+import express from "express"
 
 const {
-  getAssetController,
-  createAssetController
-} = require("../controllers/asset");
-const router = express.Router();
+	getAssetController,
+	createAssetController,
+} = require("../controllers/asset")
+const router = express.Router()
 
-router.get("/:assetId", getAssetController);
-router.post("/", createAssetController);
+router.get("/:assetId", getAssetController)
+router.post("/", createAssetController)
 
-module.exports = router;
+module.exports = router
