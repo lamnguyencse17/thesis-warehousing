@@ -44,10 +44,6 @@ export default StyleSheet.create({
     padding: 5,
     color: '#FFF',
   },
-  buttonSubmit: {
-    position: 'absolute',
-    top: 10,
-  },
   generateButton: {
     height: 40,
     width: Styles.width / 4,

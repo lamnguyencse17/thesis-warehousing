@@ -12,7 +12,7 @@ export default class QRcodeComponent extends Component {
       data: null,
       showModal: false,
       active: false,
-      type: '',
+      type: 0,
     };
   }
 
@@ -22,15 +22,12 @@ export default class QRcodeComponent extends Component {
       data = JSON.parse(data);
     }
     this.setState({showModal: true, data: data, reactivate: false});
-    if (this.props.type !== 'undefined' && this.props.type === 'asset') {
-      this.setState({type: 'asset'});
-      this.props.addDataToAssets(data);
-    } else if (
-      this.props.type !== 'undefined' &&
-      this.props.type === 'receiver'
-    ) {
-      this.setState({type: 'receiver'});
-      this.props.addDataToReceiver(data);
+    if (this.props.type !== 'undefined' && this.props.type === 2) {
+      this.setState({type: 2});
+      this.props.assetsData(data);
+    } else if (this.props.type !== 'undefined' && this.props.type === 1) {
+      this.setState({type: 1});
+      this.props.receiverData(data);
     }
   };
 
@@ -40,6 +37,7 @@ export default class QRcodeComponent extends Component {
 
   render() {
     const {data, showModal, type} = this.state;
+    console.log(type);
     return (
       <QRCodeScanner
         onRead={this.onSuccess}
@@ -55,7 +53,7 @@ export default class QRcodeComponent extends Component {
           </View>
         }
         bottomContent={
-          showModal == false ? null : type == 'asset' ? (
+          showModal == false ? null : type == 2 ? (
             <View style={styles.bottomView}>
               <Text style={[styles.text, styles.title]}>
                 Thông tin sản phẩm
