@@ -24,10 +24,10 @@ export default class QRcodeComponent extends Component {
     this.setState({showModal: true, data: data, reactivate: false});
     if (this.props.type !== 'undefined' && this.props.type === 2) {
       this.setState({type: 2});
-      this.props.assetsData(data);
+      this.props.addDataToAssets(data);
     } else if (this.props.type !== 'undefined' && this.props.type === 1) {
       this.setState({type: 1});
-      this.props.receiverData(data);
+      this.props.addDataToReceiver(data);
     }
   };
 

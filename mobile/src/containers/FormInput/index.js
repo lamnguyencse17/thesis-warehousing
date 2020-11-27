@@ -17,9 +17,8 @@ export default class FormInput extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      receiver: [],
-      assets: [],
-      sender: [],
+      receiverData: [],
+      assetData: [],
       visible: false,
       type: 0,
     };
@@ -40,8 +39,8 @@ export default class FormInput extends Component {
     );
   };
   handleSubmitTransaction = async () => {
-    const assets = this.state.assets.map((asset) => asset._id);
-    const receiver = this.state.receiver._id;
+    const assets = this.state.assetData.map((asset) => asset._id);
+    const receiver = this.state.receiverData._id;
     const sender = '5fb411df8173b602387d8768';
     const createTransactionResult = await createTransactionRequest({
       receiver,
@@ -55,19 +54,19 @@ export default class FormInput extends Component {
     console.log('Success');
   };
 
-  assetsData = (data) => {
+  addDataToAssets = (data) => {
     if (data.name === 'undefined') {
       return;
     }
-    this.setState({assets: [...this.state.assets, data]});
+    this.setState({assetData: [...this.state.assetData, data]});
   };
 
-  receiverData = (data) => {
+  addDataToReceiver = (data) => {
     if (data.receiver === 'undefined') {
       return;
     }
 
-    this.setState({receiver: data});
+    this.setState({receiverData: data});
   };
 
   setType = (type) => {
@@ -75,13 +74,13 @@ export default class FormInput extends Component {
   };
 
   render() {
-    const {visible, assets, type, receiver} = this.state;
+    const {visible, assetData, type, receiverData} = this.state;
     return (
       <View style={styles.container}>
         <Modal visible={visible} animationType="slide">
           <QRCode
-            assetsData={this.assetsData}
-            receiverData={this.receiverData}
+            addDataToAssets={this.addDataToAssets}
+            addDataToReceiver={this.addDataToReceiver}
             type={type}
           />
           <TouchableOpacity
@@ -99,16 +98,15 @@ export default class FormInput extends Component {
             <TouchableOpacity
               onPress={() => {
                 this.toggleQRCode();
-
                 this.setType(1);
               }}>
               <Text style={styles.buttonText}>Scan QR</Text>
             </TouchableOpacity>
           </View>
-          {receiver.length == 0 ? null : (
+          {receiverData.length == 0 ? null : (
             <View style={styles.textReceiver}>
-              <Text>ID: {receiver._id}</Text>
-              <Text>Receiver: {receiver.receiver}</Text>
+              <Text>ID: {receiverData._id}</Text>
+              <Text>Receiver: {receiverData.receiver}</Text>
             </View>
           )}
         </View>
@@ -123,10 +121,10 @@ export default class FormInput extends Component {
               <Text style={styles.buttonText}>Scan QR</Text>
             </TouchableOpacity>
           </View>
-          {assets.length == 0 ? null : (
+          {assetData.length == 0 ? null : (
             <View>
               <FlatList
-                data={assets}
+                data={assetData}
                 keyExtractor={this._keyExtractor}
                 renderItem={({item, index}) => this.renderItem(item, index)}
               />
