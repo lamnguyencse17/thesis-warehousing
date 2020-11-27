@@ -26,7 +26,6 @@ export default class FormInput extends Component {
   //Type sender: 0, receiver: 1, assets : 2
   toggleQRCode = () => {
     this.setState((prevState) => ({visible: !prevState.visible}));
-    this.setState({type: type});
   };
 
   _keyExtractor = (item, index) => index.toString();
@@ -46,7 +45,7 @@ export default class FormInput extends Component {
     const createTransactionResult = await createTransactionRequest({
       receiver,
       sender,
-      assetIds,
+      assets,
     });
     if (!createTransactionResult.status) {
       console.log(createTransactionResult.message);

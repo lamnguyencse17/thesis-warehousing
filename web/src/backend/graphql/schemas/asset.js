@@ -1,7 +1,9 @@
 import { gql } from "apollo-server-express";
 
 export default gql`
-    type Asset {id: ID!}
+	type Asset {
+		id: ID!
+	}
 `;
 
 // Add inside when implement
