@@ -2,8 +2,6 @@ import request from "supertest";
 import app from "../app";
 import mongoose from "mongoose";
 import assetModel from "../models/assets";
-import { hashPassword } from "../utils/password";
-import setCookie from "set-cookie-parser";
 import passport from "passport";
 
 let savedCookies;
@@ -16,13 +14,13 @@ describe("Test User related API", () => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useFindAndModify: false,
-      useCreateIndex: true,
+      useCreateIndex: true
     });
     TestObj = await assetModel.create({
       name: "Thung Tao Test",
       quantity: 3,
       unit: 0,
-      description: "Thung Tao Test",
+      description: "Thung Tao Test"
     });
   });
 
@@ -80,7 +78,7 @@ describe("Test User related API", () => {
             quantity: 3,
             unit: 0,
             description: "Thung Tao Test",
-            __v: 0,
+            __v: 0
           })
         );
         done();
@@ -104,7 +102,7 @@ describe("Test User related API", () => {
         name: "Thung Tao Test 2",
         quantity: 5,
         unit: 0,
-        description: "Thung Tao Test",
+        description: "Thung Tao Test"
       })
       .set("Content-Type", "application/json")
       .set("Accept", "application/json")
@@ -117,7 +115,7 @@ describe("Test User related API", () => {
             name: "Thung Tao Test 2",
             quantity: 5,
             unit: 0,
-            description: "Thung Tao Test",
+            description: "Thung Tao Test"
           })
         );
         done();
@@ -130,7 +128,7 @@ describe("Test User related API", () => {
       .send({
         quantity: 5,
         unit: 0,
-        description: "Thung Tao Test",
+        description: "Thung Tao Test"
       })
       .set("Content-Type", "application/json")
       .set("Accept", "application/json")
@@ -139,7 +137,7 @@ describe("Test User related API", () => {
         expect(response.statusCode).toBe(400);
         expect(response.body).toEqual(
           expect.objectContaining({
-            message: expect.arrayContaining(expecting),
+            message: expect.arrayContaining(expecting)
           })
         );
         done();
@@ -152,7 +150,7 @@ describe("Test User related API", () => {
       .send({
         name: "Thung Tao Test 2",
         unit: 0,
-        description: "Thung Tao Test",
+        description: "Thung Tao Test"
       })
       .set("Content-Type", "application/json")
       .set("Accept", "application/json")
@@ -161,7 +159,7 @@ describe("Test User related API", () => {
         expect(response.statusCode).toBe(400);
         expect(response.body).toEqual(
           expect.objectContaining({
-            message: expect.arrayContaining(expecting),
+            message: expect.arrayContaining(expecting)
           })
         );
         done();
@@ -175,7 +173,7 @@ describe("Test User related API", () => {
         name: "Thung Tao Test 2",
         quantity: 5,
         unit: -2,
-        description: "Thung Tao Test",
+        description: "Thung Tao Test"
       })
       .set("Content-Type", "application/json")
       .set("Accept", "application/json")
@@ -184,7 +182,7 @@ describe("Test User related API", () => {
         expect(response.statusCode).toBe(400);
         expect(response.body).toEqual(
           expect.objectContaining({
-            message: expect.arrayContaining(expecting),
+            message: expect.arrayContaining(expecting)
           })
         );
         done();
@@ -196,7 +194,7 @@ describe("Test User related API", () => {
       .post(`/api/assets/`)
       .send({
         name: "Thung Tao Test 2",
-        description: "Thung Tao Test",
+        description: "Thung Tao Test"
       })
       .set("Content-Type", "application/json")
       .set("Accept", "application/json")
@@ -205,7 +203,7 @@ describe("Test User related API", () => {
         expect(response.statusCode).toBe(400);
         expect(response.body).toEqual(
           expect.objectContaining({
-            message: expect.arrayContaining(expecting),
+            message: expect.arrayContaining(expecting)
           })
         );
         done();

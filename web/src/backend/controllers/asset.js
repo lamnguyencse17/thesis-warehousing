@@ -1,8 +1,9 @@
 import { createAsset, getAssetById } from "../services/asset";
-import { OK_RESPONSE, HANDLED_ERROR_RESPONSE } from "../constants/http";
+import { HANDLED_ERROR_RESPONSE, OK_RESPONSE } from "../constants/http";
 import { validateCreateAsset } from "../validators/assetValidator";
 
 import { createAssetRequest } from "../requests/assets";
+
 export const getAssetController = async (req, res) => {
   const assetId = req.params.assetId;
   let { result, status } = await getAssetById(assetId);
@@ -22,7 +23,7 @@ export const createAssetController = async (req, res) => {
     name,
     quantity,
     unit,
-    description,
+    description
   });
   if (!validateResult.status) {
     return res
@@ -34,7 +35,7 @@ export const createAssetController = async (req, res) => {
     name,
     quantity,
     unit,
-    description,
+    description
   });
   if (!status) {
     return res
@@ -49,7 +50,7 @@ export const createAssetController = async (req, res) => {
       name,
       quantity,
       unit,
-      description,
+      description
     });
     if (!assetRequest.status) {
       return res

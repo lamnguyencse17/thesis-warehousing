@@ -6,30 +6,34 @@
 
 "use strict";
 
-import { createCipher } from "crypto";
 import { IAsset } from "./types/asset";
+import { Gateway, Wallets } from "fabric-network";
+import FabricCAServices from "fabric-ca-client";
+import { buildCAClient, enrollAdmin, registerAndEnrollUser } from "./util/CAUtil.js";
+import { buildCCPOrg1, buildWallet } from "./util/AppUtil.js";
+import path from "path";
+import eventHandlers from "./eventHandlers/eventHandlers";
 
-const { Gateway, Wallets } = require("fabric-network");
-const FabricCAServices = require("fabric-ca-client");
-const path = require("path");
-const {
-  buildCAClient,
-  registerAndEnrollUser,
-  enrollAdmin,
-} = require("./util/CAUtil.js");
-const { buildCCPOrg1, buildWallet } = require("./util/AppUtil.js");
 
 const channelName = "mychannel";
 const chaincodeName = "basic";
 const mspOrg1 = "Org1MSP";
 const walletPath = path.join(__dirname, "wallet");
-const org1UserId = "appUser";
+const org1UserId = "1";
+
 
 function prettyJSONString(inputString: string) {
   return JSON.stringify(JSON.parse(inputString), null, 2);
 }
 
 class LedgerClient {
+  ccp: any;
+  caClient: any;
+  wallet: any;
+  gateway: any;
+  network: any;
+  contract: any;
+
   initInstance = async () => {
     try {
       this.ccp = buildCCPOrg1();
@@ -51,14 +55,16 @@ class LedgerClient {
       await this.gateway.connect(this.ccp, {
         wallet: this.wallet,
         identity: org1UserId,
-        discovery: { enabled: true, asLocalhost: true },
+        discovery: { enabled: true, asLocalhost: true }
       });
       this.network = await this.gateway.getNetwork(channelName);
       this.contract = this.network.getContract(chaincodeName);
+      await this.contract.addContractListener(eventHandlers);
     } catch (error) {
       console.error(`******** FAILED to run the application: ${error}`);
     }
   };
+
   initLedger = async () => {
     try {
       await this.contract.submitTransaction("InitLedger");
@@ -67,19 +73,22 @@ class LedgerClient {
     }
     console.log("*** Result: committed");
   };
+
   queryAll = async () => {
     console.log(
       "\n--> Evaluate Transaction: GetAllAssets, function returns all the current assets on the ledger"
     );
     let result = await this.contract.evaluateTransaction("GetAllAssets");
-    return JSON.parse(result)
+    return JSON.parse(result);
   };
+
   queryAsset = async (ID: string) => {
     const result = await this.contract.evaluateTransaction("ReadAsset", ID);
     return JSON.parse(result);
   };
+
   createAsset = async (newAsset: IAsset) => {
-    const {ID} = newAsset
+    const { ID } = newAsset;
     const newAssetString = JSON.stringify(newAsset);
     try {
       await this.contract.submitTransaction("CreateAsset", newAssetString, ID);
@@ -88,20 +97,15 @@ class LedgerClient {
       return false;
     }
   };
-  transferAsset = async (ID: string, newOwner: string) => {
+
+  transferAsset = async (ID: string, IDs:string, newOwner: string, oldOwner: string) => {
     try {
-        await this.contract.submitTransaction("TransferAsset", ID, newOwner);
-        return true;
-      } catch (err) {
-        return false;
-      }
-  }
-  ccp: any;
-  caClient: any;
-  wallet: any;
-  gateway: any;
-  network: any;
-  contract: any;
+      await this.contract.submitTransaction("TransferAsset", ID, IDs, newOwner, oldOwner);
+      return true;
+    } catch (err) {
+      return false;
+    }
+  };
 }
 
 const instance = new LedgerClient();
