@@ -9,7 +9,8 @@ import {
   Returns,
   Transaction,
 } from "fabric-contract-api";
-import { Asset } from "./asset";
+import { Asset } from "./types/asset";
+import { convertStringToAssetArray } from "./util/convertTypes";
 
 @Info({
   title: "AssetTransfer",
@@ -77,18 +78,31 @@ export class AssetTransferContract extends Contract {
   public async CreateAsset(
     ctx: Context,
     newAsset: string,
-    ID: string
   ): Promise<Asset> {
-    // const newAsset = { ID, name, owner, quantity, unit, description };
-    try {
-      await ctx.stub.putState(
-        ID,
-        Buffer.from(newAsset)
-      );
-      ctx.stub.setEvent('CreateAsset', Buffer.from(newAsset));
-    } catch (err) {
-      return err;
+    const convertedAssets = convertStringToAssetArray(newAsset);
+    for (let asset of convertedAssets){
+      try {
+        asset.ID = asset._id;
+        delete asset._id;
+        await ctx.stub.putState(
+          asset._id,
+          Buffer.from(newAsset)
+        );
+      } catch (err) {
+        return err;
+      }
     }
+    ctx.stub.setEvent('CreateAsset', Buffer.from(convertedAssets));
+    // const newAsset = { ID, name, owner, quantity, unit, description };
+    // try {
+    //   await ctx.stub.putState(
+    //     ID,
+    //     Buffer.from(newAsset)
+    //   );
+    //   ctx.stub.setEvent('CreateAsset', Buffer.from(newAsset));
+    // } catch (err) {
+    //   return err;
+    // }
   }
 
   // ReadAsset returns the asset stored in the world state with given id.

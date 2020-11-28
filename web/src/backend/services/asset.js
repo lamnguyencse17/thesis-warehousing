@@ -29,28 +29,28 @@ export const createAsset = async ({
 	return { asset, status: true };
 };
 
-export const syncAsset = async ({
-	_id,
-	name,
-	quantity,
-	unit,
-	description,
-	owner,
-}) => {
-	let asset = await assetModel.exists({ _id: mongoose.Types.ObjectId(_id) });
-	if (!asset) {
-		try {
-			const newAsset = await assetModel.create({
-				_id: mongoose.Types.ObjectId(_id),
-				name,
-				quantity,
-				unit,
-				description,
-				owner: mongoose.Types.ObjectId(owner),
-			});
-			return newAsset;
-		} catch (err) {
-			console.log(err);
+export const syncAsset = async (newAssets) => {
+	for (let asset of newAssets){
+		let {_id,
+			name,
+			quantity,
+			unit,
+			description,
+			owner} = asset;
+		let syncStatus = await assetModel.exists({ _id: mongoose.Types.ObjectId(_id) });
+		if (!syncStatus) {
+			try {
+				await assetModel.create({
+					_id: mongoose.Types.ObjectId(_id),
+					name,
+					quantity,
+					unit,
+					description,
+					owner: mongoose.Types.ObjectId(owner),
+				});
+			} catch (err) {
+				console.log(err);
+			}
 		}
 	}
 };

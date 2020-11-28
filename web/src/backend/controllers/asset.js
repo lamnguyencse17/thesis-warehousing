@@ -1,6 +1,6 @@
 import { createAsset, getAssetById } from "../services/asset";
 import { HANDLED_ERROR_RESPONSE, OK_RESPONSE } from "../constants/http";
-import { validateCreateAsset } from "../validators/assetValidator";
+import {validateCreateAsset, validateOwner} from "../validators/assetValidator";
 
 import { createAssetRequest } from "../requests/assets";
 import { isUserExits } from "../services/user";
@@ -19,18 +19,22 @@ export const getAssetController = async (req, res) => {
 };
 
 export const createAssetController = async (req, res) => {
-	const { name, quantity, unit, description, owner } = req.body;
-	let validateResult = validateCreateAsset({
-		name,
-		quantity,
-		unit,
-		description,
-		owner,
-	});
-	if (!validateResult.status) {
+	const {assets, owner} = req.body;
+	const validateOwnerResult = validateOwner(owner);
+	if (!validateOwnerResult.status){
 		return res
 			.status(HANDLED_ERROR_RESPONSE)
 			.json({ message: validateResult.message });
+	}
+	// const { name, quantity, unit, description, owner } = req.body;
+	let validateResult;
+	for (let asset of assets){
+		validateResult = validateCreateAsset(asset);
+		if (!validateResult.status) {
+			return res
+				.status(HANDLED_ERROR_RESPONSE)
+				.json({ message: validateResult.message });
+		}
 	}
 	const validateUserResult = await isUserExits(owner);
 	if (!validateUserResult) {
@@ -38,36 +42,35 @@ export const createAssetController = async (req, res) => {
 			.status(HANDLED_ERROR_RESPONSE)
 			.json({ message: "User does not exists" });
 	}
-	let { asset, status } = await createAsset({
-		name,
-		quantity,
-		unit,
-		description,
-		owner,
-	});
-	if (!status) {
-		return res
-			.status(HANDLED_ERROR_RESPONSE)
-			.json({ message: "Something went wrong" });
+	// Handled Till Here
+	let newAssets = [];
+	for (let asset of assets){
+		newAssets.push(await createAsset({...asset, owner}));
+		if (!status) {
+			return res
+				.status(HANDLED_ERROR_RESPONSE)
+				.json({ message: "Something went wrong" });
+		}
 	}
-
-	let ID = asset._id;
+	// let { asset, status } = await createAsset({
+	// 	name,
+	// 	quantity,
+	// 	unit,
+	// 	description,
+	// 	owner,
+	// });
+	// let ID = asset._id;
 	if (process.env.MODE != "test" && process.env.NODE_ENV != "test") {
-		let assetRequest = await createAssetRequest({
-			ID,
-			name,
-			quantity,
-			unit,
-			description,
-			owner,
-		});
+		let assetRequest = await createAssetRequest(newAssets);
 		if (!assetRequest.status) {
 			return res
 				.status(HANDLED_ERROR_RESPONSE)
 				.json({ message: "Something went wrong" });
 		}
 	}
-	asset.save();
-	asset = asset.toObject();
-	return res.status(OK_RESPONSE).json(asset);
+	for (let asset of newAssets){
+		asset.save();
+		asset = asset.toObject();
+	}
+	return res.status(OK_RESPONSE).json(newAssets);
 };

@@ -11,17 +11,12 @@ export const validateCreateAsset = ({
 	unit,
 	name,
 	quantity,
-	owner,
 }) => {
 	let status = true;
 	let message = [];
 	if (!isValidAssetName(name)) {
 		status = false;
 		message.push("Invalid name");
-	}
-	if (!isValidMongoId(owner)) {
-		status = false;
-		message.push("Invalid owner");
 	}
 	if (description) {
 		if (!isValidAssetDescription(description)) {
@@ -36,6 +31,16 @@ export const validateCreateAsset = ({
 	if (!isValidUnit(unit)) {
 		status = false;
 		message.push("Invalid unit");
+	}
+	return { status, message };
+};
+
+export const validateOwner = (owner) => {
+	let status = true;
+	let message = [];
+	if (!isValidMongoId(owner)) {
+		status = false;
+		message.push("Invalid owner");
 	}
 	return { status, message };
 };

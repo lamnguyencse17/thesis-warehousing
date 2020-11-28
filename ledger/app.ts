@@ -6,7 +6,7 @@
 
 "use strict";
 
-import { IAsset } from "./types/asset";
+import { IAsset, INewAsset } from "./types/asset";
 import { Gateway, Wallets } from "fabric-network";
 import FabricCAServices from "fabric-ca-client";
 import { buildCAClient, enrollAdmin, registerAndEnrollUser } from "./util/CAUtil.js";
@@ -87,11 +87,10 @@ class LedgerClient {
     return JSON.parse(result);
   };
 
-  createAsset = async (newAsset: IAsset) => {
-    const { ID } = newAsset;
+  createAsset = async (newAsset: INewAsset) => {
     const newAssetString = JSON.stringify(newAsset);
     try {
-      await this.contract.submitTransaction("CreateAsset", newAssetString, ID);
+      await this.contract.submitTransaction("CreateAsset", newAssetString);
       return true;
     } catch (err) {
       return false;

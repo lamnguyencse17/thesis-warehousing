@@ -27,23 +27,17 @@ export class Asset {
   @Property()
   public description: string;
 }
-// export class Asset {
 
+export interface IAsset {
+  docType?: string;
+  ID?: string;
+  _id?: string;
+  name: string;
+  owner: string;
+  quantity: number;
+  unit: number;
+  description: string;
+}
 
-//     @Property()
-//     public ID: string;
-
-//     @Property()
-//     public Color: string;
-
-//     @Property()
-//     public Size: number;
-
-//     @Property()
-//     public Owner: string;
-
-//     @Property()
-//     public AppraisedValue: number;
-// }
-
+export interface INewAsset extends Array<IAsset> {}
 

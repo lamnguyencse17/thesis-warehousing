@@ -1,8 +1,8 @@
 import MqttClient from "../mqtt";
-import { IAsset } from "../types/asset";
+import { IAsset, INewAsset } from "../types/asset";
 import { convertAsset } from "../util/convertPayload";
 
-const CreateAssetHandler = (payload: IAsset) => {
+const CreateAssetHandler = (payload: INewAsset) => {
   const assetPayload = convertAsset(payload);
   setTimeout(() => {
     MqttClient.publishAsset(assetPayload).then(() => {
