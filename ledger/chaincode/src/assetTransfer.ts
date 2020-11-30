@@ -3,7 +3,8 @@
  */
 
 import { Context, Contract, Info, Returns, Transaction } from "fabric-contract-api";
-import { Asset } from "./asset";
+import { Asset } from "./types/asset";
+import {convertStringToAssetArray} from "./util/convertTypes"
 
 @Info({
   title: "AssetTransfer",
