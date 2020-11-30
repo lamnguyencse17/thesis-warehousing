@@ -30,14 +30,11 @@ export const createAsset = async ({
 };
 
 export const syncAsset = async (newAssets) => {
-	for (let asset of newAssets){
-		let {_id,
-			name,
-			quantity,
-			unit,
-			description,
-			owner} = asset;
-		let syncStatus = await assetModel.exists({ _id: mongoose.Types.ObjectId(_id) });
+	for (let asset of newAssets) {
+		let { _id, name, quantity, unit, description, owner } = asset;
+		let syncStatus = await assetModel.exists({
+			_id: mongoose.Types.ObjectId(_id),
+		});
 		if (!syncStatus) {
 			try {
 				await assetModel.create({

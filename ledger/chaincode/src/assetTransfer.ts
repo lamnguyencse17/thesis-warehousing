@@ -80,6 +80,7 @@ export class AssetTransferContract extends Contract {
     newAsset: string,
   ): Promise<Asset> {
     const convertedAssets = convertStringToAssetArray(newAsset);
+    console.log(convertedAssets)
     for (let asset of convertedAssets){
       try {
         asset.ID = asset._id;
@@ -92,7 +93,7 @@ export class AssetTransferContract extends Contract {
         return err;
       }
     }
-    ctx.stub.setEvent('CreateAsset', Buffer.from(convertedAssets));
+    ctx.stub.setEvent('CreateAsset', Buffer.from(JSON.stringify(convertedAssets)));
     // const newAsset = { ID, name, owner, quantity, unit, description };
     // try {
     //   await ctx.stub.putState(

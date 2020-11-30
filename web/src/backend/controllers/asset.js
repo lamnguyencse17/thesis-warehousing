@@ -1,6 +1,10 @@
 import { createAsset, getAssetById } from "../services/asset";
 import { HANDLED_ERROR_RESPONSE, OK_RESPONSE } from "../constants/http";
-import {validateAssetRequest, validateCreateAsset, validateOwner} from "../validators/assetValidator";
+import {
+	validateAssetRequest,
+	validateCreateAsset,
+	validateOwner,
+} from "../validators/assetValidator";
 
 import { createAssetRequest } from "../requests/assets";
 import { isUserExits } from "../services/user";
@@ -19,19 +23,22 @@ export const getAssetController = async (req, res) => {
 };
 
 export const createAssetController = async (req, res) => {
-	const {assets, owner} = req.body;
-	if (!validateAssetRequest(req.body)){
-		return res.status(HANDLED_ERROR_RESPONSE).json({message: "Invalid Request. Please reference usage again"});
+	const { assets, owner } = req.body;
+	const validateRequestFormat = validateAssetRequest(req.body);
+	if (!validateRequestFormat.status) {
+		return res
+			.status(HANDLED_ERROR_RESPONSE)
+			.json({ message: validateRequestFormat.message });
 	}
 	const validateOwnerResult = validateOwner(owner);
-	if (!validateOwnerResult.status){
-				return res
+	if (!validateOwnerResult.status) {
+		return res
 			.status(HANDLED_ERROR_RESPONSE)
 			.json({ message: validateResult.message });
 	}
 	// const { name, quantity, unit, description, owner } = req.body;
 	let validateResult;
-	for (let asset of assets){
+	for (let asset of assets) {
 		validateResult = validateCreateAsset(asset);
 		if (!validateResult.status) {
 			return res
@@ -47,15 +54,14 @@ export const createAssetController = async (req, res) => {
 	}
 	// Handled Till Here
 	let newAssets = [];
-	for (let asset of assets){
-		let createdAsset = await createAsset({...asset, owner});
+	for (let asset of assets) {
+		let createdAsset = await createAsset({ ...asset, owner });
 		if (!createdAsset.status) {
 			return res
 				.status(HANDLED_ERROR_RESPONSE)
 				.json({ message: "Something went wrong" });
 		}
 		newAssets.push(createdAsset.asset);
-		
 	}
 	// let { asset, status } = await createAsset({
 	// 	name,
@@ -73,7 +79,7 @@ export const createAssetController = async (req, res) => {
 				.json({ message: "Something went wrong" });
 		}
 	}
-	for (let asset of newAssets){
+	for (let asset of newAssets) {
 		asset.save();
 		asset = asset.toObject();
 	}
