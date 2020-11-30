@@ -6,7 +6,7 @@
 
 "use strict";
 
-import { IAsset } from "./types/asset";
+import { INewAsset } from "./types/asset";
 import { Gateway, Wallets } from "fabric-network";
 import FabricCAServices from "fabric-ca-client";
 import { buildCAClient, enrollAdmin, registerAndEnrollUser } from "./util/CAUtil.js";
@@ -19,7 +19,7 @@ const channelName = "mychannel";
 const chaincodeName = "basic";
 const mspOrg1 = "Org1MSP";
 const walletPath = path.join(__dirname, "wallet");
-const org1UserId = "1";
+const org1UserId = "4";
 
 
 function prettyJSONString(inputString: string) {
@@ -87,11 +87,10 @@ class LedgerClient {
     return JSON.parse(result);
   };
 
-  createAsset = async (newAsset: IAsset) => {
-    const { ID } = newAsset;
+  createAsset = async (newAsset: INewAsset) => {
     const newAssetString = JSON.stringify(newAsset);
     try {
-      await this.contract.submitTransaction("CreateAsset", newAssetString, ID);
+      await this.contract.submitTransaction("CreateAsset", newAssetString);
       return true;
     } catch (err) {
       return false;

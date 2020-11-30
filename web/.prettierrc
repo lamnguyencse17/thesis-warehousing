@@ -1,10 +1,9 @@
 {
 	"printWidth": 80,
 	"trailingComma": "es5",
-	"semi": false,
 	"jsxSingleQuote": true,
 	"singleQuote": false,
 	"useTabs": true,
-	"endOfLine": "auto"
+	"endOfLine": "auto",
 	"semi":true
 }

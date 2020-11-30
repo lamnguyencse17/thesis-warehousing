@@ -7,10 +7,10 @@ import App from "./App";
 import "../assets/main.css";
 
 ReactDOM.render(
-  <Provider store={store}>
-    <Router>
-      <Route component={App}></Route>
-    </Router>
-  </Provider>,
-  document.getElementById("root")
+	<Provider store={store}>
+		<Router>
+			<Route component={App}></Route>
+		</Router>
+	</Provider>,
+	document.getElementById("root")
 );

@@ -6,15 +6,15 @@ import * as actionCreators from "./actions/types";
 
 const initialState = {};
 const composeEnhancers = composeWithDevTools({
-  actionCreators,
-  trace: true,
-  traceLimit: 25,
+	actionCreators,
+	trace: true,
+	traceLimit: 25,
 });
 const middleWare = [thunk];
 
 const store = createStore(
-  rootReducer,
-  composeEnhancers(applyMiddleware(...middleWare))
+	rootReducer,
+	composeEnhancers(applyMiddleware(...middleWare))
 );
 
 export default store;
