@@ -7,6 +7,8 @@ export default async (event: ContractEvent): Promise<void> => {
   const { eventName, chaincodeId } = event;
   let { payload } = event;
   let parsedPayload;
+  console.log(event);
+  console.log(payload);
   if (!!payload) {
     parsedPayload = JSON.parse(payload.toString());
   }

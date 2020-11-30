@@ -6,22 +6,25 @@ import {
 	isValidUnit,
 } from "./utils";
 
-export const validateCreateAsset = ({
-	description,
-	unit,
-	name,
-	quantity,
-	owner,
-}) => {
+export const validateAssetRequest = (request) => {
+	if (request.owner === undefined) {
+		return { status: false, message: "No onwer is specified" };
+	}
+	if (request.assets === undefined) {
+		return { status: false, message: "Missing field assets in request" };
+	}
+	if (request.assets.length <= 0) {
+		return { status: false, message: "No assets in request" };
+	}
+	return { status: true };
+};
+
+export const validateCreateAsset = ({ description, unit, name, quantity }) => {
 	let status = true;
 	let message = [];
 	if (!isValidAssetName(name)) {
 		status = false;
 		message.push("Invalid name");
-	}
-	if (!isValidMongoId(owner)) {
-		status = false;
-		message.push("Invalid owner");
 	}
 	if (description) {
 		if (!isValidAssetDescription(description)) {
@@ -36,6 +39,16 @@ export const validateCreateAsset = ({
 	if (!isValidUnit(unit)) {
 		status = false;
 		message.push("Invalid unit");
+	}
+	return { status, message };
+};
+
+export const validateOwner = (owner) => {
+	let status = true;
+	let message = [];
+	if (!isValidMongoId(owner)) {
+		status = false;
+		message.push("Invalid owner");
 	}
 	return { status, message };
 };

@@ -6,6 +6,9 @@ export interface IAssetPayload {
   unit: number;
   description: string;
 }
+
+export interface IAssetPayloadArray extends Array<IAssetPayload> {}
+
 export interface ITransactionPayload {
   _id?: string;
   assets: string[];

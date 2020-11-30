@@ -110,27 +110,31 @@ describe("Test Asset related API", () => {
 		request(app)
 			.post(`/api/assets/`)
 			.send({
-				name: "Thung Tao Test 2",
-				quantity: 5,
-				unit: 0,
-				description: "Thung Tao Test",
-				owner: testUser._id,
+				assets: [
+					{
+						name: "Thung Tao Test 2",
+						quantity: 5,
+						unit: 0,
+						description: "Thung Tao Test",
+					},
+				],
+				owner: testUser._id.toString(),
 			})
 			.set("Content-Type", "application/json")
 			.set("Accept", "application/json")
 			//   .set("Cookie", savedCookies)
 			.then((response) => {
 				expect(response.statusCode).toBe(200);
-				delete response.body._id;
-				expect(JSON.stringify(response.body)).toEqual(
-					JSON.stringify({
+				expect(response.body).toEqual([
+					{
+						_id: expect.any(String),
 						name: "Thung Tao Test 2",
 						quantity: 5,
 						unit: 0,
 						description: "Thung Tao Test",
-						owner: testUser._id,
-					})
-				);
+						owner: testUser._id.toString(),
+					},
+				]);
 				done();
 			});
 	});
@@ -139,9 +143,13 @@ describe("Test Asset related API", () => {
 		request(app)
 			.post(`/api/assets/`)
 			.send({
-				quantity: 5,
-				unit: 0,
-				description: "Thung Tao Test",
+				assets: [
+					{
+						quantity: 5,
+						unit: 0,
+						description: "Thung Tao Test",
+					},
+				],
 				owner: testUser._id,
 			})
 			.set("Content-Type", "application/json")
@@ -162,9 +170,13 @@ describe("Test Asset related API", () => {
 		request(app)
 			.post(`/api/assets/`)
 			.send({
-				name: "Thung Tao Test 2",
-				unit: 0,
-				description: "Thung Tao Test",
+				assets: [
+					{
+						name: "Thung Tao Test 2",
+						unit: 0,
+						description: "Thung Tao Test",
+					},
+				],
 				owner: testUser._id,
 			})
 			.set("Content-Type", "application/json")
@@ -185,10 +197,14 @@ describe("Test Asset related API", () => {
 		request(app)
 			.post(`/api/assets/`)
 			.send({
-				name: "Thung Tao Test 2",
-				quantity: 5,
-				unit: -2,
-				description: "Thung Tao Test",
+				assets: [
+					{
+						name: "Thung Tao Test 2",
+						quantity: 5,
+						unit: -2,
+						description: "Thung Tao Test",
+					},
+				],
 				owner: testUser._id,
 			})
 			.set("Content-Type", "application/json")
@@ -209,8 +225,12 @@ describe("Test Asset related API", () => {
 		request(app)
 			.post(`/api/assets/`)
 			.send({
-				name: "Thung Tao Test 2",
-				description: "Thung Tao Test",
+				assets: [
+					{
+						name: "Thung Tao Test 2",
+						description: "Thung Tao Test",
+					},
+				],
 				owner: testUser._id,
 			})
 			.set("Content-Type", "application/json")

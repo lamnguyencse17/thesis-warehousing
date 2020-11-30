@@ -9,53 +9,53 @@ import axios from "axios";
 import Landing from "./Landing";
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    axios.defaults.withCredentials = true;
-    const { clearUser, history } = this.props;
-    window.addEventListener("storage", (e) => {
-      if (e.newValue == "false") {
-        clearUser();
-        history.push("/");
-      }
-    });
-  }
-  //   async componentDidMount() {
-  //     const { setUser, history, token, location } = this.props;
-  //     let isLogin = await setUser();
-  //     if (!isLogin) {
-  //       history.push("/");
-  //     } else {
-  //       if (
-  //         // token &&
-  //         // token != "" &&
-  //         ["/login", "/signup", "/"].includes(location.pathname)
-  //       ) {
-  //         history.push("/main");
-  //       }
-  //     }
-  //   }
+	constructor(props) {
+		super(props);
+		axios.defaults.withCredentials = true;
+		const { clearUser, history } = this.props;
+		window.addEventListener("storage", (e) => {
+			if (e.newValue == "false") {
+				clearUser();
+				history.push("/");
+			}
+		});
+	}
+	//   async componentDidMount() {
+	//     const { setUser, history, token, location } = this.props;
+	//     let isLogin = await setUser();
+	//     if (!isLogin) {
+	//       history.push("/");
+	//     } else {
+	//       if (
+	//         // token &&
+	//         // token != "" &&
+	//         ["/login", "/signup", "/"].includes(location.pathname)
+	//       ) {
+	//         history.push("/main");
+	//       }
+	//     }
+	//   }
 
-  render() {
-    // const { token } = this.props;
-    return (
-      <>
-        <Suspense fallback={<div className="loader"></div>}>
-          <Switch>
-            <Route path="/" render={() => <Landing {...this.props} />} exact />
-            {/* <Route path="/main" render={() => <Main {...this.props} />} exact />
+	render() {
+		// const { token } = this.props;
+		return (
+			<>
+				<Suspense fallback={<div className='loader'></div>}>
+					<Switch>
+						<Route path='/' render={() => <Landing {...this.props} />} exact />
+						{/* <Route path="/main" render={() => <Main {...this.props} />} exact />
             <Route
               path="/"
               token={token}
               render={() => <Landing {...this.props} />}
               exact
             /> */}
-            <Route path="*" component={PageNotFound} />
-          </Switch>
-        </Suspense>
-      </>
-    );
-  }
+						<Route path='*' component={PageNotFound} />
+					</Switch>
+				</Suspense>
+			</>
+		);
+	}
 }
 
 // function mapStateToProps(state) {
