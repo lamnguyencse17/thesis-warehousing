@@ -1,5 +1,5 @@
 import MqttClient from "../mqtt";
-import { IAsset, INewAsset } from "../types/asset";
+import { INewAsset } from "../types/asset";
 import { convertAsset } from "../util/convertPayload";
 
 const CreateAssetHandler = (payload: INewAsset) => {

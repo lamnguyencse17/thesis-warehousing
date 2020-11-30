@@ -1,4 +1,4 @@
-import { IAsset, INewAsset } from "../types/asset";
+import { INewAsset } from "../types/asset";
 import { IAssetPayloadArray, ITransactionPayload } from "../types/payload";
 import { ITransaction } from "../types/transaction";
 

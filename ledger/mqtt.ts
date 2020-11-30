@@ -1,8 +1,6 @@
 import mqtt, { Client } from "mqtt";
-import { ITransaction } from "./types/transaction";
-import { IAsset } from "./types/asset";
 import { ASSET_TOPIC, TRANSACTION_TOPIC } from "./types/topics";
-import { IAssetPayload, IAssetPayloadArray, ITransactionPayload } from "./types/payload";
+import { IAssetPayloadArray, ITransactionPayload } from "./types/payload";
 
 let client:mqttClient;
 

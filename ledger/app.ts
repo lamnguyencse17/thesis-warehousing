@@ -6,7 +6,7 @@
 
 "use strict";
 
-import { IAsset, INewAsset } from "./types/asset";
+import { INewAsset } from "./types/asset";
 import { Gateway, Wallets } from "fabric-network";
 import FabricCAServices from "fabric-ca-client";
 import { buildCAClient, enrollAdmin, registerAndEnrollUser } from "./util/CAUtil.js";
