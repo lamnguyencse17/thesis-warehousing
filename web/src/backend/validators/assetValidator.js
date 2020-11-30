@@ -6,6 +6,10 @@ import {
 	isValidUnit,
 } from "./utils";
 
+export const validateAssetRequest = (request) => {
+	return !request.owner === undefined || !request.assets === undefined || !request.assets.length <= 0;
+};
+
 export const validateCreateAsset = ({
 	description,
 	unit,

@@ -70,7 +70,7 @@ describe("Test User related API", () => {
 			.set("Content-Type", "application/json")
 			.set("Accept", "application/json")
 			.set("Cookie", savedCookies)
-			.then((response) => {
+			.then((response) => {	
 				expect(response.statusCode).toBe(200);
 				expect(response.body).toEqual(
 					expect.objectContaining({

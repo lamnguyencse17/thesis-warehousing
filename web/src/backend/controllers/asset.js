@@ -1,6 +1,6 @@
 import { createAsset, getAssetById } from "../services/asset";
 import { HANDLED_ERROR_RESPONSE, OK_RESPONSE } from "../constants/http";
-import {validateCreateAsset, validateOwner} from "../validators/assetValidator";
+import {validateAssetRequest, validateCreateAsset, validateOwner} from "../validators/assetValidator";
 
 import { createAssetRequest } from "../requests/assets";
 import { isUserExits } from "../services/user";
@@ -20,9 +20,12 @@ export const getAssetController = async (req, res) => {
 
 export const createAssetController = async (req, res) => {
 	const {assets, owner} = req.body;
+	if (!validateAssetRequest(req.body)){
+		return res.status(HANDLED_ERROR_RESPONSE).json({message: "Invalid Request. Please reference usage again"});
+	}
 	const validateOwnerResult = validateOwner(owner);
 	if (!validateOwnerResult.status){
-		return res
+				return res
 			.status(HANDLED_ERROR_RESPONSE)
 			.json({ message: validateResult.message });
 	}
@@ -45,12 +48,14 @@ export const createAssetController = async (req, res) => {
 	// Handled Till Here
 	let newAssets = [];
 	for (let asset of assets){
-		newAssets.push(await createAsset({...asset, owner}));
-		if (!status) {
+		let createdAsset = await createAsset({...asset, owner});
+		if (!createdAsset.status) {
 			return res
 				.status(HANDLED_ERROR_RESPONSE)
 				.json({ message: "Something went wrong" });
 		}
+		newAssets.push(createdAsset.asset);
+		
 	}
 	// let { asset, status } = await createAsset({
 	// 	name,

@@ -6,6 +6,7 @@ import userModel from "../models/users";
 import { hashPassword } from "../utils/password";
 
 describe("Test Login API functionalities", () => {
+	let user;
 	beforeAll(async () => {
 		await mongoose.connect(process.env.MONGODB_URI, {
 			useNewUrlParser: true,
@@ -13,7 +14,7 @@ describe("Test Login API functionalities", () => {
 			useFindAndModify: false,
 			useCreateIndex: true,
 		});
-		await userModel.create({
+		user = await userModel.create({
 			name: "Test User",
 			password: await hashPassword("123456"),
 			email: "testUser0@gmail.com",
@@ -80,8 +81,8 @@ describe("Test Login API functionalities", () => {
 		request(app)
 			.post("/api/auth/login")
 			.send({
-				password: "1234567",
-				email: "testUser0@gmail.com",
+				password: "123456799",
+				email: user.email,
 			})
 			.set("Content-Type", "application/json")
 			.set("Accept", "application/json")
