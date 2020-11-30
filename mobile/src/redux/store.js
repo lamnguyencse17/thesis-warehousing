@@ -1,22 +1,22 @@
-// import {createStore, combineReducers, applyMiddleware, compose} from 'redux';
-// import thunk from 'redux-thunk';
+import {createStore, combineReducers, applyMiddleware, compose} from 'redux';
+import logger from 'redux-logger';
+import user from './reducer/userReducer';
+import thunk from 'redux-thunk';
 
-// import AddFormReducer from './reducer/AddFormReducer';
+const initialState = {};
 
-// const initialState = {};
+const middleware = [thunk, logger];
 
-// const middleware = [thunk];
+const reducers = combineReducers({
+  user,
+});
 
-// const reducers = combineReducers({
-//   // AddFormReducer: AddFormReducer,
-// });
+const composeEnhancers =
+  typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
+    : compose;
 
-// const composeEnhancers =
-//   typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-//     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
-//     : compose;
+const enhancer = composeEnhancers(applyMiddleware(...middleware));
+const store = createStore(reducers, initialState, enhancer);
 
-// const enhancer = composeEnhancers(applyMiddleware(...middleware));
-// const store = createStore(reducers, initialState, enhancer);
-
-// export default store;
+export default store;
