@@ -34,7 +34,7 @@ export const createAssetController = async (req, res) => {
 	if (!validateOwnerResult.status) {
 		return res
 			.status(HANDLED_ERROR_RESPONSE)
-			.json({ message: validateResult.message });
+			.json({ message: validateOwnerResult.message });
 	}
 	// const { name, quantity, unit, description, owner } = req.body;
 	let validateResult;

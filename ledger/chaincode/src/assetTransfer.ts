@@ -2,15 +2,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {
-  Context,
-  Contract,
-  Info,
-  Returns,
-  Transaction,
-} from "fabric-contract-api";
-import { Asset } from "./types/asset";
-import { convertStringToAssetArray } from "./util/convertTypes";
+import { Context, Contract, Info, Returns, Transaction } from "fabric-contract-api";
+import { Asset } from "./asset";
 
 @Info({
   title: "AssetTransfer",
