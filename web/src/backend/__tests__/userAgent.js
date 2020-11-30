@@ -25,7 +25,7 @@ describe("Test User related API", () => {
 	});
 
 	afterAll(async (done) => {
-		await userModel.deleteOne({ email: "testUser0@gmail.com" }, (err) => {
+		await userModel.deleteMany({ email: "testUser0@gmail.com" }, (err) => {
 			if (err) {
 				console.log(err);
 			}

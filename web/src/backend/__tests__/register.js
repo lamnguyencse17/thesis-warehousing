@@ -14,7 +14,7 @@ describe("Test Register API", () => {
 	});
 
 	afterAll(async (done) => {
-		await userModel.deleteOne({ email: "testuser@gmail.com" }, (err) => {
+		await userModel.deleteMany({ email: "testuser@gmail.com" }, (err) => {
 			if (err) {
 				console.log(err);
 			}

@@ -116,23 +116,23 @@ describe("Test Asset related API", () => {
 					unit: 0,
 					description: "Thung Tao Test"
 				}],
-				owner: testUser._id,
+				owner: testUser._id.toString(),
 			})
 			.set("Content-Type", "application/json")
 			.set("Accept", "application/json")
 			//   .set("Cookie", savedCookies)
 			.then((response) => {
 				expect(response.statusCode).toBe(200);
-				expect(response.body).toEqual(expect.arrayContaining([
-					expect.objectContaining({
+				expect(response.body).toEqual([
+					{
 						_id: expect.any(String),
 						name: "Thung Tao Test 2",
 						quantity: 5,
 						unit: 0,
-						description: "Thung Tao Test",
-						owner: testUser._id,
-					})
-				])
+						description: "Thung Tao Test", 
+						owner: testUser._id.toString(),
+					}
+				]
 				);
 				done();
 			});
