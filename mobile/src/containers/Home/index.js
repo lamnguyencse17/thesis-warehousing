@@ -1,10 +1,10 @@
 import React from 'react';
 import {
-  SafeAreaView,
-  View,
   FlatList,
+  SafeAreaView,
   Text,
   TouchableOpacity,
+  View,
 } from 'react-native';
 import {CommonActions} from '@react-navigation/native';
 import styles from './styles';

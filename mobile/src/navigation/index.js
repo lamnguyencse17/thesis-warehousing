@@ -16,6 +16,7 @@ class Router extends Component {
   constructor(props) {
     super(props);
   }
+
   componentDidMount() {
     if (this.props.token !== '') {
       this.props.setUser(this.props.token);

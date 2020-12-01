@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, TextInput, TouchableOpacity, Alert} from 'react-native';
+import {Alert, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {Formik} from 'formik';
 import RegisterStyle from './styles';
 
@@ -13,6 +13,7 @@ export default class Register extends React.Component {
       error: '',
     };
   }
+
   processRegisterSubmit = (values, setSubmitting) => {
     // Validation goes here
     const {email, password, name, password2} = values;
@@ -71,6 +72,7 @@ export default class Register extends React.Component {
   onFocusTextInput = () => {
     this.setState({error: ''});
   };
+
   render() {
     const {error} = this.state;
     return (

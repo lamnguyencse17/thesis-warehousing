@@ -1,6 +1,7 @@
-import React, {Component} from 'react';
-import {View, Text, StyleSheet, TextInput} from 'react-native';
-import {Styles, Color} from '@common';
+import React from 'react';
+import {StyleSheet, Text, TextInput, View} from 'react-native';
+import {Color, Styles} from '@common';
+
 const Input = React.forwardRef((props, ref) => {
   return (
     <View style={styles.mainView}>

@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-import {Text, View, TextInput, TouchableOpacity, Alert} from 'react-native';
+import {Alert, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import LoginStyle from './styles';
 import {Formik} from 'formik';
 import {connect} from 'react-redux';
@@ -15,6 +15,7 @@ class Login extends React.Component {
       error: '',
     };
   }
+
   processLoginSubmit = async (values, setSubmitting) => {
     const {email, password} = values;
     const {status, message} = validateLogInUser({email, password});

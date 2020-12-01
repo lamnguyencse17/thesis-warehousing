@@ -1,12 +1,5 @@
 import React, {Component} from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  FlatList,
-  Button,
-  Modal,
-} from 'react-native';
+import {FlatList, Modal, Text, TouchableOpacity, View} from 'react-native';
 
 import styles from './styles';
 
@@ -23,6 +16,7 @@ export default class FormInput extends Component {
       type: 0,
     };
   }
+
   //Type sender: 0, receiver: 1, assets : 2
   toggleQRCode = () => {
     this.setState((prevState) => ({visible: !prevState.visible}));

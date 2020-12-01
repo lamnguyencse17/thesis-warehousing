@@ -1,5 +1,6 @@
-import {Color, Styles} from '@common';
+import {Styles} from '@common';
 import {StyleSheet} from 'react-native';
+
 export default StyleSheet.create({
   centerText: {
     alignItems: 'center',
