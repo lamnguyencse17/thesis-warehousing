@@ -7,16 +7,11 @@ import LoginScreen from './LoginScreen';
 import {bindActionCreators} from 'redux';
 import {setUser} from '../redux/actions/user';
 import HomeScreen from './HomeScreen';
-
 import RegisterScreen from './RegisterScreen';
 
 const Stack = createStackNavigator();
 
 class Router extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     if (this.props.token !== '') {
       this.props.setUser(this.props.token);
@@ -37,9 +32,7 @@ class Router extends Component {
               <Stack.Screen name="Register" component={RegisterScreen} />
             </>
           ) : (
-            <>
-              <Stack.Screen name="Home" component={HomeScreen} />
-            </>
+            <Stack.Screen name="Home" component={HomeScreen} />
           )}
         </Stack.Navigator>
       </NavigationContainer>
