@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
+import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import {Input} from '@components';
-import {Language, Config} from '@common';
+import {Config, Language} from '@common';
 import styles from './styles';
 
 import QRCode from 'react-native-qrcode-svg';

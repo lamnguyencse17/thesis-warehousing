@@ -3,4 +3,6 @@ import QRcode from './QRcode';
 import Login from './Login';
 import Register from './Register';
 import FormInput from './FormInput';
-export {AssetInfo, QRcode, Login, Register, FormInput};
+import Home from './Home';
+
+export {AssetInfo, QRcode, Login, Register, FormInput, Home};

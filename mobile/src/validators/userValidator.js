@@ -1,7 +1,7 @@
 import {
   isValidEmail,
-  isValidPassword,
   isValidName,
+  isValidPassword,
   isValidPasswordConfirm,
 } from './util';
 

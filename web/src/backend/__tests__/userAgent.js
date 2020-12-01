@@ -8,7 +8,10 @@ import passport from "passport";
 
 let savedCookies;
 
-describe("Test User related API", () => {
+describe("API Integration Test", () => {
+	process.env.MODE = "test";
+	process.env.TEST_TYPE = "integrate";
+	let testUser;
 	beforeAll(async () => {
 		require("../utils/passport")(passport);
 		await mongoose.connect(process.env.MONGODB_URI, {
@@ -17,15 +20,15 @@ describe("Test User related API", () => {
 			useFindAndModify: false,
 			useCreateIndex: true,
 		});
-		await userModel.create({
+		testUser = await userModel.create({
 			name: "Test User",
 			password: await hashPassword("123456"),
-			email: "testUser0@gmail.com",
+			email: "testUser999@gmail.com",
 		});
 	});
 
 	afterAll(async (done) => {
-		await userModel.deleteMany({ email: "testUser0@gmail.com" }, (err) => {
+		await userModel.deleteMany({ email: "testUser999@gmail.com" }, (err) => {
 			if (err) {
 				console.log(err);
 			}
@@ -38,7 +41,7 @@ describe("Test User related API", () => {
 			.post("/api/auth/login")
 			.send({
 				password: "123456",
-				email: "testUser0@gmail.com",
+				email: "testUser999@gmail.com",
 			})
 			.set("Content-Type", "application/json")
 			.set("Accept", "application/json")
@@ -76,10 +79,60 @@ describe("Test User related API", () => {
 					expect.objectContaining({
 						_id: expect.any(String),
 						name: "Test User",
-						email: "testUser0@gmail.com",
+						email: "testUser999@gmail.com",
 						__v: 0,
 					})
 				);
+				done();
+			});
+	});
+
+	it("Create Asset With Token", async (done) => {
+		request(app)
+			.post("/api/assets").send({
+				assets: [
+					{
+						name: "Thung Tao Test 2",
+						quantity: 5,
+						unit: 0,
+						description: "Thung Tao Test",
+					},
+				],
+			})
+			.set("Content-Type", "application/json")
+			.set("Accept", "application/json")
+			.set("Cookie", savedCookies).then((response) => {
+				expect(response.statusCode).toBe(200);
+				expect(response.body).toEqual([
+					{
+						_id: expect.any(String),
+						name: "Thung Tao Test 2",
+						quantity: 5,
+						unit: 0,
+						description: "Thung Tao Test",
+						owner: testUser._id.toString(),
+					},
+				]);
+				done();
+			});
+	});
+
+	it("Create Asset With Token - 401 Error", async (done) => {
+		request(app)
+			.post("/api/assets").send({
+				assets: [
+					{
+						name: "Thung Tao Test 2",
+						quantity: 5,
+						unit: 0,
+						description: "Thung Tao Test",
+					},
+				],
+			})
+			.set("Content-Type", "application/json")
+			.set("Accept", "application/json")
+			.then((response) => {
+				expect(response.statusCode).toBe(401);
 				done();
 			});
 	});

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {Config} from '@common';
+
 export const getAssetRequest = async (assetId) => {
   // use process.env in the feature for BACKEND_API please!
   const requestUrl = `http://localhost:3000/api/assets/${assetId}`;
