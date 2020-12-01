@@ -23,20 +23,20 @@ export const getAssetController = async (req, res) => {
 };
 
 export const createAssetController = async (req, res) => {
-	const { assets, owner } = req.body;
 	const validateRequestFormat = validateAssetRequest(req.body);
 	if (!validateRequestFormat.status) {
 		return res
 			.status(HANDLED_ERROR_RESPONSE)
 			.json({ message: validateRequestFormat.message });
 	}
+	const { assets } = req.body;
+	const owner = req._id;
 	const validateOwnerResult = validateOwner(owner);
 	if (!validateOwnerResult.status) {
 		return res
 			.status(HANDLED_ERROR_RESPONSE)
 			.json({ message: validateOwnerResult.message });
 	}
-	// const { name, quantity, unit, description, owner } = req.body;
 	let validateResult;
 	for (let asset of assets) {
 		validateResult = validateCreateAsset(asset);
@@ -52,7 +52,6 @@ export const createAssetController = async (req, res) => {
 			.status(HANDLED_ERROR_RESPONSE)
 			.json({ message: "User does not exists" });
 	}
-	// Handled Till Here
 	let newAssets = [];
 	for (let asset of assets) {
 		let createdAsset = await createAsset({ ...asset, owner });
@@ -63,14 +62,6 @@ export const createAssetController = async (req, res) => {
 		}
 		newAssets.push(createdAsset.asset);
 	}
-	// let { asset, status } = await createAsset({
-	// 	name,
-	// 	quantity,
-	// 	unit,
-	// 	description,
-	// 	owner,
-	// });
-	// let ID = asset._id;
 	if (process.env.MODE != "test" && process.env.NODE_ENV != "test") {
 		let assetRequest = await createAssetRequest(newAssets);
 		if (!assetRequest.status) {

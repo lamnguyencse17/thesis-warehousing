@@ -7,9 +7,6 @@ import {
 } from "./utils";
 
 export const validateAssetRequest = (request) => {
-	if (request.owner === undefined) {
-		return { status: false, message: "No onwer is specified" };
-	}
 	if (request.assets === undefined) {
 		return { status: false, message: "Missing field assets in request" };
 	}
