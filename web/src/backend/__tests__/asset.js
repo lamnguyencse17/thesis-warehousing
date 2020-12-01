@@ -6,10 +6,9 @@ import passport from "passport";
 import userModel from "../models/users";
 import { hashPassword } from "../utils/password";
 
-let savedCookies;
-
 describe("Test Asset related API", () => {
 	process.env.MODE = "test";
+	process.env.TEST_TYPE = "unit";
 	let TestObj;
 	let testUser;
 	beforeAll(async () => {
@@ -47,31 +46,6 @@ describe("Test Asset related API", () => {
 		});
 		mongoose.disconnect(done);
 	});
-
-	// it('Login With Agent', async (done) => {
-	//     request(app).post("/api/auth/login").send({
-	//         "password": "123456",
-	//         "email": "testUser0@gmail.com"
-	//     })
-	//         .set("Content-Type", "application/json")
-	//         .set("Accept", "application/json")
-	//         .then(response => {
-	//             const cookies = setCookie.parse(response, {
-	//                 map: true,
-	//             });
-	//             expect(response.statusCode).toBe(200);
-	//             expect(response.body).toEqual(expect.objectContaining({
-	//                 "token": expect.any(String)
-	//             }));
-	//             expect(cookies.token).toEqual(expect.objectContaining({
-	//                 name: "token",
-	//                 value: expect.any(String),
-	//                 httpOnly: true
-	//             }));
-	//             savedCookies = response.headers['set-cookie'];
-	//             done();
-	//         });
-	// });
 
 	it("Get Asset Info", async (done) => {
 		request(app)

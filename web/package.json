@@ -98,5 +98,9 @@
 			"@babel/plugin-transform-runtime",
 			"@babel/plugin-syntax-dynamic-import"
 		]
+	},
+	"jest": {
+		"verbose": true,
+		"testPathIgnorePatterns": ["/node_modules/", "/dist/"]
 	}
 }
