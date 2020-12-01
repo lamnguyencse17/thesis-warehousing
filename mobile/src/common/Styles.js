@@ -2,6 +2,7 @@ import {Dimensions, Platform} from 'react-native';
 // import {getStatusBarHeight} from 'react-native-status-bar-height';
 import Device from './Device';
 import Color from './Color';
+
 const {height, width} = Dimensions.get('window');
 
 const Styles = {

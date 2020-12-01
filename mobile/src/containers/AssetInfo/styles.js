@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {Color, Styles} from '@common';
+import {Styles} from '@common';
 
 export default StyleSheet.create({
   title: {

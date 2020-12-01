@@ -1,10 +1,14 @@
 import React, {Component} from 'react';
-import {StatusBar, View, Text} from 'react-native';
-// import SplashScreen from 'react-native-splash-screen';
-import Router from './src/navigation/index';
 import {Provider} from 'react-redux';
 import store from './src/redux/store';
-// import {MyToast} from '@containers';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+import LoginScreen from './src/navigation/LoginScreen';
+import AssetInfoScreen from './src/navigation/AssetInfoScreen';
+import Router from './src/navigation/index';
+
+const Stack = createStackNavigator();
+
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -14,10 +18,9 @@ export default class App extends Component {
   }
   render() {
     return (
-      // <Provider store={store}>
-      <Router />
-      // {/* <MyToast /> */}
-      // </Provider>
+      <Provider store={store}>
+        <Router />
+      </Provider>
     );
   }
 }
