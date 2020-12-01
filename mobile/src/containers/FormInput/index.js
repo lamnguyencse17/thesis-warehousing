@@ -97,7 +97,7 @@ export default class FormInput extends Component {
               <Text style={styles.buttonText}>Scan QR</Text>
             </TouchableOpacity>
           </View>
-          {receiverData.length == 0 ? null : (
+          {receiverData.length === 0 ? null : (
             <View style={styles.textReceiver}>
               <Text>ID: {receiverData._id}</Text>
               <Text>Receiver: {receiverData.receiver}</Text>
@@ -115,7 +115,7 @@ export default class FormInput extends Component {
               <Text style={styles.buttonText}>Scan QR</Text>
             </TouchableOpacity>
           </View>
-          {assetData.length == 0 ? null : (
+          {assetData.length === 0 ? null : (
             <View>
               <FlatList
                 data={assetData}

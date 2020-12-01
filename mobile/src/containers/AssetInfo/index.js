@@ -123,7 +123,7 @@ export default class AssetInfo extends Component {
               </Text>
             </TouchableOpacity>
             <View style={styles.QRCodeView}>
-              {isGenerated == true ? (
+              {isGenerated === true ? (
                 <QRCode
                   value={JSON.stringify({
                     _id: _id,

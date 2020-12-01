@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, TouchableOpacity, Text} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import {useSelector} from 'react-redux';
 import styles from './styles';
 import QRCode from 'react-native-qrcode-svg';
