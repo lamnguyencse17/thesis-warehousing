@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
 import styles from './styles';
-import QRCodeScanner from 'react-native-qrcode-scanner';
+import QRScanner from 'react-native-qrcode-scanner';
 
 import {Config} from '@common';
 
-export default class QRcodeComponent extends Component {
+export default class QRCodeScanner extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -38,7 +38,7 @@ export default class QRcodeComponent extends Component {
   render() {
     const {data, showModal, type} = this.state;
     return (
-      <QRCodeScanner
+      <QRScanner
         onRead={this.onSuccess}
         ref={(node) => {
           this.scanner = node;

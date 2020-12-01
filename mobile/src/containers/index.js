@@ -1,8 +1,8 @@
-import AssetInfo from './AssetInfo';
-import QRcode from './QRcode';
+import AssetCreator from './AssetCreator';
+import QRcode from './QRCodeScanner';
 import Login from './Login';
 import Register from './Register';
-import FormInput from './FormInput';
+import TransactionCreator from './TransactionCreator';
 import User from './User';
 
-export {AssetInfo, QRcode, Login, Register, FormInput, User};
+export {AssetCreator, QRcode, Login, Register, TransactionCreator, User};
