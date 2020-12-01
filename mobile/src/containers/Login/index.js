@@ -95,7 +95,7 @@ class Login extends React.Component {
               <TouchableOpacity>
                 <Text style={LoginStyle.forgot}>Forgot Password?</Text>
               </TouchableOpacity>
-              {error == '' ? null : (
+              {error === '' ? null : (
                 <Text style={LoginStyle.errorText}>{error}</Text>
               )}
               <TouchableOpacity
@@ -107,9 +107,7 @@ class Login extends React.Component {
               <TouchableOpacity>
                 <Text
                   style={LoginStyle.loginText}
-                  onPress={() =>
-                    this.props.navigation.navigate('RegisterScreen')
-                  }>
+                  onPress={() => this.props.navigation.navigate('Register')}>
                   Register
                 </Text>
               </TouchableOpacity>

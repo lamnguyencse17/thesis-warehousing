@@ -6,6 +6,9 @@ import LoginScreen from './LoginScreen';
 import AssetInfoScreen from './AssetInfoScreen';
 import {bindActionCreators} from 'redux';
 import {setUser} from '../redux/actions/user';
+import HomeScreen from './HomeScreen';
+import FormInputScreen from './FormInputScreen';
+import RegisterScreen from './RegisterScreen';
 
 const Stack = createStackNavigator();
 
@@ -28,9 +31,16 @@ class Router extends Component {
             headerShown: false,
           }}>
           {this.props.token === '' ? (
-            <Stack.Screen name="Login" component={LoginScreen} />
+            <>
+              <Stack.Screen name="Login" component={LoginScreen} />
+              <Stack.Screen name="Register" component={RegisterScreen} />
+            </>
           ) : (
-            <Stack.Screen name="Asset" component={AssetInfoScreen} />
+            <>
+              <Stack.Screen name="Home" component={HomeScreen} />
+              <Stack.Screen name="Asset" component={AssetInfoScreen} />
+              <Stack.Screen name="Transaction" component={FormInputScreen} />
+            </>
           )}
         </Stack.Navigator>
       </NavigationContainer>

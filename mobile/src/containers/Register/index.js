@@ -22,8 +22,8 @@ export default class Register extends React.Component {
       name,
       password2,
     });
-    if (status == false) {
-      if (message.length == 1) {
+    if (status === false) {
+      if (message.length === 1) {
         this.setState({error: message});
       } else {
         this.setState({error: 'More than one field are invalid'});
@@ -43,14 +43,14 @@ export default class Register extends React.Component {
       email,
       password,
     });
-    if (status == true) {
+    if (status === true) {
       Alert.alert(
         'Register Success',
-        `Hello ${name}`,
+        '',
         [
           {
             text: 'OK',
-            onPress: () => this.props.navigation.navigate('LoginScreen'),
+            onPress: () => this.props.navigation.navigate('Login'),
           },
         ],
         {cancelable: false},
@@ -138,7 +138,7 @@ export default class Register extends React.Component {
               <TouchableOpacity>
                 <Text style={RegisterStyle.forgot}>Forgot Password?</Text>
               </TouchableOpacity>
-              {error == '' ? null : (
+              {error === '' ? null : (
                 <Text style={RegisterStyle.errorText}>{error}</Text>
               )}
               <TouchableOpacity
@@ -150,7 +150,7 @@ export default class Register extends React.Component {
               <TouchableOpacity>
                 <Text
                   style={RegisterStyle.loginText}
-                  onPress={() => this.props.navigation.navigate('LoginScreen')}>
+                  onPress={() => this.props.navigation.navigate('Login')}>
                   Login
                 </Text>
               </TouchableOpacity>

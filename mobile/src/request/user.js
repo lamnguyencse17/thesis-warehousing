@@ -1,5 +1,6 @@
 import {Config} from '@common';
 import axios from 'axios';
+
 export const createLoginRequest = async ({email, password}) => {
   const requestUrl = `${Config.server}auth/login`;
   try {
@@ -33,7 +34,7 @@ export const createRegisterRequest = async ({name, email, password}) => {
   const requestUrl = `${Config.server}/auth/register`;
   try {
     const res = await axios.post(requestUrl, {name, email, password});
-    return {status: true, user: res.data};
+    return {status: true};
   } catch (err) {
     return {
       status: false,
