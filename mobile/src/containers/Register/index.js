@@ -39,7 +39,7 @@ export default class Register extends React.Component {
     }, 2000);
   };
   register = async (name, email, password) => {
-    const {status, user, message} = await createRegisterRequest({
+    const {status, message} = await createRegisterRequest({
       name,
       email,
       password,
