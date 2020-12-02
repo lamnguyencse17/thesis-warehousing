@@ -39,12 +39,13 @@ export default class AssetCreator extends Component {
 
     let unit = parseInt(this.state.unit);
     let quantity = parseInt(this.state.quantity);
-    const {status, asset} = await createAssetRequest({
+    const {status, assets} = await createAssetRequest({
       name,
       quantity,
       unit,
       description,
     });
+    let asset = assets[0]
     if (status) {
       this.setState(
         {

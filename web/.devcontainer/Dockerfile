@@ -2,11 +2,11 @@
 ARG VARIANT=14
 FROM mcr.microsoft.com/vscode/devcontainers/javascript-node:${VARIANT}
 ENV SECRET_KEY=TU%8&sPS5Qz4$rLc#VsQfFvnz3W7nV
-ENV MONGODB_URI=mongodb://db:27017/thesis?readPreference=primary&appname=Server&ssl=false
+ENV MONGODB_URI=mongodb://localhost:27017/thesis?readPreference=primary&appname=Server&ssl=false
 ENV PORT=3000
 ENV BACKEND_SERVER=http://localhost:3000
 ENV MODE=dev
-ENV LEDGER_SERVER=http://172.17.0.1:3001
+ENV LEDGER_SERVER=http://localhost:3001
 ENV FRONTEND_SERVER=http://localhost:8080
 # Install MongoDB command line tools
 ARG MONGO_TOOLS_VERSION=4.2
