@@ -61,16 +61,22 @@ describe("API Integration Test", () => {
 				console.log(err);
 			}
 		});
-		await userModel.deleteMany({ _id: mongoose.Types.ObjectId(Asset._id) }, (err) => {
-			if (err) {
-				console.log(err);
+		await userModel.deleteMany(
+			{ _id: mongoose.Types.ObjectId(Asset._id) },
+			(err) => {
+				if (err) {
+					console.log(err);
+				}
 			}
-		});
-		await userModel.deleteMany({ _id: mongoose.Types.ObjectId(DumbAsset._id) }, (err) => {
-			if (err) {
-				console.log(err);
+		);
+		await userModel.deleteMany(
+			{ _id: mongoose.Types.ObjectId(DumbAsset._id) },
+			(err) => {
+				if (err) {
+					console.log(err);
+				}
 			}
-		});
+		);
 		mongoose.disconnect(done);
 	});
 
@@ -127,7 +133,8 @@ describe("API Integration Test", () => {
 
 	it("Create Asset With Token", async (done) => {
 		request(app)
-			.post("/api/assets").send({
+			.post("/api/assets")
+			.send({
 				assets: [
 					{
 						name: "Thung Tao Test 2",
@@ -139,7 +146,8 @@ describe("API Integration Test", () => {
 			})
 			.set("Content-Type", "application/json")
 			.set("Accept", "application/json")
-			.set("Cookie", savedCookies).then((response) => {
+			.set("Cookie", savedCookies)
+			.then((response) => {
 				expect(response.statusCode).toBe(200);
 				expect(response.body).toEqual([
 					{
@@ -157,7 +165,8 @@ describe("API Integration Test", () => {
 
 	it("Create Asset With Token - 401 Error", async (done) => {
 		request(app)
-			.post("/api/assets").send({
+			.post("/api/assets")
+			.send({
 				assets: [
 					{
 						name: "Thung Tao Test 2",
@@ -256,7 +265,7 @@ describe("API Integration Test", () => {
 			.then((response) => {
 				expect(response.statusCode).toBe(401);
 				expect(response.body).toStrictEqual({
-					message: "You are not logged in or cookie has expired"
+					message: "You are not logged in or cookie has expired",
 				});
 				done();
 			});

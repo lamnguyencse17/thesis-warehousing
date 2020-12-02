@@ -8,6 +8,7 @@ import {
 
 import { createAssetRequest } from "../requests/assets";
 import { isUserExits } from "../services/user";
+import pubsub from "../pubsub";
 
 export const getAssetController = async (req, res) => {
 	const assetId = req.params.assetId;
@@ -73,6 +74,7 @@ export const createAssetController = async (req, res) => {
 	for (let asset of newAssets) {
 		asset.save();
 		asset = asset.toObject();
+		pubsub.publish("assetCreated", { ...asset });
 	}
 	return res.status(OK_RESPONSE).json(newAssets);
 };
