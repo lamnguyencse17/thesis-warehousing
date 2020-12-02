@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
 import styles from './styles';
-import QRCodeScanner from 'react-native-qrcode-scanner';
+import QRScanner from 'react-native-qrcode-scanner';
 
 import {Config} from '@common';
 
-export default class QRcodeComponent extends Component {
+export default class QRCodeScanner extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -31,14 +31,14 @@ export default class QRcodeComponent extends Component {
     }
   };
 
-  toogleActive = () => {
+  toggleActive = () => {
     this.scanner.reactivate();
   };
 
   render() {
     const {data, showModal, type} = this.state;
     return (
-      <QRCodeScanner
+      <QRScanner
         onRead={this.onSuccess}
         ref={(node) => {
           this.scanner = node;
@@ -46,13 +46,13 @@ export default class QRcodeComponent extends Component {
         topContent={
           <View style={styles.centerText}>
             <Text style={styles.textBold}>Scan QRCode in to transaction</Text>
-            <TouchableOpacity onPress={this.toogleActive} style={styles.button}>
+            <TouchableOpacity onPress={this.toggleActive} style={styles.button}>
               <Text style={styles.textReactive}>React active scan</Text>
             </TouchableOpacity>
           </View>
         }
         bottomContent={
-          showModal == false ? null : type == 2 ? (
+          showModal === false ? null : type === 2 ? (
             <View style={styles.bottomView}>
               <Text style={[styles.text, styles.title]}>
                 Thông tin sản phẩm

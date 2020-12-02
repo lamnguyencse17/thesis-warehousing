@@ -33,7 +33,7 @@ export const getUserRequest = () => {
 export const createRegisterRequest = async ({name, email, password}) => {
   const requestUrl = `${Config.server}/auth/register`;
   try {
-    const res = await axios.post(requestUrl, {name, email, password});
+    await axios.post(requestUrl, {name, email, password});
     return {status: true};
   } catch (err) {
     return {

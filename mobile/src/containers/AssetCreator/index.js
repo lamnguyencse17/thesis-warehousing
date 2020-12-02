@@ -8,7 +8,7 @@ import QRCode from 'react-native-qrcode-svg';
 import {Picker} from '@react-native-picker/picker';
 import {createAssetRequest} from '../../request/asset';
 
-export default class AssetInfo extends Component {
+export default class AssetCreator extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -123,7 +123,7 @@ export default class AssetInfo extends Component {
               </Text>
             </TouchableOpacity>
             <View style={styles.QRCodeView}>
-              {isGenerated == true ? (
+              {isGenerated === true ? (
                 <QRCode
                   value={JSON.stringify({
                     _id: _id,

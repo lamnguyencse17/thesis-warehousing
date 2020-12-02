@@ -22,7 +22,7 @@ export const isValidPassword = (password) => {
 };
 
 export const isValidPasswordConfirm = (password, password2) => {
-  return !!password2 && !isEmpty(password2) && password == password2;
+  return !!password2 && !isEmpty(password2) && password === password2;
 };
 export const isValidName = (name) => {
   return !!name && !isEmpty(name) && isLength(name, {max: NAME_MAX_LENGTH});
@@ -47,7 +47,7 @@ export const isValidQuantity = (quantity) => {
 };
 
 export const isValidUnit = (unit) => {
-  return (unit == 0 || !!unit) && unit >= 0 && unit < UNIT.length;
+  return (unit === 0 || !!unit) && unit >= 0 && unit < UNIT.length;
 };
 
 export const isValidMongoId = (id) => {

@@ -4,9 +4,9 @@ import {FlatList, Modal, Text, TouchableOpacity, View} from 'react-native';
 import styles from './styles';
 
 import {createTransactionRequest} from '../../request/transaction';
-import QRCode from '../QRcode';
+import QRCodeScanner from '../QRCodeScanner';
 
-export default class FormInput extends Component {
+export default class TransactionCreator extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -72,7 +72,7 @@ export default class FormInput extends Component {
     return (
       <View style={styles.container}>
         <Modal visible={visible} animationType="slide">
-          <QRCode
+          <QRCodeScanner
             addDataToAssets={this.addDataToAssets}
             addDataToReceiver={this.addDataToReceiver}
             type={type}
@@ -97,7 +97,7 @@ export default class FormInput extends Component {
               <Text style={styles.buttonText}>Scan QR</Text>
             </TouchableOpacity>
           </View>
-          {receiverData.length == 0 ? null : (
+          {receiverData.length === 0 ? null : (
             <View style={styles.textReceiver}>
               <Text>ID: {receiverData._id}</Text>
               <Text>Receiver: {receiverData.receiver}</Text>
@@ -115,7 +115,7 @@ export default class FormInput extends Component {
               <Text style={styles.buttonText}>Scan QR</Text>
             </TouchableOpacity>
           </View>
-          {assetData.length == 0 ? null : (
+          {assetData.length === 0 ? null : (
             <View>
               <FlatList
                 data={assetData}
