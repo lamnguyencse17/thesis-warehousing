@@ -5,7 +5,7 @@ import passport from "passport";
 const authenticator = (req, res, next) =>
 	passport.authenticate("jwt", { session: false }, (err, user) => {
 		if (process.env.TEST_TYPE === "unit"){
-			req._id = req.body.owner;
+			req._id = req.body.owner ? req.body.owner : req.body.sender;
 			return next();
 		}
 		if (!user) {
@@ -15,17 +15,6 @@ const authenticator = (req, res, next) =>
 		}
 		next();
 	})(req, res, next);
-
-// router.use("/groups", authenticator, require("./routes/groups"));
-// router.use("/auth/signin", require("./routes/auth/signin"));
-
-// router.use("/auth/signup", require("./routes/auth/signup"));
-
-// router.use("/dishes", authenticator, require("./routes/dishes"));
-
-// router.use("/orders", authenticator, require("./routes/orders"));
-
-// router.use("/invite", authenticator, require("./routes/invite"));
 
 router.use("/user", authenticator, require("./routes/user"));
 router.use("/assets", authenticator, require("./routes/asset"));
