@@ -254,7 +254,7 @@ describe("API Integration Test", () => {
 			.set("Accept", "application/json")
 			.set("Cookie", failedToken)
 			.then((response) => {
-				expect(response.statusCode).toBe(400);
+				expect(response.statusCode).toBe(401);
 				expect(response.body).toStrictEqual({
 					message: "Some assets do not belong to you"
 				});
