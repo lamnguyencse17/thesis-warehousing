@@ -5,10 +5,5 @@ import resolvers from "./graphql/resolvers";
 const graphqlServer = new ApolloServer({
 	typeDefs: schemas,
 	resolvers,
-	subscriptions: {
-		onConnect: (connectionParams, webSocket) => {
-			console.log(connectionParams);
-		},
-	},
 });
 export default graphqlServer;

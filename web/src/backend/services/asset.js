@@ -1,5 +1,8 @@
 import assetModel from "../models/assets";
 import mongoose from "mongoose";
+import { PubSub } from "graphql-subscriptions";
+
+const pubsub = new PubSub();
 
 export const getAssetById = async (assetId) => {
 	const result = await assetModel.findOne({
@@ -37,7 +40,7 @@ export const syncAsset = async (newAssets) => {
 		});
 		if (!syncStatus) {
 			try {
-				await assetModel.create({
+				let newSingleAsset = await assetModel.create({
 					_id: mongoose.Types.ObjectId(_id),
 					name,
 					quantity,
@@ -45,6 +48,7 @@ export const syncAsset = async (newAssets) => {
 					description,
 					owner: mongoose.Types.ObjectId(owner),
 				});
+				pubsub.publish("assetCreated", {assetCreated: newSingleAsset});
 			} catch (err) {
 				console.error(err);
 			}
