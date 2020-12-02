@@ -46,7 +46,7 @@ export const syncAsset = async (newAssets) => {
 					owner: mongoose.Types.ObjectId(owner),
 				});
 			} catch (err) {
-				console.log(err);
+				console.error(err);
 			}
 		}
 	}
@@ -66,10 +66,9 @@ export const validateTransferRight = async (sender, assets) => {
 
 export const updateOwner = async (owner, assets) => {
 	let parsedAssets = assets.map(asset => mongoose.Types.ObjectId(asset));
-	const {n, nModified, ok} = await assetModel.updateMany({
+	const {n, nModified} = await assetModel.updateMany({
 		_id: {$in: parsedAssets},
 	}, {owner: mongoose.Types.ObjectId(owner)});
-	console.log(n, nModified);
 	if (n !== nModified || nModified !== assets.length){
 		return false;
 	}
