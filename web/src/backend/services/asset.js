@@ -51,3 +51,16 @@ export const syncAsset = async (newAssets) => {
 		}
 	}
 };
+
+export const validateTransferRight = async (sender, assets) => {
+	let parsedAssets = assets.map(asset => mongoose.Types.ObjectId(asset));
+	const validateResult = await assetModel.find({
+		_id: { $in: parsedAssets},
+		owner: mongoose.Types.ObjectId(sender)
+	}).select("_id").lean();
+	console.log(validateResult);
+	if (validateResult.length !== assets.length){
+		return false;
+	}
+	return true;
+};
