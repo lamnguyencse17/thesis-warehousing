@@ -21,7 +21,8 @@ graphqlServer.installSubscriptionHandlers(server);
 
 server.listen(3000, () => {
 	console.log(
-		`Graphql started, listening on port ${graphqlServer.graphqlPath} for incoming requests.`
+		`Graphql started, listening on port ${graphqlServer.graphqlPath} for incoming requests.`,
+		`\nSubscription listening on port ${graphqlServer.subscriptionsPath} for incoming requests.`
 	);
 	mqttService();
 });

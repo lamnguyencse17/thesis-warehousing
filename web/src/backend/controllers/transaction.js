@@ -44,9 +44,11 @@ export const createTransactionController = async (req, res) => {
 		}
 	}
 	const updateAssetResult = await updateOwner(receiver, assets);
-		if (!updateAssetResult){
-			return res.status(HANDLED_ERROR_RESPONSE).json({message: "Something went wrong"});
-		}
+	if (!updateAssetResult) {
+		return res
+			.status(HANDLED_ERROR_RESPONSE)
+			.json({ message: "Something went wrong" });
+	}
 	await result.save(async (err) => {
 		if (err) {
 			console.log(err);
