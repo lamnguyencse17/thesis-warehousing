@@ -58,8 +58,19 @@ export const validateTransferRight = async (sender, assets) => {
 		_id: { $in: parsedAssets},
 		owner: mongoose.Types.ObjectId(sender)
 	}).select("_id").lean();
-	console.log(validateResult);
 	if (validateResult.length !== assets.length){
+		return {status: false, message: "Some assets do not belong to you"};
+	}
+	return {status: true};
+};
+
+export const updateOwner = async (owner, assets) => {
+	let parsedAssets = assets.map(asset => mongoose.Types.ObjectId(asset));
+	const {n, nModified, ok} = await assetModel.updateMany({
+		_id: {$in: parsedAssets},
+	}, {owner: mongoose.Types.ObjectId(owner)});
+	console.log(n, nModified);
+	if (n !== nModified || nModified !== assets.length){
 		return false;
 	}
 	return true;
