@@ -2,14 +2,22 @@ import { createTransaction, getTransactionById } from "../services/transaction";
 import { HANDLED_ERROR_RESPONSE, OK_RESPONSE } from "../constants/http";
 import { validateCreateTransaction } from "../validators/transactionValidator";
 import { createTransactionRequest } from "../requests/transaction";
+import { updateOwner, validateTransferRight } from "../services/asset";
 
 export const createTransactionController = async (req, res) => {
-	const { receiver, sender, assets } = req.body;
-	let validateResult = validateCreateTransaction({ receiver, sender, assets });
+	const { receiver, assets } = req.body;
+	const sender = req._id;
+	let validateResult = validateCreateTransaction({ receiver, assets });
 	if (!validateResult.status) {
 		return res
 			.status(HANDLED_ERROR_RESPONSE)
 			.json({ message: validateResult.message });
+	}
+	let validateTransferResult = await validateTransferRight(sender, assets);
+	if (!validateTransferResult.status) {
+		return res
+			.status(HANDLED_ERROR_RESPONSE)
+			.json({ message: validateTransferResult.message });
 	}
 	// this is for CI Test
 	let { result, status } = await createTransaction({
@@ -35,7 +43,11 @@ export const createTransactionController = async (req, res) => {
 				.json({ message: createTransactionResult.message });
 		}
 	}
-	await result.save((err) => {
+	const updateAssetResult = await updateOwner(receiver, assets);
+		if (!updateAssetResult){
+			return res.status(HANDLED_ERROR_RESPONSE).json({message: "Something went wrong"});
+		}
+	await result.save(async (err) => {
 		if (err) {
 			console.log(err);
 			return res.status(HANDLED_ERROR_RESPONSE).json({ message: err });

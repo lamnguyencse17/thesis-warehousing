@@ -7,12 +7,12 @@ const mqttService = () => {
 	client.on("connect", () => {
 		client.subscribe("transactions", (err) => {
 			if (err) {
-				console.log(err);
+				console.error(err);
 			}
 		});
 		client.subscribe("assets", (err) => {
 			if (err) {
-				console.log(err);
+				console.error(err);
 			}
 		});
 		console.log("MQTT Ready");
