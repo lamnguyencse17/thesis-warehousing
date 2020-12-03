@@ -19,7 +19,7 @@ services:
     command: sleep infinity
 
     # Runs app on the same network as the database container, allows "forwardPorts" in devcontainer.json function.
-    network_mode: service:db
+    network_mode: "host"
 
     # Uncomment the next line to use a non-root user for all processes.
     # user: node
@@ -32,7 +32,7 @@ services:
     restart: unless-stopped
     volumes:
       - mongodb-data:/data/db
-
+    network_mode: "host"
     # Uncomment to change startup options
     # environment:
     #  MONGO_INITDB_ROOT_USERNAME: root
@@ -46,6 +46,6 @@ services:
     container_name: mosquitto
     volumes:
       - ../mosquitto.conf:/mosquitto/config/mosquitto.conf
-    network_mode: service:db
+    network_mode: "host"
 volumes:
   mongodb-data:

@@ -6,8 +6,8 @@ const graphqlServer = new ApolloServer({
 	typeDefs: schemas,
 	resolvers,
 	subscriptions: {
-		onConnect: (connectionParams, webSocket) => {
-			console.log(connectionParams);
+		onConnect: async (connectionParams, webSocket) => {
+			console.log("Client Connected");
 		},
 	},
 });

@@ -1,5 +1,8 @@
 import assetModel from "../models/assets";
 import mongoose from "mongoose";
+import { PubSub } from "graphql-subscriptions";
+
+const pubsub = new PubSub();
 
 export const getAssetById = async (assetId) => {
 	const result = await assetModel.findOne({
@@ -37,7 +40,7 @@ export const syncAsset = async (newAssets) => {
 		});
 		if (!syncStatus) {
 			try {
-				await assetModel.create({
+				let newSingleAsset = await assetModel.create({
 					_id: mongoose.Types.ObjectId(_id),
 					name,
 					quantity,
@@ -45,9 +48,39 @@ export const syncAsset = async (newAssets) => {
 					description,
 					owner: mongoose.Types.ObjectId(owner),
 				});
+				pubsub.publish("assetCreated", { assetCreated: newSingleAsset });
 			} catch (err) {
-				console.log(err);
+				console.error(err);
 			}
 		}
 	}
+};
+
+export const validateTransferRight = async (sender, assets) => {
+	let parsedAssets = assets.map((asset) => mongoose.Types.ObjectId(asset));
+	const validateResult = await assetModel
+		.find({
+			_id: { $in: parsedAssets },
+			owner: mongoose.Types.ObjectId(sender),
+		})
+		.select("_id")
+		.lean();
+	if (validateResult.length !== assets.length) {
+		return { status: false, message: "Some assets do not belong to you" };
+	}
+	return { status: true };
+};
+
+export const updateOwner = async (owner, assets) => {
+	let parsedAssets = assets.map((asset) => mongoose.Types.ObjectId(asset));
+	const { n, nModified } = await assetModel.updateMany(
+		{
+			_id: { $in: parsedAssets },
+		},
+		{ owner: mongoose.Types.ObjectId(owner) }
+	);
+	if (n !== nModified || nModified !== assets.length) {
+		return false;
+	}
+	return true;
 };

@@ -8,6 +8,7 @@ import assetModel from "../models/assets";
 
 describe("Test Transaction related API", () => {
 	process.env.MODE = "test";
+	process.env.TEST_TYPE = "unit";
 	let User1;
 	let User2;
 	let Asset;
@@ -132,14 +133,15 @@ describe("Test Transaction related API", () => {
 		request(app)
 			.post(`/api/transactions/`)
 			.send({
-				sender: `${User2._id}`,
-				receiver: `${User1._id}`,
+				sender: `${User1._id}`,
+				receiver: `${User2._id}`,
 				assets: [`${Asset._id}`],
 			})
 			.set("Content-Type", "application/json")
 			.set("Accept", "application/json")
 			//   .set("Cookie", savedCookies)
 			.then((response) => {
+				console.log(response.error);
 				expect(response.statusCode).toBe(200);
 				expect(response.body).toEqual(
 					expect.objectContaining({
@@ -151,12 +153,12 @@ describe("Test Transaction related API", () => {
 							},
 						]),
 						receiver: {
-							_id: `${User1._id}`,
-							name: "Lam Nguyen1",
-						},
-						sender: {
 							_id: `${User2._id}`,
 							name: "Lam Nguyen2",
+						},
+						sender: {
+							_id: `${User1._id}`,
+							name: "Lam Nguyen1",
 						},
 						__v: 0,
 					})
@@ -187,12 +189,11 @@ describe("Test Transaction related API", () => {
 			});
 	});
 	it("Create Transaction Asset - Failed ID", async (done) => {
-		const expecting = ["Invalid sender"];
+		const expecting = ["Invalid receiver"];
 		request(app)
 			.post(`/api/transactions/`)
 			.send({
-				sender: "5fb4b239b32c2c2ba44f23fg",
-				receiver: "5fb411df8173b602387d8768",
+				receiver: "5fb411df8173b602387d876",
 				assets: ["5fb411df8173b602387d8768"],
 			})
 			.set("Content-Type", "application/json")

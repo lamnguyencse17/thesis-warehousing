@@ -53,14 +53,12 @@ export const createAssetRequest = async ({
   //     "__v": 0
   // }
   try {
-    const res = await axios.post(requestUrl, {
-      name,
+    const res = await axios.post(requestUrl, {assets: [{name,
       quantity,
       unit,
-      description,
+      description,}]
     });
-
-    return {status: true, asset: res.data};
+    return {status: true, assets: res.data};
   } catch (err) {
     console.log(err.response.data.message);
     return {

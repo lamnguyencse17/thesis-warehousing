@@ -1,15 +1,11 @@
 import { isValidMongoId } from "./utils";
 
-export const validateCreateTransaction = ({ receiver, sender, assets }) => {
+export const validateCreateTransaction = ({ receiver, assets }) => {
 	let status = true;
 	let message = [];
 	if (!isValidMongoId(receiver)) {
 		status = false;
 		message.push("Invalid receiver");
-	}
-	if (!isValidMongoId(sender)) {
-		status = false;
-		message.push("Invalid sender");
 	}
 	if (assets.length === 0) {
 		status = false;

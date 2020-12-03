@@ -8,7 +8,6 @@ export const createTransaction = async ({ receiver, sender, assets }) => {
 		sender: mongoose.Types.ObjectId(sender),
 		assets,
 	});
-
 	return { result, status: true };
 };
 
