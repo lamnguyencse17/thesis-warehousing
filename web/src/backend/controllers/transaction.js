@@ -3,6 +3,7 @@ import { HANDLED_ERROR_RESPONSE, OK_RESPONSE } from "../constants/http";
 import { validateCreateTransaction } from "../validators/transactionValidator";
 import { createTransactionRequest } from "../requests/transaction";
 import { updateOwner, validateTransferRight } from "../services/asset";
+import pubsub from "../pubsub";
 
 export const createTransactionController = async (req, res) => {
 	const { receiver, assets } = req.body;
@@ -51,15 +52,17 @@ export const createTransactionController = async (req, res) => {
 	}
 	await result.save(async (err) => {
 		if (err) {
-			console.log(err);
+			console.error(err);
 			return res.status(HANDLED_ERROR_RESPONSE).json({ message: err });
 		}
 		result
-			.populate({ path: "sender", select: "name" })
-			.populate({ path: "receiver", select: "name" })
-			.populate({ path: "assets", select: "name" })
+			.populate({ path: "sender", select: "name email" })
+			.populate({ path: "receiver", select: "name email" })
+			.populate({ path: "assets", select: "name quantity unit description" })
 			.execPopulate()
 			.then((transaction) => {
+				transaction = transaction.toJSON();
+				pubsub.publish("transactionCreated", {...transaction});
 				return res.status(OK_RESPONSE).json(transaction);
 			});
 	});

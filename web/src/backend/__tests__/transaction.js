@@ -48,12 +48,12 @@ describe("Test Transaction related API", () => {
 	afterAll(async (done) => {
 		await transactionModel.deleteOne({ sender: `${User1._id}` }, (err) => {
 			if (err) {
-				console.log(err);
+				console.error(err);
 			}
 		});
 		await transactionModel.deleteOne({ sender: `${User2._id}` }, (err) => {
 			if (err) {
-				console.log(err);
+				console.error(err);
 			}
 		});
 		await assetModel.deleteOne({ _id: mongoose.Types.ObjectId(Asset._id) });
@@ -61,32 +61,6 @@ describe("Test Transaction related API", () => {
 		await userModel.deleteOne({ _id: mongoose.Types.ObjectId(User2._id) });
 		mongoose.disconnect(done);
 	});
-
-	// it('Login With Agent', async (done) => {
-	//     request(app).post("/api/auth/login").send({
-	//         "password": "123456",
-	//         "email": "testUser0@gmail.com"
-	//     })
-	//         .set("Content-Type", "application/json")
-	//         .set("Accept", "application/json")
-	//         .then(response => {
-	//             const cookies = setCookie.parse(response, {
-	//                 map: true,
-	//             });
-	//             expect(response.statusCode).toBe(200);
-	//             expect(response.body).toEqual(expect.objectContaining({
-	//                 "token": expect.any(String)
-	//             }));
-	//             expect(cookies.token).toEqual(expect.objectContaining({
-	//                 name: "token",
-	//                 value: expect.any(String),
-	//                 httpOnly: true
-	//             }));
-	//             savedCookies = response.headers['set-cookie'];
-	//             done();
-	//         });
-	// });
-
 	it("Get Transaction Info", async (done) => {
 		request(app)
 			.get(`/api/transactions/${TestObj._id}`)
@@ -101,16 +75,21 @@ describe("Test Transaction related API", () => {
 						assets: expect.arrayContaining([
 							{
 								_id: `${Asset._id}`,
-								name: "Thung Tao",
+								name: Asset.name,
+								quantity: Asset.quantity,
+								unit: Asset.unit,
+								description: ""
 							},
 						]),
 						receiver: {
 							_id: `${User2._id}`,
-							name: "Lam Nguyen2",
+							name: User2.name,
+							email: User2.email
 						},
 						sender: {
 							_id: `${User1._id}`,
-							name: "Lam Nguyen1",
+							name: User1.name,
+							email: User1.email
 						},
 						__v: 0,
 					})
@@ -141,7 +120,6 @@ describe("Test Transaction related API", () => {
 			.set("Accept", "application/json")
 			//   .set("Cookie", savedCookies)
 			.then((response) => {
-				console.log(response.error);
 				expect(response.statusCode).toBe(200);
 				expect(response.body).toEqual(
 					expect.objectContaining({
@@ -149,16 +127,21 @@ describe("Test Transaction related API", () => {
 						assets: expect.arrayContaining([
 							{
 								_id: `${Asset._id}`,
-								name: "Thung Tao",
+								name: Asset.name,
+								quantity: Asset.quantity,
+								unit: Asset.unit,
+								description: ""
 							},
 						]),
 						receiver: {
 							_id: `${User2._id}`,
-							name: "Lam Nguyen2",
+							name: User2.name,
+							email: User2.email
 						},
 						sender: {
 							_id: `${User1._id}`,
-							name: "Lam Nguyen1",
+							name: User1.name,
+							email: User1.email
 						},
 						__v: 0,
 					})
