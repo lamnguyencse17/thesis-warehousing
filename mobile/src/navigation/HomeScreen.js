@@ -27,6 +27,7 @@ const queryb = gql`
 
 const Drawer = createDrawerNavigator();
 import {client} from '../graphQL/graphQL';
+import {View} from 'react-native';
 
 export default class HomeScreen extends Component {
   // async componentDidMount() {
@@ -44,14 +45,33 @@ export default class HomeScreen extends Component {
     return (
       <ApolloProvider client={client}>
         <Drawer.Navigator initialRouteName="User">
-          <Drawer.Screen name="Asset" component={AssetCreatorScreen} />
+          <Drawer.Screen
+            name="Asset"
+            component={AssetCreatorScreen}
+            options={{headerShown: true}}
+          />
           <Drawer.Screen
             name="Transaction"
             component={TransactionCreatorScreen}
+            options={{headerShown: true}}
           />
-          <Drawer.Screen name="User" component={UserScreen} />
+          <Drawer.Screen
+            name="User"
+            component={UserScreen}
+            options={{
+              headerShown: true,
+            }}
+          />
         </Drawer.Navigator>
       </ApolloProvider>
     );
   }
 }
+
+const Header = () => {
+  return (
+    <View>
+      <Text>Hello</Text>
+    </View>
+  );
+};
