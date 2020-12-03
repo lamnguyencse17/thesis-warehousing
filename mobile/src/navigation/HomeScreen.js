@@ -27,7 +27,6 @@ const queryb = gql`
 
 const Drawer = createDrawerNavigator();
 import {client} from '../graphQL/graphQL';
-import {View} from 'react-native';
 
 export default class HomeScreen extends Component {
   // async componentDidMount() {
