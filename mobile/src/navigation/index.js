@@ -26,7 +26,7 @@ class Router extends Component {
           screenOptions={{
             headerShown: false,
           }}>
-          {this.props.token !== '' ? (
+          {this.props.token === '' ? (
             <>
               <Stack.Screen name="Login" component={LoginScreen} />
               <Stack.Screen name="Register" component={RegisterScreen} />

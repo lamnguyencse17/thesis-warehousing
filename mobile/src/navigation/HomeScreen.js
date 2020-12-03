@@ -67,11 +67,3 @@ export default class HomeScreen extends Component {
     );
   }
 }
-
-const Header = () => {
-  return (
-    <View>
-      <Text>Hello</Text>
-    </View>
-  );
-};
