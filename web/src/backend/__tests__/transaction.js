@@ -5,6 +5,7 @@ import transactionModel from "../models/transactions";
 import passport from "passport";
 import userModel from "../models/users";
 import assetModel from "../models/assets";
+import { hashPassword } from "../utils/password";
 
 describe("Test Transaction related API", () => {
 	process.env.MODE = "test";
@@ -24,12 +25,12 @@ describe("Test Transaction related API", () => {
 		User1 = await userModel.create({
 			name: "Lam Nguyen1",
 			email: "lamnguyen1@gmail.com",
-			password: "123456",
+			password: await hashPassword("123456"),
 		});
 		User2 = await userModel.create({
 			name: "Lam Nguyen2",
 			email: "lamnguyen2@gmail.com",
-			password: "123456",
+			password: await hashPassword("123456"),
 		});
 		Asset = await assetModel.create({
 			name: "Thung Tao",

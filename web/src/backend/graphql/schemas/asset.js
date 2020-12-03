@@ -14,11 +14,8 @@ export default gql`
 		assetCreated: Asset
 	}
 
-	# type Mutation {
-	# 	createOneAsset(name: String, quantity: Int!, description: String, owner: ID!, unit: Int!): Asset
-	# }
-
 	type Query {
 		getOneAsset(_id: ID!): Asset
+		getManyAssetsOfSelf(owner: ID!, limit: Int!, offset: Int!): [Asset]!
 	}
 `;
