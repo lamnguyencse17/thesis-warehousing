@@ -7,6 +7,7 @@ import {bindActionCreators} from 'redux';
 import {setUser} from '../../redux/actions/user';
 import {validateLogInUser} from '../../validators/userValidator';
 import {createLoginRequest} from '../../request/user';
+import {splitLink} from '../../graphQL/graphQL';
 
 class Login extends React.Component {
   constructor(props) {
@@ -64,7 +65,7 @@ class Login extends React.Component {
       <View style={LoginStyle.container}>
         <Text style={LoginStyle.logo}>TraceChain</Text>
         <Formik
-          initialValues={{email: '', password: ''}}
+          initialValues={{email: 'hung@gmail.com', password: '123456'}}
           onSubmit={(values, {setSubmitting}) =>
             this.processLoginSubmit(values, setSubmitting)
           }>

@@ -1,12 +1,28 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
 import {useSelector} from 'react-redux';
 import styles from './styles';
 import QRCode from 'react-native-qrcode-svg';
+import {useSubscription, gql} from '@apollo/client';
 
-function User() {
+const query = gql`
+  subscription Subscription {
+    assetCreated {
+      _id
+      name
+    }
+  }
+`;
+
+function User(props) {
+  const {data} = useSubscription(query, {
+    onSubscriptionData: () => {
+      console.log('Loonf');
+    },
+  });
   const {_id, name} = useSelector((state) => state.user);
   const [isShowingQR, showQR] = useState(false);
+  console.log(props);
   return (
     <View>
       <View style={styles.title}>
