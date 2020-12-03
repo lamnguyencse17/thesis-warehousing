@@ -1,6 +1,6 @@
-import { UserInputError } from "apollo-server-express";
+import { ApolloError, UserInputError } from "apollo-server-express";
 import pubsub from "../../pubsub";
-import { getAssetById } from "../../services/asset";
+import { getAssetById, getAssetsOfOwner } from "../../services/asset";
 
 export default {
 	Query: {
@@ -14,6 +14,13 @@ export default {
 			}
 			return result;
 		},
+		getManyAssetsOfSelf: async (root, {owner, limit, offset}, context) => {
+			const {status, assets, message} = await getAssetsOfOwner(owner, {limit, offset});
+			if (!status) {
+				throw new ApolloError(message);
+			}  
+			return assets;
+		}
 	},
 	Subscription: {
 		assetCreated: {
@@ -25,18 +32,4 @@ export default {
 			},
 		},
 	},
-	// Mutation: {
-	// 	createOneAsset: async (root, args, context) => {
-	// 		const {name, quantity, unit, description, owner} = args;
-	// 		const {status, asset} = await createAsset({name, quantity, unit, description, owner});
-	// 		if (!status){
-	// 			throw new UserInputError("No Asset Id Found", {
-	// 				invalidArgs: "_id"
-	// 			});
-	// 		}
-	// 		asset.save();
-	// 		// pubsub.publish("assetCreated", {assetCreated: asset});
-	// 		return asset;
-	// 	},
-	// }
 };
