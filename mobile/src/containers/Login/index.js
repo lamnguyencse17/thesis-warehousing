@@ -7,6 +7,7 @@ import {bindActionCreators} from 'redux';
 import {setUser} from '../../redux/actions/user';
 import {validateLogInUser} from '../../validators/userValidator';
 import {createLoginRequest} from '../../request/user';
+import {splitLink} from '../../graphQL/graphQL';
 
 class Login extends React.Component {
   constructor(props) {
