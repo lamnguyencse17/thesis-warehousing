@@ -63,14 +63,14 @@ export const createAssetController = async (req, res) => {
 		}
 		newAssets.push(createdAsset.asset);
 	}
-	if (process.env.MODE != "test" && process.env.NODE_ENV != "test") {
-		let assetRequest = await createAssetRequest(newAssets);
-		if (!assetRequest.status) {
-			return res
-				.status(HANDLED_ERROR_RESPONSE)
-				.json({ message: "Something went wrong" });
-		}
-	}
+	// if (process.env.MODE != "test" && process.env.NODE_ENV != "test") {
+	// 	let assetRequest = await createAssetRequest(newAssets);
+	// 	if (!assetRequest.status) {
+	// 		return res
+	// 			.status(HANDLED_ERROR_RESPONSE)
+	// 			.json({ message: "Something went wrong" });
+	// 	}
+	// }
 	for (let asset of newAssets) {
 		asset.save();
 		asset = asset.toObject();

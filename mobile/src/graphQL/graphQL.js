@@ -3,17 +3,25 @@ import {getMainDefinition} from '@apollo/client/utilities';
 import {WebSocketLink} from '@apollo/client/link/ws';
 
 const httpLink = new HttpLink({
-  uri: 'http://localhost:3000/',
+  uri: 'http://172.16.5.122:3000/graphql',
 });
 
 const wsLink = new WebSocketLink({
-  uri: `ws://localhost:3000/`,
+  uri: `ws://172.16.5.122:3000/graphql`,
   options: {
     reconnect: true,
     // connectionParams: {
     //   authToken: user.authToken,
     // },
   },
+});
+
+wsLink.subscriptionClient.on('connecting', () => {
+  console.log('connecting');
+});
+
+wsLink.subscriptionClient.on('connected', () => {
+  console.log('connected');
 });
 
 // The split function takes three parameters:

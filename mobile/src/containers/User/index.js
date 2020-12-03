@@ -15,17 +15,21 @@ const query = gql`
 `;
 
 function User(props) {
-  const {data} = useSubscription(query, {
-    onSubscriptionData: () => {
-      console.log('Loonf');
-    },
-  });
+  //EXAMPLE
+  // const [data, setData] = useState([]);
+  // useSubscription(query, {
+  //   onSubscriptionData: ({subscriptionData}) => {
+  //     setData([...data, {...subscriptionData.data}]);
+  //   },
+  // });
   const {_id, name} = useSelector((state) => state.user);
   const [isShowingQR, showQR] = useState(false);
-  console.log(props);
   return (
     <View>
       <View style={styles.title}>
+        {/*{data.map((newData) => (*/}
+        {/*  <Text>{JSON.stringify(newData, null, 2)}</Text>*/}
+        {/*))}*/}
         <TouchableOpacity onPress={() => showQR(true)}>
           <Text style={styles.titleText}>Generate Receiving QR</Text>
         </TouchableOpacity>

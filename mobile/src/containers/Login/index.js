@@ -65,7 +65,7 @@ class Login extends React.Component {
       <View style={LoginStyle.container}>
         <Text style={LoginStyle.logo}>TraceChain</Text>
         <Formik
-          initialValues={{email: 'hung@gmail.com', password: '123456'}}
+          initialValues={{email: '', password: ''}}
           onSubmit={(values, {setSubmitting}) =>
             this.processLoginSubmit(values, setSubmitting)
           }>
