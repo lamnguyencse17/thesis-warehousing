@@ -22,9 +22,9 @@ export const populateTransaction = async (transaction) => {
 export const getTransactionById = async (transactionId) => {
 	const result = await transactionModel
 		.findOne({ _id: mongoose.Types.ObjectId(transactionId) })
-		.populate({ path: "sender", select: "name" })
-		.populate({ path: "receiver", select: "name" })
-		.populate({ path: "assets", select: "name" })
+		.populate({ path: "sender", select: "name email" })
+		.populate({ path: "receiver", select: "name email" })
+		.populate({ path: "assets", select: "name quantity unit description" })
 		.lean();
 	let status = true;
 	if (!result) {
