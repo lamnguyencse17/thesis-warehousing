@@ -8,16 +8,19 @@ export const getClient = () => {
   return client;
 };
 
-export const initClient = () => {
+export const initClient = ({token}) => {
   const httpLink = new HttpLink({
-    uri: 'http://172.16.5.81:3000/graphql',
+    uri: 'http://172.16.5.122:3000/graphql',
     credentials: 'include',
   });
 
   const wsLink = new WebSocketLink({
-    uri: `ws://172.16.5.81:3000/graphql`,
+    uri: `ws://172.16.5.122:3000/graphql`,
     options: {
       reconnect: true,
+      connectionParams: {
+        token,
+      },
     },
   });
 

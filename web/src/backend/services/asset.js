@@ -85,11 +85,15 @@ export const updateOwner = async (owner, assets) => {
 	return true;
 };
 
-export const getAssetsOfOwner = async (owner, {limit, offset}) => {
-	try{
-		const assets = await assetModel.find({owner: mongoose.Types.ObjectId(owner)}).skip(offset).limit(limit).lean();
-		return {status: true, assets};
-	} catch(err){
-		return {status: false, message: err};
+export const getAssetsOfOwner = async (owner, { limit, offset }) => {
+	try {
+		const assets = await assetModel
+			.find({ owner: mongoose.Types.ObjectId(owner) })
+			.skip(offset)
+			.limit(limit)
+			.lean();
+		return { status: true, assets };
+	} catch (err) {
+		return { status: false, message: err };
 	}
 };
