@@ -3,34 +3,12 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import AssetCreatorScreen from './AssetCreatorScreen';
 import TransactionCreatorScreen from './TransactionCreatorScreen';
 import UserScreen from './UserScreen';
-import {ApolloProvider, gql} from '@apollo/client';
-import {getClient, initClient} from '../graphQL/graphQL';
-
-const query = gql`
-  subscription Subscription {
-    assetCreated {
-      _id
-      name
-    }
-  }
-`;
-
-const queryb = gql`
-  query Query {
-    getOneAsset(_id: "5fc48551f70e44019dc653c9") {
-      _id
-      name
-      quantity
-      description
-    }
-  }
-`;
+import {ApolloProvider} from '@apollo/client';
+import {getClient} from '../graphQL/graphQL';
 
 const Drawer = createDrawerNavigator();
 
 export default class HomeScreen extends Component {
-  async componentDidMount() {}
-
   render() {
     return (
       <ApolloProvider client={getClient()}>
