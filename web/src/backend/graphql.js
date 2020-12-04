@@ -1,15 +1,11 @@
-const {
-	ApolloServer,
-	ApolloError,
-	AuthenticationError,
-} = require("apollo-server-express");
+const { ApolloServer, AuthenticationError } = require("apollo-server-express");
 import schemas from "./graphql/schemas";
 import resolvers from "./graphql/resolvers";
 import jwt from "jsonwebtoken";
 import { getUserById } from "./services/user";
 
 const verifyUser = async (_id) => {
-	const {status} = await getUserById(_id);
+	const { status } = await getUserById(_id);
 	if (!status) {
 		throw AuthenticationError("No User Found");
 	}

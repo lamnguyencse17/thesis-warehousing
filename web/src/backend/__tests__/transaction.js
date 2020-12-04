@@ -79,18 +79,18 @@ describe("Test Transaction related API", () => {
 								name: Asset.name,
 								quantity: Asset.quantity,
 								unit: Asset.unit,
-								description: ""
+								description: "",
 							},
 						]),
 						receiver: {
 							_id: `${User2._id}`,
 							name: User2.name,
-							email: User2.email
+							email: User2.email,
 						},
 						sender: {
 							_id: `${User1._id}`,
 							name: User1.name,
-							email: User1.email
+							email: User1.email,
 						},
 						__v: 0,
 					})
@@ -131,18 +131,18 @@ describe("Test Transaction related API", () => {
 								name: Asset.name,
 								quantity: Asset.quantity,
 								unit: Asset.unit,
-								description: ""
+								description: "",
 							},
 						]),
 						receiver: {
 							_id: `${User2._id}`,
 							name: User2.name,
-							email: User2.email
+							email: User2.email,
 						},
 						sender: {
 							_id: `${User1._id}`,
 							name: User1.name,
-							email: User1.email
+							email: User1.email,
 						},
 						__v: 0,
 					})

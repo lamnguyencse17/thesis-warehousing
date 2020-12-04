@@ -62,7 +62,7 @@ export const createTransactionController = async (req, res) => {
 			.execPopulate()
 			.then((transaction) => {
 				transaction = transaction.toJSON();
-				pubsub.publish("transactionCreated", {...transaction});
+				pubsub.publish("transactionCreated", { ...transaction });
 				return res.status(OK_RESPONSE).json(transaction);
 			});
 	});

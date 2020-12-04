@@ -14,14 +14,17 @@ export default {
 			}
 			return result;
 		},
-		getManyAssetsOfSelf: async (root, { limit, offset}, context) => {
+		getManyAssetsOfSelf: async (root, { limit, offset }, context) => {
 			const owner = context.user._id;
-			const {status, assets, message} = await getAssetsOfOwner(owner, {limit, offset});
+			const { status, assets, message } = await getAssetsOfOwner(owner, {
+				limit,
+				offset,
+			});
 			if (!status) {
 				throw new ApolloError(message);
-			}  
+			}
 			return assets;
-		}
+		},
 	},
 	Subscription: {
 		assetCreated: {
