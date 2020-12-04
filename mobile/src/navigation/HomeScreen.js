@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import AssetCreatorScreen from './AssetCreatorScreen';
 import TransactionCreatorScreen from './TransactionCreatorScreen';
+import YourAssetScreen from './YourAssetScreen';
 import UserScreen from './UserScreen';
 import {ApolloProvider} from '@apollo/client';
 import {getClient} from '../graphQL/graphQL';
@@ -26,6 +27,13 @@ export default class HomeScreen extends Component {
           <Drawer.Screen
             name="User"
             component={UserScreen}
+            options={{
+              headerShown: true,
+            }}
+          />
+          <Drawer.Screen
+            name="Your Asset"
+            component={YourAssetScreen}
             options={{
               headerShown: true,
             }}

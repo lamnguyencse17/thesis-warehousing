@@ -2,26 +2,26 @@ import {StyleSheet} from 'react-native';
 import {Styles} from '@common';
 
 export default StyleSheet.create({
-  title: {
+  header: {
     height: Styles.height * 0.2,
     ...Styles.Common.ColumnCenter,
   },
   titleText: {
     fontSize: 24,
     fontWeight: 'bold',
-    textDecorationLine: 'underline',
   },
-  generateButton: {
-    height: 40,
-    width: (Styles.width * 3) / 4,
-    borderRadius: 20,
-    backgroundColor: '#9ACBF1',
+  itemView: {
+    width: Styles.width - 80,
+    alignSelf: 'center',
+    height: Styles.height * 0.05,
+    borderColor: 'black',
+    borderWidth: 1,
+    padding: 10,
+    alignContent: 'center',
+    marginBottom: 10,
     justifyContent: 'center',
-    alignSelf: 'center',
-    marginTop: 5,
   },
-  QRCodeView: {
-    alignSelf: 'center',
-    marginTop: 20,
+  textItem: {
+    fontSize: 16,
   },
 });
