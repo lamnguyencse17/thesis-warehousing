@@ -7,6 +7,10 @@ export default gql`
 		email: String!
 		password: String!
 	}
+	extend type Query {
+		getManyAssetsOfSelf(limit: Int!, offset: Int!): [Asset]!
+		getManyTransactionOfSelf(limit: Int!, offset: Int!): [Transaction]!
+	}
 `;
 // Add inside when implement
 // extend type Query {}

@@ -16,6 +16,5 @@ export default gql`
 
 	type Query {
 		getOneAsset(_id: ID!): Asset
-		getManyAssetsOfSelf(limit: Int!, offset: Int!): [Asset]!
 	}
 `;
