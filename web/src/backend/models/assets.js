@@ -15,6 +15,16 @@ export const AssetSchema = new Assets(
 	{ _id: false }
 );
 
+AssetSchema.pre('find', function() {
+	this._startTime = Date.now();
+  });
+  
+  AssetSchema.post('find', function() {
+	if (this._startTime != null) {
+		console.log('Runtime in MS: ', Date.now() - this._startTime);
+	}
+});
+
 const assetModel = mongoose.model("Assets", AssetSchema);
 
 export default assetModel;
