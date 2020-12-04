@@ -205,18 +205,18 @@ describe("API Integration Test", () => {
 								name: `${Asset.name}`,
 								quantity: Asset.quantity,
 								unit: Asset.unit,
-								description: ""
+								description: "",
 							},
 						]),
 						receiver: {
 							_id: `${testUser2._id}`,
 							name: `${testUser2.name}`,
-							email: `${testUser2.email}`
+							email: `${testUser2.email}`,
 						},
 						sender: {
 							_id: `${testUser._id}`,
 							name: `${testUser.name}`,
-							email: `${testUser.email}`
+							email: `${testUser.email}`,
 						},
 						__v: 0,
 					})

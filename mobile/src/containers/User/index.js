@@ -1,18 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
 import {useSelector} from 'react-redux';
 import styles from './styles';
 import QRCode from 'react-native-qrcode-svg';
-import {useSubscription, gql} from '@apollo/client';
-
-const query = gql`
-  subscription Subscription {
-    assetCreated {
-      _id
-      name
-    }
-  }
-`;
 
 function User(props) {
   //EXAMPLE

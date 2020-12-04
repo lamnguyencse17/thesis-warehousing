@@ -3,10 +3,12 @@ import bodyParser from "body-parser";
 import morgan from "morgan";
 import compression from "compression";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 // import path from "path";
 
 const app = express();
 app.use(morgan("tiny"));
+app.use(cors({ credentials: true }));
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
