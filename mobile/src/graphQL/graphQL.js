@@ -4,6 +4,7 @@ import {WebSocketLink} from '@apollo/client/link/ws';
 
 const httpLink = new HttpLink({
   uri: 'http://172.16.5.122:3000/graphql',
+  credentials: 'include',
 });
 
 const wsLink = new WebSocketLink({
