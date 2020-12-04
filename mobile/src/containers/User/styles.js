@@ -9,6 +9,7 @@ export default StyleSheet.create({
   titleText: {
     fontSize: 24,
     fontWeight: 'bold',
+    textDecorationLine: 'underline',
   },
   generateButton: {
     height: 40,
