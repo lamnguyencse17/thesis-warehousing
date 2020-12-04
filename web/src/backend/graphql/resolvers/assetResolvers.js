@@ -1,6 +1,6 @@
-import { ApolloError, UserInputError } from "apollo-server-express";
+import { UserInputError } from "apollo-server-express";
 import pubsub from "../../pubsub";
-import { getAssetById, getAssetsOfOwner } from "../../services/asset";
+import { getAssetById } from "../../services/asset";
 
 export default {
 	Query: {
@@ -13,17 +13,6 @@ export default {
 				});
 			}
 			return result;
-		},
-		getManyAssetsOfSelf: async (root, { limit, offset }, context) => {
-			const owner = context.user._id;
-			const { status, assets, message } = await getAssetsOfOwner(owner, {
-				limit,
-				offset,
-			});
-			if (!status) {
-				throw new ApolloError(message);
-			}
-			return assets;
 		},
 	},
 	Subscription: {
