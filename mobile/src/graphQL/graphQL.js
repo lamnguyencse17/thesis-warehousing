@@ -1,7 +1,7 @@
 import {split, HttpLink, ApolloClient, InMemoryCache} from '@apollo/client';
 import {getMainDefinition} from '@apollo/client/utilities';
 import {WebSocketLink} from '@apollo/client/link/ws';
-
+import {Config} from '@common';
 let client = null;
 
 export const getClient = () => {
@@ -10,12 +10,12 @@ export const getClient = () => {
 
 export const initClient = ({token}) => {
   const httpLink = new HttpLink({
-    uri: 'http://172.16.5.81:3000/graphql',
+    uri: `http://${Config.graphql}/graphql`,
     credentials: 'include',
   });
 
   const wsLink = new WebSocketLink({
-    uri: `ws://172.16.5.81:3000/graphql`,
+    uri: `ws://${Config.graphql}/graphql`,
     options: {
       reconnect: true,
       connectionParams: {

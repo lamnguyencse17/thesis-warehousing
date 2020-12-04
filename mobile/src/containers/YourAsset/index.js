@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {Text, View, FlatList, Modal, Button} from 'react-native';
+import React, {useState} from 'react';
+import {Text, View, FlatList} from 'react-native';
 import styles from './styles';
 import {gql, useQuery} from '@apollo/client';
 import {TouchableOpacity} from 'react-native-gesture-handler';
@@ -17,15 +17,7 @@ const queryYourAsset = gql`
   }
 `;
 
-const YourAsset = ({params}) => {
-  //   const [data, setData] = useState([]);
-  //   useSubscription(query, {
-  //     onSubscriptionData: ({subscriptionData}) => {
-  //       setData([...data, {...subscriptionData.data}]);
-  //     },
-  //   });
-
-  const [modalVisible, setModalVisible] = useState(false);
+const YourAsset = () => {
   const [itemIndex, setIndexItem] = useState(-1);
   const {loading, error, data} = useQuery(queryYourAsset);
 
@@ -37,14 +29,14 @@ const YourAsset = ({params}) => {
           onPress={() => {
             setIndexItem(index);
           }}>
-          <Text>
+          <Text style={styles.textItem}>
             {index + 1}: {item.name}
           </Text>
         </TouchableOpacity>
       </View>
     );
   };
-  console.log('item', itemIndex);
+
   return (
     <View>
       <View style={styles.header}>

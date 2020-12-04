@@ -1,64 +1,37 @@
-import {Styles} from '@common';
-import React, {Component, useEffect, useState} from 'react';
+import React from 'react';
 import {View, Text, Modal, TouchableOpacity, StyleSheet} from 'react-native';
+import {Config} from '@common';
+import styles from './styles';
 
 const ModalItem = (props) => {
   const {name, quantity, unit, description} = props.data;
 
   return (
     <View style={styles.centeredView}>
-      <Modal transparent={true} style={styles.modalView}>
+      <Modal transparent={true}>
         <View style={styles.modalView}>
-          <Text>{name}</Text>
-          <Text>{quantity}</Text>
-          <Text>{unit}</Text>
-          <Text>{description}</Text>
-          <TouchableOpacity onPress={() => props.setIndexItem(-1)}>
-            <Text>BACK</Text>
-          </TouchableOpacity>
+          <Text>Name: {name}</Text>
+          <Text>Quantity: {quantity}</Text>
+          <Text>Unit: {Config.options[unit]}</Text>
+          <Text>Description: {description}</Text>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <TouchableOpacity
+              onPress={() => props.setIndexItem(-1)}
+              style={styles.backButton}>
+              <Text style={{textDecorationLine: 'underline', color: 'blue'}}>
+                Back
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.assetButton}>
+              <Text style={{textDecorationLine: 'underline', color: 'blue'}}>
+                Asset
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </Modal>
     </View>
   );
 };
-const styles = StyleSheet.create({
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: Styles.height / 2,
-  },
-  modalView: {
-    marginTop: Styles.height / 2 - 40,
-    marginHorizontal: 80,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  openButton: {
-    backgroundColor: '#F194FF',
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
-  textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'center',
-  },
-});
 
 export default ModalItem;
