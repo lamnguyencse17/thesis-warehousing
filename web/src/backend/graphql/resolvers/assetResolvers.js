@@ -1,6 +1,6 @@
-import { ApolloError, UserInputError } from "apollo-server-express";
+import { UserInputError } from "apollo-server-express";
 import pubsub from "../../pubsub";
-import { getAssetById, getAssetsOfOwner } from "../../services/asset";
+import { getAssetById } from "../../services/asset";
 
 export default {
 	Query: {
