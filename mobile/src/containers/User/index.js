@@ -27,13 +27,13 @@ const queryb = gql`
 
 function User(props) {
   //EXAMPLE
-  // const [data, setData] = useState([]);
-  // useSubscription(query, {
-  //   onSubscriptionData: ({subscriptionData}) => {
-  //     setData([...data, {...subscriptionData.data}]);
-  //   },
-  // });
-  const {loading, error, data} = useQuery(queryb);
+  const [data, setData] = useState([]);
+  useSubscription(query, {
+    onSubscriptionData: ({subscriptionData}) => {
+      setData([...data, {...subscriptionData.data}]);
+    },
+  });
+  // const {loading, error, data} = useQuery(queryb);
   // useEffect(() => {
   //   if (!loading) {
   //     console.log(data);
