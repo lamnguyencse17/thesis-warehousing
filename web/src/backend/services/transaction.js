@@ -51,3 +51,16 @@ export const syncTransaction = async ({ _id, receiver, sender, assets }) => {
 		}
 	}
 };
+
+export const getTransactionOfSender = async (sender, { limit, offset }) => {
+	try {
+		const transactions = await transactionModel
+			.find({ sender: mongoose.Types.ObjectId(sender) })
+			.skip(offset)
+			.limit(limit)
+			.lean();
+		return { status: true, transactions };
+	} catch (err) {
+		return { status: false, message: err };
+	}
+};
