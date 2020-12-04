@@ -19,7 +19,7 @@ const queryYourAsset = gql`
 
 const YourAsset = () => {
   const [itemIndex, setIndexItem] = useState(-1);
-  const {loading, error, data} = useQuery(queryYourAsset);
+  const {loading, data} = useQuery(queryYourAsset);
 
   const _renderItem = ({item, index}) => {
     return (

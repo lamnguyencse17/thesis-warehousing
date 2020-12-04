@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Modal, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, Text, Modal, TouchableOpacity} from 'react-native';
 import {Config} from '@common';
 import styles from './styles';
 
