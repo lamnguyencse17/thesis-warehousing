@@ -4,6 +4,7 @@ import AssetCreatorScreen from './AssetCreatorScreen';
 import TransactionCreatorScreen from './TransactionCreatorScreen';
 import UserScreen from './UserScreen';
 import {ApolloProvider, gql} from '@apollo/client';
+import {getClient, initClient} from '../graphQL/graphQL';
 
 const query = gql`
   subscription Subscription {
@@ -26,23 +27,13 @@ const queryb = gql`
 `;
 
 const Drawer = createDrawerNavigator();
-import {client} from '../graphQL/graphQL';
 
 export default class HomeScreen extends Component {
-  // async componentDidMount() {
-  //   const data = await client.query({query: queryb});
-  //   console.log(data.data);
-  //   const observer = client.subscribe({query});
-  //   observer.subscribe({
-  //     next(data) {
-  //       console.log(data);
-  //     },
-  //   });
-  // }
+  async componentDidMount() {}
 
   render() {
     return (
-      <ApolloProvider client={client}>
+      <ApolloProvider client={getClient()}>
         <Drawer.Navigator initialRouteName="User">
           <Drawer.Screen
             name="Asset"

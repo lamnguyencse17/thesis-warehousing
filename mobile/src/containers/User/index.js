@@ -34,11 +34,11 @@ function User(props) {
   //   },
   // });
   const {loading, error, data} = useQuery(queryb);
-  useEffect(() => {
-    if (!loading) {
-      console.log(data);
-    }
-  });
+  // useEffect(() => {
+  //   if (!loading) {
+  //     console.log(data);
+  //   }
+  // });
   const {_id, name} = useSelector((state) => state.user);
   const [isShowingQR, showQR] = useState(false);
   return (
