@@ -33,12 +33,12 @@ function User(props) {
   //     setData([...data, {...subscriptionData.data}]);
   //   },
   // });
-  // const {loading, error, data} = useQuery(queryb);
-  // useEffect(() => {
-  //   if (!loading) {
-  //     console.log(data);
-  //   }
-  // });
+  const {loading, error, data} = useQuery(queryb);
+  useEffect(() => {
+    if (!loading) {
+      console.log(data);
+    }
+  });
   const {_id, name} = useSelector((state) => state.user);
   const [isShowingQR, showQR] = useState(false);
   return (
