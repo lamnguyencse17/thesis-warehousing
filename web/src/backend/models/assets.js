@@ -15,13 +15,13 @@ export const AssetSchema = new Assets(
 	{ _id: false }
 );
 
-AssetSchema.pre('find', function() {
+AssetSchema.pre("find", function () {
 	this._startTime = Date.now();
-  });
-  
-  AssetSchema.post('find', function() {
+});
+
+AssetSchema.post("find", function () {
 	if (this._startTime != null) {
-		console.log('Runtime in MS: ', Date.now() - this._startTime);
+		console.log("Runtime in MS: ", Date.now() - this._startTime);
 	}
 });
 
