@@ -23,9 +23,9 @@ export default {
 			info
 		) => {
 			const populateInfo = parseTransactionQuery(info);
+			const sender = context.user._id;
 			const { status, transactions, message } = await getTransactionOfSender(
-				// sender,
-				"5fc735570b9d80018ca7620e",
+				sender,
 				{
 					limit,
 					offset,
