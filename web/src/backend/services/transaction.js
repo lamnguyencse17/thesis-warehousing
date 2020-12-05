@@ -52,15 +52,15 @@ export const syncTransaction = async ({ _id, receiver, sender, assets }) => {
 	}
 };
 
-export const getTransactionOfSender = async (sender, { limit, offset }) => {
+export const getTransactionOfSender = async (sender, { limit, offset }, populateInfo) => {
 	try {
 		const transactions = await transactionModel
 			.find({ sender: mongoose.Types.ObjectId(sender) })
 			.skip(offset)
 			.limit(limit)
-			.populate({ path: "sender", select: "name email" })
-			.populate({ path: "receiver", select: "name email" })
-			.populate({ path: "assets", select: "name quantity unit description" })
+			.populate({ path: "sender", select: populateInfo.sender })
+			.populate({ path: "receiver", select: populateInfo.receiver })
+			.populate({ path: "assets", select: populateInfo.assets })
 			.lean();
 		return { status: true, transactions };
 	} catch (err) {

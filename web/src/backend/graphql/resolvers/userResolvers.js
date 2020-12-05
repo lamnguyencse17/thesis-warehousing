@@ -1,6 +1,7 @@
 import { ApolloError } from "apollo-server-express";
 import { getAssetsOfOwner } from "../../services/asset";
 import { getTransactionOfSender } from "../../services/transaction";
+import parseTransactionQuery from "./util/parseTransactionQuery";
 
 export default {
 	Query: {
@@ -15,14 +16,21 @@ export default {
 			}
 			return assets;
 		},
-		getManyTransactionOfSelf: async (root, { limit, offset }, context) => {
+		getManyTransactionOfSelf: async (
+			root,
+			{ limit, offset },
+			context,
+			info
+		) => {
+			const populateInfo = parseTransactionQuery(info);
 			const sender = context.user._id;
 			const { status, transactions, message } = await getTransactionOfSender(
 				sender,
 				{
 					limit,
 					offset,
-				}
+				},
+				populateInfo
 			);
 			if (!status) {
 				throw new ApolloError(message);
@@ -30,7 +38,4 @@ export default {
 			return transactions;
 		},
 	},
-	// Mutation: {
-	//     // createTransaction: () => {},
-	// }
 };

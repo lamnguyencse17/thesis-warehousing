@@ -2,7 +2,7 @@ import { gql } from "apollo-server-express";
 
 export default gql`
 	type User {
-		id: ID!
+		_id: ID!
 		name: String!
 		email: String!
 		password: String!
@@ -12,7 +12,3 @@ export default gql`
 		getManyTransactionOfSelf(limit: Int!, offset: Int!): [Transaction]!
 	}
 `;
-// Add inside when implement
-// extend type Query {}
-
-// extend type Mutation {}
