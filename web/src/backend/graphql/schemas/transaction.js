@@ -3,9 +3,14 @@ import { gql } from "apollo-server-express";
 export default gql`
 	type Transaction {
 		_id: ID!
-		receiver: User!
-		sender: User!
+		receiver: TransactionUser!
+		sender: TransactionUser!
 		assets: [Asset!]!
+	}
+	type TransactionUser {
+		_id: ID!
+		name: String!
+		email: String!
 	}
 	extend type Query {
 		getOneTransaction(_id: ID!): Transaction
@@ -14,8 +19,3 @@ export default gql`
 		transactionCreated: Transaction
 	}
 `;
-
-// Add inside when implement
-// extend type Query {}
-
-// extend type Mutation {}

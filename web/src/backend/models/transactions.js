@@ -22,13 +22,13 @@ export const TransactionsSchema = new Transactions(
 	{ _id: false }
 );
 
-TransactionsSchema.pre('find', function() {
+TransactionsSchema.pre("find", function () {
 	this._startTime = Date.now();
-  });
-  
-TransactionsSchema.post('find', function() {
+});
+
+TransactionsSchema.post("find", function () {
 	if (this._startTime != null) {
-		console.log('Runtime in MS: ', Date.now() - this._startTime);
+		console.log("Runtime in MS: ", Date.now() - this._startTime);
 	}
 });
 
