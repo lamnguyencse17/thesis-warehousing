@@ -8,6 +8,8 @@ import {setUser} from '../../redux/actions/user';
 import {validateLogInUser} from '../../validators/userValidator';
 import {createLoginRequest} from '../../request/user';
 import {initClient} from '../../graphQL/graphQL';
+import {Button} from 'react-native-elements';
+
 class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -101,19 +103,23 @@ class Login extends React.Component {
               {error === '' ? null : (
                 <Text style={LoginStyle.errorText}>{error}</Text>
               )}
-              <TouchableOpacity
-                style={LoginStyle.loginBtn}
+              <Button
+                title="Login"
+                buttonStyle={LoginStyle.loginButton}
+                titleStyle={LoginStyle.buttonText}
+                TouchableComponent={TouchableOpacity}
+                loading={isSubmitting}
                 onPress={handleSubmit}
-                disabled={isSubmitting}>
-                <Text style={LoginStyle.loginText}>LOGIN</Text>
-              </TouchableOpacity>
-              <TouchableOpacity>
-                <Text
-                  style={LoginStyle.loginText}
-                  onPress={() => this.props.navigation.navigate('Register')}>
-                  Register
-                </Text>
-              </TouchableOpacity>
+              />
+              <Button
+                title="Register"
+                titleStyle={LoginStyle.buttonText}
+                buttonStyle={LoginStyle.registerButton}
+                TouchableComponent={TouchableOpacity}
+                type="clear"
+                loading={isSubmitting}
+                onPress={() => this.props.navigation.navigate('Register')}
+              />
             </Fragment>
           )}
         </Formik>

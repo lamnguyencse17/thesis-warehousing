@@ -5,6 +5,7 @@ import RegisterStyle from './styles';
 
 import {createRegisterRequest} from '../../request/user';
 import {validateCreateUser} from '../../validators/userValidator';
+import {Button} from 'react-native-elements';
 
 export default class Register extends React.Component {
   constructor(props) {
@@ -29,14 +30,10 @@ export default class Register extends React.Component {
       } else {
         this.setState({error: 'More than one field are invalid'});
       }
+      setSubmitting(false);
     } else {
       this.register(values.name, values.email, values.password);
     }
-
-    setTimeout(() => {
-      console.log(values);
-      setSubmitting(false);
-    }, 2000);
   };
   register = async (name, email, password) => {
     const {status, message} = await createRegisterRequest({
@@ -47,7 +44,7 @@ export default class Register extends React.Component {
     if (status === true) {
       Alert.alert(
         'Register Success',
-        '',
+        'Please Login',
         [
           {
             text: 'OK',
@@ -143,19 +140,23 @@ export default class Register extends React.Component {
               {error === '' ? null : (
                 <Text style={RegisterStyle.errorText}>{error}</Text>
               )}
-              <TouchableOpacity
-                style={RegisterStyle.loginBtn}
+              <Button
+                title="Register"
+                buttonStyle={RegisterStyle.registerButton}
+                titleStyle={RegisterStyle.buttonText}
+                TouchableComponent={TouchableOpacity}
+                loading={isSubmitting}
                 onPress={handleSubmit}
-                disabled={isSubmitting}>
-                <Text style={RegisterStyle.loginText}>REGISTER</Text>
-              </TouchableOpacity>
-              <TouchableOpacity>
-                <Text
-                  style={RegisterStyle.loginText}
-                  onPress={() => this.props.navigation.navigate('Login')}>
-                  Login
-                </Text>
-              </TouchableOpacity>
+              />
+              <Button
+                title="Login"
+                titleStyle={RegisterStyle.buttonText}
+                buttonStyle={RegisterStyle.loginButton}
+                TouchableComponent={TouchableOpacity}
+                type="clear"
+                loading={isSubmitting}
+                onPress={() => this.props.navigation.navigate('Login')}
+              />
             </>
           )}
         </Formik>

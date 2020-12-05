@@ -30,17 +30,19 @@ export default StyleSheet.create({
     color: 'white',
     fontSize: 11,
   },
-  loginBtn: {
-    width: '80%',
+  loginButton: {
+    marginTop: 30,
+    width: 300,
+    height: 50,
     backgroundColor: '#fb5b5a',
     borderRadius: 25,
-    height: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 40,
-    marginBottom: 10,
   },
-  loginText: {
+  registerButton: {
+    width: 300,
+    height: 50,
+  },
+  buttonText: {
+    textAlign: 'center',
     color: 'white',
   },
   errorText: {

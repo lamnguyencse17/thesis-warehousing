@@ -47,4 +47,19 @@ export default StyleSheet.create({
     color: 'red',
     fontSize: 16,
   },
+  registerButton: {
+    marginTop: 30,
+    width: 300,
+    height: 50,
+    backgroundColor: '#fb5b5a',
+    borderRadius: 25,
+  },
+  loginButton: {
+    width: 300,
+    height: 50,
+  },
+  registerText: {
+    textAlign: 'center',
+    color: 'white',
+  },
 });
