@@ -5,6 +5,7 @@ import styles from './styles';
 
 import {createTransactionRequest} from '../../request/transaction';
 import QRCodeScanner from '../QRCodeScanner';
+import {Button} from 'react-native-elements';
 
 export default class TransactionCreator extends Component {
   constructor(props) {
@@ -84,19 +85,19 @@ export default class TransactionCreator extends Component {
           </TouchableOpacity>
         </Modal>
         <View style={styles.header}>
-          <Text style={styles.headerText}>FORM CONFIRM TRANSACTION</Text>
+          <Text style={styles.headerText}>CREATE A NEW TRANSACTION</Text>
         </View>
         <View style={styles.ReceiverView}>
-          <View style={{flexDirection: 'row'}}>
-            <Text style={styles.sectionText}>Information of receiver: </Text>
-            <TouchableOpacity
-              onPress={() => {
-                this.toggleQRCode();
-                this.setType(1);
-              }}>
-              <Text style={styles.buttonText}>Scan QR</Text>
-            </TouchableOpacity>
-          </View>
+          <Button
+            title="Scan Receiver QR"
+            buttonStyle={styles.loginButton}
+            titleStyle={styles.buttonText}
+            TouchableComponent={TouchableOpacity}
+            onPress={() => {
+              this.toggleQRCode();
+              this.setType(1);
+            }}
+          />
           {receiverData.length === 0 ? null : (
             <View style={styles.textReceiver}>
               <Text>ID: {receiverData._id}</Text>
@@ -105,16 +106,16 @@ export default class TransactionCreator extends Component {
           )}
         </View>
         <View>
-          <View style={{flexDirection: 'row'}}>
-            <Text style={styles.sectionText}>Information of package: </Text>
-            <TouchableOpacity
-              onPress={() => {
-                this.toggleQRCode();
-                this.setType(2);
-              }}>
-              <Text style={styles.buttonText}>Scan QR</Text>
-            </TouchableOpacity>
-          </View>
+          <Button
+            title="Scan Asset QR"
+            buttonStyle={styles.loginButton}
+            titleStyle={styles.buttonText}
+            TouchableComponent={TouchableOpacity}
+            onPress={() => {
+              this.toggleQRCode();
+              this.setType(2);
+            }}
+          />
           {assetData.length === 0 ? null : (
             <View>
               <FlatList

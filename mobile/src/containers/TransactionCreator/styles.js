@@ -4,30 +4,19 @@ import {Styles} from '@common';
 export default StyleSheet.create({
   container: {
     flex: 1,
-    marginHorizontal: 20,
-  },
-  header: {
-    flex: 0.2,
-    ...Styles.Common.ColumnCenter,
+    marginTop: 50,
+    alignItems: 'center',
   },
   headerText: {
     fontSize: 20,
     fontWeight: 'bold',
   },
   ReceiverView: {
-    flex: 0.2,
+    marginVertical: 20,
   },
   sectionText: {
     fontWeight: 'bold',
     fontSize: 18,
-  },
-  buttonText: {
-    fontSize: 18,
-    textDecorationLine: 'underline',
-    color: 'red',
-  },
-  PackageView: {
-    flex: 0.6,
   },
   itemView: {
     flexDirection: 'row',
@@ -44,20 +33,11 @@ export default StyleSheet.create({
     padding: 5,
     color: '#FFF',
   },
-  generateButton: {
-    height: 40,
-    width: Styles.width / 4,
-    borderRadius: 20,
-    backgroundColor: '#9ACBF1',
-    justifyContent: 'center',
-    alignSelf: 'center',
-    marginBottom: 20,
-  },
   buttonSubmit: {
     height: 40,
     width: Styles.width / 2,
     borderRadius: 20,
-    backgroundColor: '#9ACBF1',
+    backgroundColor: '#fb5b5a',
     justifyContent: 'center',
     alignSelf: 'center',
     position: 'absolute',
@@ -66,5 +46,15 @@ export default StyleSheet.create({
   textReceiver: {
     marginHorizontal: 30,
     marginTop: 5,
+  },
+  loginButton: {
+    marginTop: 30,
+    width: 300,
+    height: 50,
+    backgroundColor: '#003f5c',
+    borderRadius: 25,
+  },
+  buttonText: {
+    color: 'white',
   },
 });
