@@ -90,7 +90,7 @@ export default class TransactionCreator extends Component {
         <View style={styles.ReceiverView}>
           <Button
             title="Scan Receiver QR"
-            buttonStyle={styles.loginButton}
+            buttonStyle={styles.scanButton}
             titleStyle={styles.buttonText}
             TouchableComponent={TouchableOpacity}
             onPress={() => {
@@ -108,7 +108,7 @@ export default class TransactionCreator extends Component {
         <View>
           <Button
             title="Scan Asset QR"
-            buttonStyle={styles.loginButton}
+            buttonStyle={styles.scanButton}
             titleStyle={styles.buttonText}
             TouchableComponent={TouchableOpacity}
             onPress={() => {
@@ -126,11 +126,13 @@ export default class TransactionCreator extends Component {
             </View>
           )}
         </View>
-        <TouchableOpacity
+        <Button
+          title="SUBMIT TRANSACTION"
+          buttonStyle={styles.buttonSubmit}
+          titleStyle={styles.buttonText}
+          TouchableComponent={TouchableOpacity}
           onPress={this.handleSubmitTransaction}
-          style={styles.buttonSubmit}>
-          <Text style={{textAlign: 'center'}}>SUBMIT TRANSACTION</Text>
-        </TouchableOpacity>
+        />
       </View>
     );
   }

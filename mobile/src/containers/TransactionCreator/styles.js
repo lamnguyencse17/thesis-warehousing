@@ -38,16 +38,12 @@ export default StyleSheet.create({
     width: Styles.width / 2,
     borderRadius: 20,
     backgroundColor: '#fb5b5a',
-    justifyContent: 'center',
-    alignSelf: 'center',
-    position: 'absolute',
-    bottom: 60,
   },
   textReceiver: {
     marginHorizontal: 30,
     marginTop: 5,
   },
-  loginButton: {
+  scanButton: {
     marginTop: 30,
     width: 300,
     height: 50,
