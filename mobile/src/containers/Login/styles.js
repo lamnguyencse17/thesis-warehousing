@@ -14,33 +14,35 @@ export default StyleSheet.create({
     marginBottom: 40,
   },
   inputView: {
-    width: '80%',
+    width: 300,
     backgroundColor: '#465881',
-    borderRadius: 25,
     height: 50,
-    marginBottom: 20,
-    justifyContent: 'center',
+    marginVertical: 10,
     padding: 20,
   },
   inputText: {
     height: 50,
     color: 'white',
   },
+  inputContainer: {alignContent: 'center', justifyContent: 'center'},
   forgot: {
+    padding: 10,
     color: 'white',
-    fontSize: 11,
+    fontSize: 15,
   },
-  loginBtn: {
-    width: '80%',
+  loginButton: {
+    marginTop: 30,
+    width: 300,
+    height: 50,
     backgroundColor: '#fb5b5a',
     borderRadius: 25,
-    height: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 40,
-    marginBottom: 10,
   },
-  loginText: {
+  registerButton: {
+    width: 300,
+    height: 50,
+  },
+  buttonText: {
+    textAlign: 'center',
     color: 'white',
   },
   errorText: {

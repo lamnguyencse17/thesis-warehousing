@@ -3,6 +3,8 @@ import {Text, TouchableOpacity, View} from 'react-native';
 import {useSelector} from 'react-redux';
 import styles from './styles';
 import QRCode from 'react-native-qrcode-svg';
+import LoginStyle from '../Login/styles';
+import {Button} from 'react-native-elements';
 
 function User(props) {
   //EXAMPLE
@@ -16,14 +18,14 @@ function User(props) {
   const [isShowingQR, showQR] = useState(false);
   return (
     <View>
-      <View style={styles.title}>
-        {/*{data.map((newData) => (*/}
-        {/*  <Text>{JSON.stringify(newData, null, 2)}</Text>*/}
-        {/*))}*/}
-        <TouchableOpacity onPress={() => showQR(true)}>
-          <Text style={styles.titleText}>Generate Receiving QR</Text>
-        </TouchableOpacity>
-      </View>
+      <Button
+        containerStyle={styles.title}
+        title="Generate Receiving QR"
+        buttonStyle={styles.generateButton}
+        titleStyle={styles.titleText}
+        TouchableComponent={TouchableOpacity}
+        onPress={() => showQR(true)}
+      />
       <View style={styles.QRCodeView}>
         {isShowingQR === true ? (
           <QRCode
