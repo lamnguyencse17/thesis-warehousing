@@ -7,36 +7,36 @@ import {
 
 export const validateCreateUser = ({email, password, name, password2}) => {
   let status = true;
-  let message = [];
+  let message = {name: '', email: '', password: '', password2: ''};
   if (!isValidName(name)) {
     status = false;
-    message.push('Invalid name');
+    message.name = 'Invalid name';
   }
   if (!isValidEmail(email)) {
     status = false;
-    message.push('Invalid email');
+    message.email = 'Invalid email';
   }
   if (!isValidPassword(password)) {
     status = false;
-    message.push('Invalid password');
+    message.password = 'Invalid password';
   }
   if (!isValidPasswordConfirm(password, password2)) {
     status = false;
-    message.push('Invalid confirm password');
+    message.password2 = 'Invalid confirm password';
   }
   return {status, message};
 };
 
 export const validateLogInUser = ({email, password}) => {
   let status = true;
-  let message = [];
+  let message = {email: '', password: ''};
   if (!isValidEmail(email)) {
     status = false;
-    message.push('Invalid email');
+    message.email = 'Invalid email';
   }
   if (!isValidPassword(password)) {
     status = false;
-    message.push('Invalid password');
+    message.password = 'Invalid password';
   }
   return {status, message};
 };

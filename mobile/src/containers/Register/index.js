@@ -6,13 +6,12 @@ import RegisterStyle from './styles';
 import {createRegisterRequest} from '../../request/user';
 import {validateCreateUser} from '../../validators/userValidator';
 import {Button, Input} from 'react-native-elements';
-import LoginStyle from '../Login/styles';
 
 export default class Register extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      error: '',
+      error: {name: '', email: '', password: '', password2: ''},
     };
   }
 
@@ -26,10 +25,16 @@ export default class Register extends React.Component {
       password2,
     });
     if (status === false) {
-      if (message.length === 1) {
-        this.setState({error: message});
-      } else {
-        this.setState({error: 'More than one field are invalid'});
+      if (
+        message.email !== '' ||
+        message.password !== '' ||
+        message.password2 !== '' ||
+        message.name !== ''
+      ) {
+        this.setState({
+          ...this.state,
+          error: {...message},
+        });
       }
       setSubmitting(false);
     } else {
@@ -91,6 +96,8 @@ export default class Register extends React.Component {
               <Input
                 inputContainerStyle={RegisterStyle.inputView}
                 inputStyle={RegisterStyle.inputText}
+                errorMessage={error.name}
+                errorStyle={RegisterStyle.errorText}
                 disabled={isSubmitting}
                 name="name"
                 placeholder="Name"
@@ -103,6 +110,8 @@ export default class Register extends React.Component {
               <Input
                 inputContainerStyle={RegisterStyle.inputView}
                 inputStyle={RegisterStyle.inputText}
+                errorMessage={error.email}
+                errorStyle={RegisterStyle.errorText}
                 disabled={isSubmitting}
                 name="email"
                 placeholder="Email"
@@ -115,6 +124,8 @@ export default class Register extends React.Component {
               <Input
                 name="password"
                 inputStyle={RegisterStyle.inputText}
+                errorMessage={error.password}
+                errorStyle={RegisterStyle.errorText}
                 disabled={isSubmitting}
                 secureTextEntry
                 inputContainerStyle={RegisterStyle.inputView}
@@ -128,6 +139,8 @@ export default class Register extends React.Component {
               <Input
                 name="password"
                 inputStyle={RegisterStyle.inputText}
+                errorMessage={error.password2}
+                errorStyle={RegisterStyle.errorText}
                 disabled={isSubmitting}
                 secureTextEntry
                 inputContainerStyle={RegisterStyle.inputView}
@@ -138,9 +151,6 @@ export default class Register extends React.Component {
                 value={values.password2}
                 onFocus={this.onFocusTextInput}
               />
-              {error === '' ? null : (
-                <Text style={RegisterStyle.errorText}>{error}</Text>
-              )}
               <Button
                 title="Register"
                 buttonStyle={RegisterStyle.registerButton}

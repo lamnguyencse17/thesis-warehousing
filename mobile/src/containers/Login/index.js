@@ -14,7 +14,7 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      error: '',
+      error: {email: '', password: ''},
     };
   }
 
@@ -22,10 +22,12 @@ class Login extends React.Component {
     const {email, password} = values;
     const {status, message} = validateLogInUser({email, password});
     if (status === false) {
-      if (message.length === 1) {
-        this.setState({error: message});
-      } else {
-        this.setState({error: 'More than one field are invalid'});
+      if (message.email !== '' || message.password !== '') {
+        console.log(message);
+        this.setState({
+          ...this.state,
+          error: {...message},
+        });
       }
       return;
     }
@@ -77,6 +79,8 @@ class Login extends React.Component {
               <Input
                 inputContainerStyle={LoginStyle.inputView}
                 inputStyle={LoginStyle.inputText}
+                errorMessage={error.email}
+                errorStyle={LoginStyle.errorText}
                 disabled={isSubmitting}
                 name="email"
                 placeholder="Email"
@@ -89,6 +93,8 @@ class Login extends React.Component {
               <Input
                 name="password"
                 inputStyle={LoginStyle.inputText}
+                errorMessage={error.password}
+                errorStyle={LoginStyle.errorText}
                 disabled={isSubmitting}
                 secureTextEntry
                 inputContainerStyle={LoginStyle.inputView}
@@ -102,9 +108,6 @@ class Login extends React.Component {
               <TouchableOpacity>
                 <Text style={LoginStyle.forgot}>Forgot Password?</Text>
               </TouchableOpacity>
-              {error === '' ? null : (
-                <Text style={LoginStyle.errorText}>{error}</Text>
-              )}
               <Button
                 title="Login"
                 buttonStyle={LoginStyle.loginButton}
