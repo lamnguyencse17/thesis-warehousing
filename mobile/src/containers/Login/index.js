@@ -8,7 +8,7 @@ import {setUser} from '../../redux/actions/user';
 import {validateLogInUser} from '../../validators/userValidator';
 import {createLoginRequest} from '../../request/user';
 import {initClient} from '../../graphQL/graphQL';
-import {Button} from 'react-native-elements';
+import {Button, Input} from 'react-native-elements';
 
 class Login extends React.Component {
   constructor(props) {
@@ -73,30 +73,32 @@ class Login extends React.Component {
             this.processLoginSubmit(values, setSubmitting)
           }>
           {({handleChange, handleSubmit, values, isSubmitting}) => (
-            <Fragment>
-              <View style={LoginStyle.inputView}>
-                <TextInput
-                  name="email"
-                  style={LoginStyle.inputText}
-                  placeholder="Email"
-                  placeholderTextColor="#003f5c"
-                  onChangeText={handleChange('email')}
-                  value={values.email}
-                  onFocus={this.onFocusTextInput}
-                />
-              </View>
-              <View style={LoginStyle.inputView}>
-                <TextInput
-                  name="password"
-                  secureTextEntry
-                  style={LoginStyle.inputText}
-                  placeholder="Password"
-                  placeholderTextColor="#003f5c"
-                  onChangeText={handleChange('password')}
-                  value={values.password}
-                  onFocus={this.onFocusTextInput}
-                />
-              </View>
+            <View style={LoginStyle.inputContainer}>
+              <Input
+                inputContainerStyle={LoginStyle.inputView}
+                inputStyle={LoginStyle.inputText}
+                disabled={isSubmitting}
+                name="email"
+                placeholder="Email"
+                onChangeText={handleChange('email')}
+                InputComponent={TextInput}
+                onFocus={this.onFocusTextInput}
+                placeholderTextColor="#003f5c"
+                value={values.email}
+              />
+              <Input
+                name="password"
+                inputStyle={LoginStyle.inputText}
+                disabled={isSubmitting}
+                secureTextEntry
+                inputContainerStyle={LoginStyle.inputView}
+                InputComponent={TextInput}
+                placeholder="Password"
+                placeholderTextColor="#003f5c"
+                onChangeText={handleChange('password')}
+                value={values.password}
+                onFocus={this.onFocusTextInput}
+              />
               <TouchableOpacity>
                 <Text style={LoginStyle.forgot}>Forgot Password?</Text>
               </TouchableOpacity>
@@ -120,7 +122,7 @@ class Login extends React.Component {
                 loading={isSubmitting}
                 onPress={() => this.props.navigation.navigate('Register')}
               />
-            </Fragment>
+            </View>
           )}
         </Formik>
       </View>

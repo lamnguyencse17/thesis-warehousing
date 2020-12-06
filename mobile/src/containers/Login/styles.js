@@ -14,21 +14,21 @@ export default StyleSheet.create({
     marginBottom: 40,
   },
   inputView: {
-    width: '80%',
+    width: 300,
     backgroundColor: '#465881',
-    borderRadius: 25,
     height: 50,
-    marginBottom: 20,
-    justifyContent: 'center',
+    marginVertical: 10,
     padding: 20,
   },
   inputText: {
     height: 50,
     color: 'white',
   },
+  inputContainer: {alignContent: 'center', justifyContent: 'center'},
   forgot: {
+    padding: 10,
     color: 'white',
-    fontSize: 11,
+    fontSize: 15,
   },
   loginButton: {
     marginTop: 30,
