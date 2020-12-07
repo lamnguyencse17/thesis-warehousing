@@ -7,6 +7,7 @@ import { bindActionCreators } from "redux";
 // import { setUser, clearUser } from "../actions/user";
 import axios from "axios";
 import Landing from "./Landing";
+import Login from "./Login";
 
 class App extends Component {
 	constructor(props) {
@@ -43,6 +44,7 @@ class App extends Component {
 				<Suspense fallback={<div className='loader'></div>}>
 					<Switch>
 						<Route path='/' render={() => <Landing {...this.props} />} exact />
+						<Route path='/login' render={() => <Login {...this.props} />} />
 						{/* <Route path="/main" render={() => <Main {...this.props} />} exact />
             <Route
               path="/"
