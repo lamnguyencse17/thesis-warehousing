@@ -9,16 +9,13 @@ export default StyleSheet.create({
   titleText: {
     fontSize: 24,
     fontWeight: 'bold',
-    textDecorationLine: 'underline',
   },
   generateButton: {
-    height: 40,
-    width: (Styles.width * 3) / 4,
-    borderRadius: 20,
-    backgroundColor: '#9ACBF1',
-    justifyContent: 'center',
-    alignSelf: 'center',
-    marginTop: 5,
+    marginTop: 30,
+    width: 300,
+    height: 50,
+    backgroundColor: '#fb5b5a',
+    borderRadius: 25,
   },
   QRCodeView: {
     alignSelf: 'center',

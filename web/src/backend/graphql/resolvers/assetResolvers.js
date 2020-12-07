@@ -1,6 +1,7 @@
 import { ApolloError, UserInputError } from "apollo-server-express";
 import pubsub from "../../pubsub";
-import { getAssetById, getAssetsOfOwner } from "../../services/asset";
+import { getAssetById } from "../../services/asset";
+import { getTransactionOfAsset } from "../../services/transaction";
 
 export default {
 	Query: {
@@ -14,16 +15,18 @@ export default {
 			}
 			return result;
 		},
-		getManyAssetsOfSelf: async (root, { limit, offset }, context) => {
-			const owner = context.user._id;
-			const { status, assets, message } = await getAssetsOfOwner(owner, {
-				limit,
-				offset,
-			});
-			if (!status) {
-				throw new ApolloError(message);
+		getAssetHistory: async (root, { limit, offset, _id }, context) => {
+			let asset = await getAssetById(_id);
+			if (!asset.status) {
+				throw new UserInputError("No Asset Id Found", {
+					invalidArgs: "_id",
+				});
 			}
-			return assets;
+			const transactions = await getTransactionOfAsset({ _id, limit, offset });
+			if (!transactions.status) {
+				throw new ApolloError(transactions.message);
+			}
+			return { ...asset.result.toJSON(), transactions: transactions.result };
 		},
 	},
 	Subscription: {

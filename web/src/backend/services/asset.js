@@ -92,6 +92,8 @@ export const getAssetsOfOwner = async (owner, { limit, offset }) => {
 			.skip(offset)
 			.limit(limit)
 			.lean();
+		console.log(owner);
+		console.log(assets);
 		return { status: true, assets };
 	} catch (err) {
 		return { status: false, message: err };

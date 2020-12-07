@@ -5,12 +5,13 @@ import RegisterStyle from './styles';
 
 import {createRegisterRequest} from '../../request/user';
 import {validateCreateUser} from '../../validators/userValidator';
+import {Button, Input} from 'react-native-elements';
 
 export default class Register extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      error: '',
+      error: {name: '', email: '', password: '', password2: ''},
     };
   }
 
@@ -24,19 +25,21 @@ export default class Register extends React.Component {
       password2,
     });
     if (status === false) {
-      if (message.length === 1) {
-        this.setState({error: message});
-      } else {
-        this.setState({error: 'More than one field are invalid'});
+      if (
+        message.email !== '' ||
+        message.password !== '' ||
+        message.password2 !== '' ||
+        message.name !== ''
+      ) {
+        this.setState({
+          ...this.state,
+          error: {...message},
+        });
       }
+      setSubmitting(false);
     } else {
       this.register(values.name, values.email, values.password);
     }
-
-    setTimeout(() => {
-      console.log(values);
-      setSubmitting(false);
-    }, 2000);
   };
   register = async (name, email, password) => {
     const {status, message} = await createRegisterRequest({
@@ -47,7 +50,7 @@ export default class Register extends React.Component {
     if (status === true) {
       Alert.alert(
         'Register Success',
-        '',
+        'Please Login',
         [
           {
             text: 'OK',
@@ -89,74 +92,83 @@ export default class Register extends React.Component {
             this.processRegisterSubmit(values, setSubmitting)
           }>
           {({handleChange, handleSubmit, values, isSubmitting}) => (
-            <>
-              <View style={RegisterStyle.inputView}>
-                <TextInput
-                  name="name"
-                  style={RegisterStyle.inputText}
-                  placeholder="Name"
-                  placeholderTextColor="#003f5c"
-                  onChangeText={handleChange('name')}
-                  value={values.name}
-                  onFocus={this.onFocusTextInput}
-                />
-              </View>
-              <View style={RegisterStyle.inputView}>
-                <TextInput
-                  name="email"
-                  style={RegisterStyle.inputText}
-                  placeholder="Email"
-                  placeholderTextColor="#003f5c"
-                  onChangeText={handleChange('email')}
-                  value={values.email}
-                  onFocus={this.onFocusTextInput}
-                />
-              </View>
-              <View style={RegisterStyle.inputView}>
-                <TextInput
-                  name="password"
-                  secureTextEntry
-                  style={RegisterStyle.inputText}
-                  placeholder="Password"
-                  placeholderTextColor="#003f5c"
-                  onChangeText={handleChange('password')}
-                  value={values.password}
-                  onFocus={this.onFocusTextInput}
-                />
-              </View>
-              <View style={RegisterStyle.inputView}>
-                <TextInput
-                  name="password2"
-                  secureTextEntry
-                  style={RegisterStyle.inputText}
-                  placeholder="Retype your password please"
-                  placeholderTextColor="#003f5c"
-                  onChangeText={handleChange('password2')}
-                  value={values.password2}
-                  onFocus={this.onFocusTextInput}
-                />
-              </View>
-
-              <TouchableOpacity>
-                <Text style={RegisterStyle.forgot}>Forgot Password?</Text>
-              </TouchableOpacity>
-              {error === '' ? null : (
-                <Text style={RegisterStyle.errorText}>{error}</Text>
-              )}
-              <TouchableOpacity
-                style={RegisterStyle.loginBtn}
+            <View style={RegisterStyle.inputContainer}>
+              <Input
+                inputContainerStyle={RegisterStyle.inputView}
+                inputStyle={RegisterStyle.inputText}
+                errorMessage={error.name}
+                errorStyle={RegisterStyle.errorText}
+                disabled={isSubmitting}
+                name="name"
+                placeholder="Name"
+                onChangeText={handleChange('name')}
+                InputComponent={TextInput}
+                onFocus={this.onFocusTextInput}
+                placeholderTextColor="#003f5c"
+                value={values.name}
+              />
+              <Input
+                inputContainerStyle={RegisterStyle.inputView}
+                inputStyle={RegisterStyle.inputText}
+                errorMessage={error.email}
+                errorStyle={RegisterStyle.errorText}
+                disabled={isSubmitting}
+                name="email"
+                placeholder="Email"
+                onChangeText={handleChange('email')}
+                InputComponent={TextInput}
+                onFocus={this.onFocusTextInput}
+                placeholderTextColor="#003f5c"
+                value={values.email}
+              />
+              <Input
+                name="password"
+                inputStyle={RegisterStyle.inputText}
+                errorMessage={error.password}
+                errorStyle={RegisterStyle.errorText}
+                disabled={isSubmitting}
+                secureTextEntry
+                inputContainerStyle={RegisterStyle.inputView}
+                InputComponent={TextInput}
+                placeholder="Password"
+                placeholderTextColor="#003f5c"
+                onChangeText={handleChange('password')}
+                value={values.password}
+                onFocus={this.onFocusTextInput}
+              />
+              <Input
+                name="password"
+                inputStyle={RegisterStyle.inputText}
+                errorMessage={error.password2}
+                errorStyle={RegisterStyle.errorText}
+                disabled={isSubmitting}
+                secureTextEntry
+                inputContainerStyle={RegisterStyle.inputView}
+                InputComponent={TextInput}
+                placeholder="Retype your password please"
+                placeholderTextColor="#003f5c"
+                onChangeText={handleChange('password2')}
+                value={values.password2}
+                onFocus={this.onFocusTextInput}
+              />
+              <Button
+                title="Register"
+                buttonStyle={RegisterStyle.registerButton}
+                titleStyle={RegisterStyle.buttonText}
+                TouchableComponent={TouchableOpacity}
+                loading={isSubmitting}
                 onPress={handleSubmit}
-                disabled={isSubmitting}>
-                <Text style={RegisterStyle.loginText}>REGISTER</Text>
-              </TouchableOpacity>
-              <TouchableOpacity>
-                <Text
-                  style={RegisterStyle.loginText}
-                  onPress={() => this.props.navigation.navigate('Login')}>
-                  Login
-                </Text>
-              </TouchableOpacity>
-            </>
+              />
+              <Button
+                title="Login"
+                titleStyle={RegisterStyle.buttonText}
+                buttonStyle={RegisterStyle.loginButton}
+                TouchableComponent={TouchableOpacity}
+                type="clear"
+                loading={isSubmitting}
+                onPress={() => this.props.navigation.navigate('Login')}
+              />
+            </View>
           )}
         </Formik>
       </View>

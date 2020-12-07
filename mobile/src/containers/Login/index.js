@@ -8,11 +8,13 @@ import {setUser} from '../../redux/actions/user';
 import {validateLogInUser} from '../../validators/userValidator';
 import {createLoginRequest} from '../../request/user';
 import {initClient} from '../../graphQL/graphQL';
+import {Button, Input} from 'react-native-elements';
+
 class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      error: '',
+      error: {email: '', password: ''},
     };
   }
 
@@ -20,10 +22,12 @@ class Login extends React.Component {
     const {email, password} = values;
     const {status, message} = validateLogInUser({email, password});
     if (status === false) {
-      if (message.length === 1) {
-        this.setState({error: message});
-      } else {
-        this.setState({error: 'More than one field are invalid'});
+      if (message.email !== '' || message.password !== '') {
+        console.log(message);
+        this.setState({
+          ...this.state,
+          error: {...message},
+        });
       }
       return;
     }
@@ -71,50 +75,57 @@ class Login extends React.Component {
             this.processLoginSubmit(values, setSubmitting)
           }>
           {({handleChange, handleSubmit, values, isSubmitting}) => (
-            <Fragment>
-              <View style={LoginStyle.inputView}>
-                <TextInput
-                  name="email"
-                  style={LoginStyle.inputText}
-                  placeholder="Email"
-                  placeholderTextColor="#003f5c"
-                  onChangeText={handleChange('email')}
-                  value={values.email}
-                  onFocus={this.onFocusTextInput}
-                />
-              </View>
-              <View style={LoginStyle.inputView}>
-                <TextInput
-                  name="password"
-                  secureTextEntry
-                  style={LoginStyle.inputText}
-                  placeholder="Password"
-                  placeholderTextColor="#003f5c"
-                  onChangeText={handleChange('password')}
-                  value={values.password}
-                  onFocus={this.onFocusTextInput}
-                />
-              </View>
+            <View style={LoginStyle.inputContainer}>
+              <Input
+                inputContainerStyle={LoginStyle.inputView}
+                inputStyle={LoginStyle.inputText}
+                errorMessage={error.email}
+                errorStyle={LoginStyle.errorText}
+                disabled={isSubmitting}
+                name="email"
+                placeholder="Email"
+                onChangeText={handleChange('email')}
+                InputComponent={TextInput}
+                onFocus={this.onFocusTextInput}
+                placeholderTextColor="#003f5c"
+                value={values.email}
+              />
+              <Input
+                name="password"
+                inputStyle={LoginStyle.inputText}
+                errorMessage={error.password}
+                errorStyle={LoginStyle.errorText}
+                disabled={isSubmitting}
+                secureTextEntry
+                inputContainerStyle={LoginStyle.inputView}
+                InputComponent={TextInput}
+                placeholder="Password"
+                placeholderTextColor="#003f5c"
+                onChangeText={handleChange('password')}
+                value={values.password}
+                onFocus={this.onFocusTextInput}
+              />
               <TouchableOpacity>
                 <Text style={LoginStyle.forgot}>Forgot Password?</Text>
               </TouchableOpacity>
-              {error === '' ? null : (
-                <Text style={LoginStyle.errorText}>{error}</Text>
-              )}
-              <TouchableOpacity
-                style={LoginStyle.loginBtn}
+              <Button
+                title="Login"
+                buttonStyle={LoginStyle.loginButton}
+                titleStyle={LoginStyle.buttonText}
+                TouchableComponent={TouchableOpacity}
+                loading={isSubmitting}
                 onPress={handleSubmit}
-                disabled={isSubmitting}>
-                <Text style={LoginStyle.loginText}>LOGIN</Text>
-              </TouchableOpacity>
-              <TouchableOpacity>
-                <Text
-                  style={LoginStyle.loginText}
-                  onPress={() => this.props.navigation.navigate('Register')}>
-                  Register
-                </Text>
-              </TouchableOpacity>
-            </Fragment>
+              />
+              <Button
+                title="Register"
+                titleStyle={LoginStyle.buttonText}
+                buttonStyle={LoginStyle.registerButton}
+                TouchableComponent={TouchableOpacity}
+                type="clear"
+                loading={isSubmitting}
+                onPress={() => this.props.navigation.navigate('Register')}
+              />
+            </View>
           )}
         </Formik>
       </View>

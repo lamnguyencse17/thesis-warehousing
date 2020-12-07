@@ -51,3 +51,38 @@ export const syncTransaction = async ({ _id, receiver, sender, assets }) => {
 		}
 	}
 };
+
+export const getTransactionOfSender = async (
+	sender,
+	{ limit, offset },
+	populateInfo
+) => {
+	try {
+		const transactions = await transactionModel
+			.find({ sender: mongoose.Types.ObjectId(sender) })
+			.skip(offset)
+			.limit(limit)
+			.populate({ path: "sender", select: populateInfo.sender })
+			.populate({ path: "receiver", select: populateInfo.receiver })
+			.populate({ path: "assets", select: populateInfo.assets })
+			.lean();
+		return { status: true, transactions };
+	} catch (err) {
+		return { status: false, message: err };
+	}
+};
+
+export const getTransactionOfAsset = async ({ _id, limit, offset }) => {
+	try {
+		const result = await transactionModel
+			.find({ assets: { $in: [mongoose.Types.ObjectId(_id)] } })
+			.skip(offset)
+			.limit(limit)
+			.populate("sender", "name email")
+			.populate("receiver", "name email")
+			.lean();
+		return { status: true, result };
+	} catch (err) {
+		return { status: false, message: err };
+	}
+};
