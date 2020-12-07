@@ -8,12 +8,12 @@ import cors from "cors";
 
 const app = express();
 app.use(morgan("tiny"));
-app.use(
-	cors({
-		credentials: true,
-		origin: ["https://studio.apollographql.com"],
-	})
-);
+// app.use(
+// 	cors({
+// 		credentials: true,
+// 		origin: ["https://studio.apollographql.com"],
+// 	})
+// );
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
