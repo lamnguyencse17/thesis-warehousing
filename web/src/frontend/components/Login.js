@@ -1,12 +1,28 @@
 import React from "react";
 import { Formik } from "formik";
+import { createLoginRequest } from "../requests/user";
+import { validateLogInUser } from "../validators/userValidator";
 
 const validateLoginForm = (values) => {
-	return {};
+	const { email, password } = values;
+	const { status, message } = validateLogInUser({ email, password });
+	if (status === false) {
+		if (message.email !== "" || message.password !== "") {
+			return { ...message };
+		}
+	}
 };
 
-const submitLoginForm = (values, setSubmitting) => {
-	return true;
+const submitLoginForm = async (values, setSubmitting) => {
+	setSubmitting(true);
+	const { email, password } = values;
+	const { status, token, message } = createLoginRequest({ email, password });
+	setSubmitting(false);
+	if (!status) {
+		console.error(message);
+	} else {
+		// Set User Here
+	}
 };
 
 export default function Login() {
