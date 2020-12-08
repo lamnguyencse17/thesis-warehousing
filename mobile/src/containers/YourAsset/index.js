@@ -4,6 +4,7 @@ import styles from './styles';
 import {gql, useQuery} from '@apollo/client';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {ModalItem} from '@components';
+
 const queryYourAsset = gql`
   query Query {
     getManyAssetsOfSelf(limit: 5, offset: 0) {
@@ -17,14 +18,14 @@ const queryYourAsset = gql`
   }
 `;
 
-const YourAsset = () => {
+const YourAsset = (props) => {
   const [itemIndex, setIndexItem] = useState(-1);
   const {loading, error, data} = useQuery(queryYourAsset);
   useEffect(() => {
-    if (!loading){
+    if (!loading) {
       console.log(data);
     }
-  })
+  });
   const _renderItem = ({item, index}) => {
     return (
       <View>
@@ -61,6 +62,7 @@ const YourAsset = () => {
             <ModalItem
               setIndexItem={setIndexItem}
               data={data.getManyAssetsOfSelf[itemIndex]}
+              navigation={props.navigation}
             />
           )}
         </>
