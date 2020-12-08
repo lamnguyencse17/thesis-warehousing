@@ -20,7 +20,9 @@ const ModalItem = (props) => {
             <TouchableOpacity
               onPress={() => {
                 props.setIndexItem(-1);
-                props.navigation.navigate('Transaction History');
+                props.navigation.navigate('Transaction History', {
+                  _id: _id,
+                });
               }}>
               <Image
                 source={require('../../assets/history.png')}

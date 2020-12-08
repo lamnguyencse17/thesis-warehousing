@@ -4,8 +4,8 @@ import styles from './styles';
 import {gql, useQuery} from '@apollo/client';
 
 const queryTransactionHistory = gql`
-  query Query {
-    getAssetHistory(_id: "5fcf6e88f5b1e501e4e2293d", limit: 5, offset: 0) {
+  query Query($_id: ID!) {
+    getAssetHistory(_id: $_id, limit: 5, offset: 0) {
       _id
       name
       quantity
@@ -29,22 +29,30 @@ const queryTransactionHistory = gql`
   }
 `;
 function TransactionHistory(props) {
-  const {loading, error, data} = useQuery(queryTransactionHistory);
+  console.log('route', props.route.params._id.toString());
+
+  const {loading, error, data} = useQuery(queryTransactionHistory, {
+    variables: {_id: '5fcf6e88f5b1e501e4e2293d'},
+  });
+  // const {loading, error, data} = useQuery(queryTransactionHistory);
 
   useEffect(() => {
     if (!loading) {
       console.log('history', data.getAssetHistory.transactions);
     }
   });
-  const listHistory = data.getAssetHistory.transactions.map((history, key) => {
-    return (
-      <View style={styles.sender} key={key}>
-        <Text style={styles.content}>From: {history.sender.name}</Text>
-        <Text>------></Text>
-        <Text style={styles.content}>To: {history.receiver.name}</Text>
-      </View>
-    );
-  });
+  const listHistory =
+    loading == false
+      ? data.getAssetHistory.transactions.map((history, key) => {
+          return (
+            <View style={styles.sender} key={key}>
+              <Text style={styles.content}>From: {history.sender.name}</Text>
+              <Text>------></Text>
+              <Text style={styles.content}>To: {history.receiver.name}</Text>
+            </View>
+          );
+        })
+      : null;
   return (
     <View style={styles.container}>
       <View style={styles.title}>
