@@ -105,7 +105,7 @@ export default class TransactionCreator extends Component {
             </View>
           )}
         </View>
-        <View>
+        <View style={{flex: 0.4}}>
           <Button
             title="Scan Asset QR"
             buttonStyle={styles.scanButton}
