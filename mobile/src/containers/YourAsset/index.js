@@ -7,7 +7,7 @@ import {ModalItem} from '@components';
 
 const queryYourAsset = gql`
   query Query {
-    getManyAssetsOfSelf(limit: 5, offset: 0) {
+    getManyAssetsOfSelf(limit: 10, offset: 0) {
       _id
       name
       quantity
@@ -21,11 +21,11 @@ const queryYourAsset = gql`
 const YourAsset = (props) => {
   const [itemIndex, setIndexItem] = useState(-1);
   const {loading, error, data} = useQuery(queryYourAsset);
-  useEffect(() => {
-    if (!loading) {
-      console.log(data);
-    }
-  });
+  // useEffect(() => {
+  //   if (!loading) {
+  //     console.log(data);
+  //   }
+  // });
   const _renderItem = ({item, index}) => {
     return (
       <View>

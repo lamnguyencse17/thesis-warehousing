@@ -29,16 +29,14 @@ const queryTransactionHistory = gql`
   }
 `;
 function TransactionHistory(props) {
-  console.log('route', props.route.params._id.toString());
-
   const {loading, error, data} = useQuery(queryTransactionHistory, {
-    variables: {_id: '5fcf6e88f5b1e501e4e2293d'},
+    variables: {_id: props.route.params._id.toString()},
   });
   // const {loading, error, data} = useQuery(queryTransactionHistory);
 
   useEffect(() => {
     if (!loading) {
-      console.log('history', data.getAssetHistory.transactions);
+      console.log('history', data.getAssetHistory);
     }
   });
   const listHistory =
