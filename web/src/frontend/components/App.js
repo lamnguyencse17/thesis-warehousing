@@ -7,6 +7,8 @@ import { bindActionCreators } from "redux";
 // import { setUser, clearUser } from "../actions/user";
 import axios from "axios";
 import Landing from "./Landing";
+import Login from "./Login";
+import Dashboard from "./Dashboard";
 
 class App extends Component {
 	constructor(props) {
@@ -43,6 +45,17 @@ class App extends Component {
 				<Suspense fallback={<div className='loader'></div>}>
 					<Switch>
 						<Route path='/' render={() => <Landing {...this.props} />} exact />
+						<Route path='/login' render={() => <Login {...this.props} />} />
+						<Route
+							path='/dashboard'
+							render={() =>
+								this.props.token === "" ? (
+									<Login {...this.props} />
+								) : (
+									<Dashboard {...this.props} />
+								)
+							}
+						/>
 						{/* <Route path="/main" render={() => <Main {...this.props} />} exact />
             <Route
               path="/"
@@ -58,15 +71,15 @@ class App extends Component {
 	}
 }
 
-// function mapStateToProps(state) {
-//   return {
-//     token: state.user.token,
-//     userId: state.user._id,
-//   };
-// }
+function mapStateToProps(state) {
+	return {
+		token: state.user.token,
+		userId: state.user._id,
+	};
+}
 
 // function mapDispatchToProps(dispatch) {
 //   return bindActionCreators({ setUser, clearUser }, dispatch);
 // }
 
-export default withRouter(connect(null, null)(App));
+export default withRouter(connect(mapStateToProps, null)(App));

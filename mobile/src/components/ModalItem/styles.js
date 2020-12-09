@@ -32,4 +32,14 @@ export default StyleSheet.create({
     marginTop: 20,
     alignSelf: 'flex-end',
   },
+  image: {
+    height: 30,
+    width: 30,
+    backgroundColor: '#fff',
+    marginLeft: 25,
+  },
+  viewRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
 });
