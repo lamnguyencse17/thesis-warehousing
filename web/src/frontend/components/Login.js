@@ -33,7 +33,7 @@ export default function Login() {
 	const history = useHistory();
 	const processSubmitLogin = async (values, setSubmitting) => {
 		const token = await submitLoginForm(values, setSubmitting);
-		dispatch(setUser(token)).then(() => history.push("/dashboard"));
+		dispatch(setUser(token)).then(() => history.push("/admin/dashboard"));
 	};
 	return (
 		<div>
