@@ -7,12 +7,19 @@ export default StyleSheet.create({
     marginTop: 50,
     alignItems: 'center',
   },
+  header: {
+    flex: 0.1,
+  },
   headerText: {
     fontSize: 20,
     fontWeight: 'bold',
   },
   ReceiverView: {
     marginVertical: 20,
+    flex: 0.4,
+  },
+  AssetView: {
+    flex: 0.4,
   },
   sectionText: {
     fontWeight: 'bold',
@@ -34,9 +41,10 @@ export default StyleSheet.create({
     color: '#FFF',
   },
   buttonSubmit: {
-    height: 40,
+    padding: 10,
+    height: 50,
     width: Styles.width / 2,
-    borderRadius: 20,
+    borderRadius: 25,
     backgroundColor: '#fb5b5a',
   },
   textReceiver: {

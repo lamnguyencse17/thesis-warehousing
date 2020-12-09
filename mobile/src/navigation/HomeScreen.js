@@ -6,8 +6,30 @@ import YourAssetScreen from './YourAssetScreen';
 import UserScreen from './UserScreen';
 import {ApolloProvider} from '@apollo/client';
 import {getClient} from '../graphQL/graphQL';
-
+import {createStackNavigator} from '@react-navigation/stack';
+import TransactionHistoryScreen from './TransactionHistoryScreen';
 const Drawer = createDrawerNavigator();
+
+const Stack = createStackNavigator();
+
+const stackNavigator = () => {
+  return (
+    <Stack.Navigator
+      initialRouteName="Your Asset"
+      screenOptions={{
+        headerShown: false,
+      }}>
+      <Stack.Screen name="Your Asset" component={YourAssetScreen} />
+      <Stack.Screen
+        name="Transaction History"
+        component={TransactionHistoryScreen}
+        screenOptions={{
+          headerShown: true,
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
 
 export default class HomeScreen extends Component {
   render() {
@@ -33,11 +55,10 @@ export default class HomeScreen extends Component {
           />
           <Drawer.Screen
             name="Your Asset"
-            component={YourAssetScreen}
+            component={stackNavigator}
             options={{
               headerShown: true,
-            }}
-          />
+            }}></Drawer.Screen>
         </Drawer.Navigator>
       </ApolloProvider>
     );
