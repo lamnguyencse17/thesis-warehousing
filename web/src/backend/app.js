@@ -8,6 +8,7 @@ import cors from "cors";
 
 const app = express();
 app.use(morgan("tiny"));
+app.use(cors({ credentials: true, origin: [process.env.FRONTEND_SERVER] }));
 // app.use(
 // 	cors({
 // 		credentials: true,

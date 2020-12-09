@@ -4,6 +4,7 @@ export const createLoginRequest = async ({ email, password }) => {
 	const requestUrl = `${process.env.BACKEND_SERVER}/api/auth/login`;
 	try {
 		const res = await axios.post(requestUrl, { email, password });
+		console.log(res.data);
 		return { status: true, token: res.data };
 	} catch (err) {
 		return {

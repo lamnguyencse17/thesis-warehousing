@@ -2,6 +2,9 @@ import React from "react";
 import { Formik } from "formik";
 import { createLoginRequest } from "../requests/user";
 import { validateLogInUser } from "../validators/userValidator";
+import { useDispatch } from "react-redux";
+import { setUser } from "../actions/user";
+import { useHistory } from "react-router-dom";
 
 const validateLoginForm = (values) => {
 	const { email, password } = values;
@@ -21,18 +24,24 @@ const submitLoginForm = async (values, setSubmitting) => {
 	if (!status) {
 		console.error(message);
 	} else {
-		// Set User Here
+		return token;
 	}
 };
 
 export default function Login() {
+	const dispatch = useDispatch();
+	const history = useHistory();
+	const processSubmitLogin = async (values, setSubmitting) => {
+		const token = await submitLoginForm(values, setSubmitting);
+		dispatch(setUser(token)).then(() => history.push("/dashboard"));
+	};
 	return (
 		<div>
 			<Formik
 				initialValues={{ email: "", password: "" }}
 				validate={(values) => validateLoginForm(values)}
 				onSubmit={(values, { setSubmitting }) =>
-					submitLoginForm(values, setSubmitting)
+					processSubmitLogin(values, setSubmitting)
 				}
 			>
 				{({
