@@ -5,7 +5,7 @@ import Register from './Register';
 import TransactionCreator from './TransactionCreator';
 import User from './User';
 import YourAsset from './YourAsset';
-
+import TransactionHistory from './TransactionHistory';
 export {
   AssetCreator,
   QRcode,
@@ -14,4 +14,5 @@ export {
   TransactionCreator,
   User,
   YourAsset,
+  TransactionHistory,
 };
