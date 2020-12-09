@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import {Text, View} from 'react-native';
 import styles from './styles';
 import {gql, useQuery} from '@apollo/client';
 
@@ -29,7 +29,7 @@ const queryTransactionHistory = gql`
   }
 `;
 function TransactionHistory(props) {
-  const {loading, error, data} = useQuery(queryTransactionHistory, {
+  const {loading, data} = useQuery(queryTransactionHistory, {
     variables: {_id: props.route.params._id.toString()},
   });
   // const {loading, error, data} = useQuery(queryTransactionHistory);
