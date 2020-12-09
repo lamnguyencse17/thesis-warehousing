@@ -1,4 +1,11 @@
-const path = require("path")
+const path = require("path");
+const webpack = require("webpack");
+
+const envKeys = {
+	"process.env.PORT": `'${process.env.PORT}'`,
+	"process.env.BACKEND_SERVER": `'${process.env.BACKEND_SERVER}'`,
+	"process.env.FRONTEND_SERVER": `'${process.env.FRONTEND_SERVER}'`,
+};
 
 module.exports = {
 	entry: "./src/frontend/components/Index.js",
@@ -44,4 +51,5 @@ module.exports = {
 	resolve: {
 		extensions: [".js", ".jsx", ".json", ".wasm", ".mjs", "*"],
 	},
-}
+	plugins: [new webpack.DefinePlugin(envKeys)],
+};

@@ -25,14 +25,14 @@ const graphqlServer = new ApolloServer({
 			}
 		},
 	},
-	context: async ({ req }) => {
-		const { _id, email } = jwt.verify(
-			req.cookies.token,
-			process.env.SECRET_KEY
-		);
-		await verifyUser(_id);
-		return { user: { _id, email } };
-	},
+	// context: async ({ req }) => {
+	// 	const { _id, email } = jwt.verify(
+	// 		req.cookies.token,
+	// 		process.env.SECRET_KEY
+	// 	);
+	// 	await verifyUser(_id);
+	// 	return { user: { _id, email } };
+	// },
 	introspection: true,
 });
 export default graphqlServer;
