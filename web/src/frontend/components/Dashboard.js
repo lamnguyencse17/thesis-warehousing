@@ -1,20 +1,16 @@
 import React from "react";
-import { useRouteMatch, Link } from "react-router-dom";
 import DashboardRouter from "./AdminDashboard/DashboardRouter";
+import Navbar from "./AdminDashboard/Navbar";
 
 export default function Dashboard(props) {
-	const { path } = useRouteMatch();
 	return (
-		<>
-			<DashboardRouter {...props} />
-			<div className='space-x-3'>
-				<Link to={`${path}/accounts`}>
-					<button>Accounts</button>
-				</Link>
-				<Link to={`${path}/assets`}>
-					<button>Assets</button>
-				</Link>
+		<div className='grid grid-cols-12'>
+			<div className='col-span-1'>
+				<Navbar />
 			</div>
-		</>
+			<div className='col-span-11'>
+				<DashboardRouter {...props} />
+			</div>
+		</div>
 	);
 }

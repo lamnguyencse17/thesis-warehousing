@@ -24,15 +24,15 @@ class App extends Component {
 		props.setUser();
 	}
 	async componentDidMount() {
-		const { setUser, history, location } = this.props;
-		let isLogin = await setUser();
-		if (!isLogin) {
-			history.push("/login");
-		} else {
-			if (["/login", "/signup", "/"].includes(location.pathname)) {
-				history.push("/admin/dashboard");
-			}
-		}
+		// const { setUser, history, location } = this.props;
+		await this.props.setUser();
+		// if (!isLogin) {
+		// 	history.push("/login");
+		// } else {
+		// 	if (["/login", "/signup", "/"].includes(location.pathname)) {
+		// 		history.push("/admin/dashboard");
+		// 	}
+		// }
 	}
 
 	render() {
@@ -46,9 +46,9 @@ class App extends Component {
 							path='/login'
 							render={() =>
 								userId === "" ? (
-									<Dashboard {...this.props} />
-								) : (
 									<Login {...this.props} />
+								) : (
+									<Dashboard {...this.props} />
 								)
 							}
 						/>
