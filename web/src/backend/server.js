@@ -19,7 +19,7 @@ graphqlServer.applyMiddleware({ app });
 const server = createServer(app);
 graphqlServer.installSubscriptionHandlers(server);
 
-server.listen(port: process.env.PORT || 3000, () => {
+server.listen({ port: process.env.PORT || 3000 }, () => {
 	console.log(
 		`Graphql started, listening on port ${graphqlServer.graphqlPath} for incoming requests.`,
 		`\nSubscription listening on port ${graphqlServer.subscriptionsPath} for incoming requests.`
