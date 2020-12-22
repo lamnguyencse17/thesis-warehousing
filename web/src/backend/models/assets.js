@@ -11,6 +11,10 @@ export const AssetSchema = new Assets(
 		unit: { type: Number, required: true },
 		description: { type: String },
 		owner: { type: ObjectId, ref: "User", required: true },
+		createdAt: {
+			type: Date,
+			default: Date.now(),
+		},
 	},
 	{ _id: false }
 );

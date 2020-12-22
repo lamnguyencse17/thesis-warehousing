@@ -18,6 +18,10 @@ export const TransactionsSchema = new Transactions(
 		assets: [
 			{ type: mongoose.Schema.Types.ObjectId, required: true, ref: "Assets" },
 		],
+		createdAt: {
+			type: Date,
+			default: Date.now(),
+		},
 	},
 	{ _id: false }
 );
