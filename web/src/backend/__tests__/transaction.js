@@ -26,11 +26,13 @@ describe("Test Transaction related API", () => {
 			name: "Lam Nguyen1",
 			email: "lamnguyen1@gmail.com",
 			password: await hashPassword("123456"),
+			role: {userType: 2, scope: []}
 		});
 		User2 = await userModel.create({
 			name: "Lam Nguyen2",
 			email: "lamnguyen2@gmail.com",
 			password: await hashPassword("123456"),
+			role: {userType: 2, scope: []}
 		});
 		Asset = await assetModel.create({
 			name: "Thung Tao",

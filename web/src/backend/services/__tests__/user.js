@@ -16,6 +16,7 @@ describe("Test User Service", () => {
 			name: "Test User",
 			password: await hashPassword("123456"),
 			email: "testUser@gmail.com",
+			role: {userType: 2, scope: []}
 		});
 	});
 
@@ -75,6 +76,7 @@ describe("Test User Service", () => {
 			name: "Test User 2",
 			password: await hashPassword("123456"),
 			email: "testUser2@gmail.com",
+			role: {userType: 2, scope: []}
 		});
 		expect(user.status).toBeTruthy();
 		expect(user.result).toEqual(

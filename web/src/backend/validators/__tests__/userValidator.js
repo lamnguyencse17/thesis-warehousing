@@ -2,7 +2,7 @@ import { validateCreateUser, validateLogInUser } from "../userValidator";
 
 describe("Test Login User Validator", () => {
 	test("Pass case", (done) => {
-		const passCase = { email: "lamnguyen@gmail.com", password: "123456" };
+		const passCase = { email: "lamnguyen@gmail.com", password: "123456", role:{userType: 2, scope: []}};
 		expect(validateLogInUser(passCase)).toEqual(
 			expect.objectContaining({
 				status: true,
@@ -12,7 +12,7 @@ describe("Test Login User Validator", () => {
 		done();
 	});
 	test("Missing email", (done) => {
-		const testcase = { password: "123456" };
+		const testcase = { password: "123456", role:{userType: 2, scope: []} };
 		expect(validateLogInUser(testcase)).toEqual(
 			expect.objectContaining({
 				status: false,
@@ -22,7 +22,7 @@ describe("Test Login User Validator", () => {
 		done();
 	});
 	test("Missing password", (done) => {
-		const testcase = { email: "lamnguyen@gmail.com" };
+		const testcase = { email: "lamnguyen@gmail.com", role:{userType: 2, scope: []} };
 		expect(validateLogInUser(testcase)).toEqual(
 			expect.objectContaining({
 				status: false,
@@ -32,7 +32,7 @@ describe("Test Login User Validator", () => {
 		done();
 	});
 	test("Missing both", (done) => {
-		const testcase = {};
+		const testcase = {role:{userType: 2, scope: []}};
 		expect(validateLogInUser(testcase)).toEqual(
 			expect.objectContaining({
 				status: false,
@@ -49,6 +49,7 @@ describe("Test Register User Validator", () => {
 			email: "lamnguyen@gmail.com",
 			password: "123456",
 			name: "Lam",
+			role: {userType: 2, scope: []} 
 		};
 		expect(validateCreateUser(passCase)).toEqual(
 			expect.objectContaining({
@@ -59,7 +60,7 @@ describe("Test Register User Validator", () => {
 		done();
 	});
 	test("Missing email", (done) => {
-		const testCase = { password: "123456", name: "Lam" };
+		const testCase = { password: "123456", name: "Lam", role:{userType: 2, scope: []} };
 		expect(validateCreateUser(testCase)).toEqual(
 			expect.objectContaining({
 				status: false,
@@ -69,7 +70,7 @@ describe("Test Register User Validator", () => {
 		done();
 	});
 	test("Missing password", (done) => {
-		const testCase = { email: "lamnguyen@gmail.com", name: "Lam" };
+		const testCase = { email: "lamnguyen@gmail.com", name: "Lam", role:{userType: 2, scope: []} };
 		expect(validateCreateUser(testCase)).toEqual(
 			expect.objectContaining({
 				status: false,
@@ -79,7 +80,7 @@ describe("Test Register User Validator", () => {
 		done();
 	});
 	test("Missing name", (done) => {
-		const testCase = { email: "lamnguyen@gmail.com", password: "123456" };
+		const testCase = { email: "lamnguyen@gmail.com", password: "123456", role:{userType: 2, scope: []} };
 		expect(validateCreateUser(testCase)).toEqual(
 			expect.objectContaining({
 				status: false,
@@ -89,7 +90,7 @@ describe("Test Register User Validator", () => {
 		done();
 	});
 	test("Missing email and password", (done) => {
-		const testCase = { name: "Lam Nguyen" };
+		const testCase = { name: "Lam Nguyen", role:{userType: 2, scope: []} };
 		expect(validateCreateUser(testCase)).toEqual(
 			expect.objectContaining({
 				status: false,
@@ -103,7 +104,7 @@ describe("Test Register User Validator", () => {
 		expect(validateCreateUser(testCase)).toEqual(
 			expect.objectContaining({
 				status: false,
-				message: ["Invalid name", "Invalid email", "Invalid password"],
+				message: ["Invalid name", "Invalid email", "Invalid password", "Invalid role"],
 			})
 		);
 		done();

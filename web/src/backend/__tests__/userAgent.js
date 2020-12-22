@@ -28,11 +28,13 @@ describe("API Integration Test", () => {
 			name: "Test User",
 			password: await hashPassword("123456"),
 			email: "testUser999@gmail.com",
+			role: {userType: 2, scope: []}
 		});
 		testUser2 = await userModel.create({
 			name: "Test User2",
 			password: await hashPassword("123456"),
 			email: "testUser9992@gmail.com",
+			role: {userType: 2, scope: []}
 		});
 		Asset = await assetModel.create({
 			name: "Thung Tao",
@@ -157,6 +159,7 @@ describe("API Integration Test", () => {
 						unit: 0,
 						description: "Thung Tao Test",
 						owner: testUser._id.toString(),
+						createdAt: expect.any(String)
 					},
 				]);
 				done();

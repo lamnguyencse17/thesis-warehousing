@@ -18,6 +18,7 @@ describe("Test Login API functionalities", () => {
 			name: "Test User",
 			password: await hashPassword("123456"),
 			email: "testUser0@gmail.com",
+			role: {userType: 2, scope: []}
 		});
 	});
 
