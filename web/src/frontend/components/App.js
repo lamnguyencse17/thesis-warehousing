@@ -21,51 +21,60 @@ class App extends Component {
 				history.push("/");
 			}
 		});
-		props.setUser();
+		this.state = {
+			isVerifying: true,
+		};
 	}
 	async componentDidMount() {
-		// const { setUser, history, location } = this.props;
-		await this.props.setUser();
-		// if (!isLogin) {
-		// 	history.push("/login");
-		// } else {
-		// 	if (["/login", "/signup", "/"].includes(location.pathname)) {
-		// 		history.push("/admin/dashboard");
-		// 	}
-		// }
+		const result = await this.props.setUser();
+		if (result) {
+			this.setState({ isVerifying: false });
+		} else {
+			this.setState({ isVerifying: false });
+		}
 	}
 
 	render() {
 		const { userId } = this.props;
 		return (
-			<>
+			<div className='h-full'>
 				<Suspense fallback={<div className='loader'></div>}>
-					<Switch>
-						<Route path='/' render={() => <Landing {...this.props} />} exact />
-						<Route
-							path='/login'
-							render={() =>
-								userId === "" ? (
-									<Login {...this.props} />
-								) : (
-									<Dashboard {...this.props} />
-								)
-							}
-						/>
-						<Route
-							path='/admin/dashboard'
-							render={() =>
-								userId === "" ? (
-									<Login {...this.props} />
-								) : (
-									<Dashboard {...this.props} />
-								)
-							}
-						/>
-						<Route path='*' component={PageNotFound} />
-					</Switch>
+					{this.state.isVerifying ? (
+						<div>Loading</div>
+					) : (
+						<>
+							<Switch>
+								<Route
+									path='/'
+									render={() => <Landing {...this.props} />}
+									exact
+								/>
+								<Route
+									path='/login'
+									render={() =>
+										userId === "" ? (
+											<Login {...this.props} />
+										) : (
+											<Dashboard {...this.props} />
+										)
+									}
+								/>
+								<Route
+									path='/admin/dashboard'
+									render={() =>
+										userId === "" ? (
+											<Login {...this.props} />
+										) : (
+											<Dashboard {...this.props} />
+										)
+									}
+								/>
+								<Route path='*' component={PageNotFound} />
+							</Switch>
+						</>
+					)}
 				</Suspense>
-			</>
+			</div>
 		);
 	}
 }
