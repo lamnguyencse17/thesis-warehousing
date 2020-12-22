@@ -3,12 +3,12 @@ import { Switch, Route } from "react-router-dom";
 const PageNotFound = React.lazy(() => import("./common/PageNotFound"));
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-// import { setUser, clearUser } from "../actions/user";
+import { setUser } from "../actions/user";
 import axios from "axios";
 import Landing from "./Landing";
 import Login from "./Login";
 import Dashboard from "./Dashboard";
+import { bindActionCreators } from "redux";
 
 class App extends Component {
 	constructor(props) {
@@ -21,52 +21,60 @@ class App extends Component {
 				history.push("/");
 			}
 		});
+		this.state = {
+			isVerifying: true,
+		};
 	}
-	//   async componentDidMount() {
-	//     const { setUser, history, token, location } = this.props;
-	//     let isLogin = await setUser();
-	//     if (!isLogin) {
-	//       history.push("/");
-	//     } else {
-	//       if (
-	//         // token &&
-	//         // token != "" &&
-	//         ["/login", "/signup", "/"].includes(location.pathname)
-	//       ) {
-	//         history.push("/main");
-	//       }
-	//     }
-	//   }
+	async componentDidMount() {
+		const result = await this.props.setUser();
+		if (result) {
+			this.setState({ isVerifying: false });
+		} else {
+			this.setState({ isVerifying: false });
+		}
+	}
 
 	render() {
-		// const { token } = this.props;
+		const { userId } = this.props;
 		return (
-			<>
+			<div className='h-full'>
 				<Suspense fallback={<div className='loader'></div>}>
-					<Switch>
-						<Route path='/' render={() => <Landing {...this.props} />} exact />
-						<Route path='/login' render={() => <Login {...this.props} />} />
-						<Route
-							path='/dashboard'
-							render={() =>
-								this.props.token === "" ? (
-									<Login {...this.props} />
-								) : (
-									<Dashboard {...this.props} />
-								)
-							}
-						/>
-						{/* <Route path="/main" render={() => <Main {...this.props} />} exact />
-            <Route
-              path="/"
-              token={token}
-              render={() => <Landing {...this.props} />}
-              exact
-            /> */}
-						<Route path='*' component={PageNotFound} />
-					</Switch>
+					{this.state.isVerifying ? (
+						<div>Loading</div>
+					) : (
+						<>
+							<Switch>
+								<Route
+									path='/'
+									render={() => <Landing {...this.props} />}
+									exact
+								/>
+								<Route
+									path='/login'
+									render={() =>
+										userId === "" ? (
+											<Login {...this.props} />
+										) : (
+											<Dashboard {...this.props} />
+										)
+									}
+								/>
+								<Route
+									path='/admin/dashboard'
+									render={() =>
+										userId === "" ? (
+											<Login {...this.props} />
+										) : (
+											<Dashboard {...this.props} />
+										)
+									}
+								/>
+								<Route path='*' component={PageNotFound} />
+							</Switch>
+						</>
+					)}
 				</Suspense>
-			</>
+			</div>
 		);
 	}
 }
@@ -78,8 +86,8 @@ function mapStateToProps(state) {
 	};
 }
 
-// function mapDispatchToProps(dispatch) {
-//   return bindActionCreators({ setUser, clearUser }, dispatch);
-// }
+function mapDispatchToProps(dispatch) {
+	return bindActionCreators({ setUser }, dispatch);
+}
 
-export default withRouter(connect(mapStateToProps, null)(App));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
