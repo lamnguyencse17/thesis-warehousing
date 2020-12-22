@@ -28,6 +28,7 @@ describe("Test Register API", () => {
 				name: "Test User",
 				password: "123456",
 				email: "testuser@gmail.com",
+				role: {userType: 2, scope: []}
 			})
 			.set("Content-Type", "application/json")
 			.set("Accept", "application/json")
@@ -47,6 +48,7 @@ describe("Test Register API", () => {
 			name: "Test User",
 			password: "123456",
 			email: "testuser@gmail.com",
+			role: {userType: 2, scope: []}
 		});
 
 		request(app)
@@ -55,6 +57,7 @@ describe("Test Register API", () => {
 				name: "Test User",
 				password: "123456",
 				email: "testuser@gmail.com",
+				role: {userType: 2, scope: []}
 			})
 			.set("Content-Type", "application/json")
 			.set("Accept", "application/json")
@@ -75,6 +78,7 @@ describe("Test Register API", () => {
 			.send({
 				name: "Test User",
 				password: "123456",
+				role: {userType: 2, scope: []}
 			})
 			.set("Content-Type", "application/json")
 			.set("Accept", "application/json")
@@ -95,6 +99,7 @@ describe("Test Register API", () => {
 			.send({
 				password: "123456",
 				email: "testuser@gmail.com",
+				role: {userType: 2, scope: []}
 			})
 			.set("Content-Type", "application/json")
 			.set("Accept", "application/json")
@@ -115,6 +120,7 @@ describe("Test Register API", () => {
 			.send({
 				name: "Test User",
 				email: "testuser@gmail.com",
+				role: {userType: 2, scope: []}
 			})
 			.set("Content-Type", "application/json")
 			.set("Accept", "application/json")
@@ -134,6 +140,7 @@ describe("Test Register API", () => {
 			.post("/api/auth/register")
 			.send({
 				name: "Test User",
+				role: {userType: 2, scope: []}
 			})
 			.set("Content-Type", "application/json")
 			.set("Accept", "application/json")
@@ -148,7 +155,7 @@ describe("Test Register API", () => {
 			});
 	});
 	test("Missing Everything", (done) => {
-		const expecting = ["Invalid password", "Invalid email", "Invalid name"];
+		const expecting = ["Invalid password", "Invalid email", "Invalid name", "Invalid role"];
 		request(app)
 			.post("/api/auth/register")
 			.send({})
