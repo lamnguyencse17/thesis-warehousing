@@ -23,6 +23,7 @@ describe("Test Asset related API", () => {
 			name: "Test User",
 			password: await hashPassword("123456"),
 			email: "testUser0@gmail.com",
+			role: {userType: 2, scope: []}
 		});
 		TestObj = await assetModel.create({
 			name: "Thung Tao Test",
@@ -52,17 +53,17 @@ describe("Test Asset related API", () => {
 			.get(`/api/assets/${TestObj._id}`)
 			.set("Content-Type", "application/json")
 			.set("Accept", "application/json")
-			//   .set("Cookie", savedCookies)
 			.then((response) => {
 				expect(response.statusCode).toBe(200);
-				expect(JSON.stringify(response.body)).toEqual(
-					JSON.stringify({
-						_id: TestObj._id,
+				expect(response.body).toEqual(
+					expect.objectContaining({
+						_id: TestObj._id.toString(),
 						name: "Thung Tao Test",
 						quantity: 3,
 						unit: 0,
 						description: "Thung Tao Test",
-						owner: testUser._id,
+						owner: testUser._id.toString(),
+						createdAt: expect.any(String),
 						__v: 0,
 					})
 				);
@@ -107,6 +108,7 @@ describe("Test Asset related API", () => {
 						unit: 0,
 						description: "Thung Tao Test",
 						owner: testUser._id.toString(),
+						createdAt: expect.any(String)
 					},
 				]);
 				done();

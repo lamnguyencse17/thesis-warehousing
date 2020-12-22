@@ -8,9 +8,9 @@ import {
 } from "../validators/userValidator";
 
 export const registerController = async (req, res) => {
-	const { email, name } = req.body;
+	const { email, name, role } = req.body;
 	let password = req.body.password;
-	let validateResult = validateCreateUser({ email, password, name });
+	let validateResult = validateCreateUser({ email, password, name, role });
 	if (!validateResult.status) {
 		return res
 			.status(HANDLED_ERROR_RESPONSE)
@@ -23,7 +23,7 @@ export const registerController = async (req, res) => {
 			.json({ message: "Duplicate Email!" });
 	}
 	password = await hashPassword(password);
-	let { result, status } = await createUser({ email, password, name });
+	let { result, status } = await createUser({ email, password, name, role });
 	if (!status) {
 		return res
 			.status(HANDLED_ERROR_RESPONSE)

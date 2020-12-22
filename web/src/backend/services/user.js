@@ -1,11 +1,12 @@
 import userModel from "../models/users";
 import mongoose from "mongoose";
 
-export const createUser = async ({ email, password, name }) => {
+export const createUser = async ({ email, password, name, role }) => {
 	const result = await userModel.create({
 		name,
 		email,
 		password,
+		role
 	});
 	return { result, status: true };
 };
