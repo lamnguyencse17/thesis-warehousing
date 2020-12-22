@@ -10,6 +10,6 @@ export const setUser = (token) => async (dispatch) => {
 		}
 	} else {
 		dispatch({ type: SET_USER, payload: { ...getUserResult.userData } });
-		return getUserResult.userData.token;
+		return getUserResult.userData.token || true;
 	}
 };
