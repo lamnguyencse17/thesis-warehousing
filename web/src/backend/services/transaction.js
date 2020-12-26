@@ -33,25 +33,6 @@ export const getTransactionById = async (transactionId) => {
 	return { result, status };
 };
 
-export const syncTransaction = async ({ _id, receiver, sender, assets }) => {
-	let transaction = await transactionModel
-		.findOne({ _id: mongoose.Types.ObjectId(_id) })
-		.lean();
-	if (!transaction) {
-		try {
-			const newTransaction = await transactionModel.create({
-				_id: mongoose.Types.ObjectId(_id),
-				receiver,
-				sender,
-				assets,
-			});
-			return newTransaction;
-		} catch (err) {
-			console.log(err);
-		}
-	}
-};
-
 export const getTransactionOfSender = async (
 	sender,
 	{ limit, offset },

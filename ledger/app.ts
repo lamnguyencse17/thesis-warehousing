@@ -16,13 +16,13 @@ import {
 } from "./util/CAUtil.js";
 import { buildCCPOrg1, buildWallet } from "./util/AppUtil.js";
 import path from "path";
-import eventHandlers from "./eventHandlers/eventHandlers";
+// import eventHandlers from "./eventHandlers/eventHandlers";
 
 const channelName = "mychannel";
 const chaincodeName = "basic";
 const mspOrg1 = "Org1MSP";
 const walletPath = path.join(__dirname, "wallet");
-const org1UserId = "1";
+const org1UserId = "11";
 
 function prettyJSONString(inputString: string) {
   return JSON.stringify(JSON.parse(inputString), null, 2);
@@ -61,7 +61,7 @@ class LedgerClient {
       });
       this.network = await this.gateway.getNetwork(channelName);
       this.contract = this.network.getContract(chaincodeName);
-      await this.contract.addContractListener(eventHandlers);
+      // await this.contract.addContractListener(eventHandlers);
     } catch (error) {
       console.error(`******** FAILED to run the application: ${error}`);
     }

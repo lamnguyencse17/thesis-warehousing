@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Text, View, FlatList} from 'react-native';
 import styles from './styles';
 import {gql, useQuery} from '@apollo/client';
@@ -21,11 +21,11 @@ const queryYourAsset = gql`
 const YourAsset = (props) => {
   const [itemIndex, setIndexItem] = useState(-1);
   const {loading, error, data} = useQuery(queryYourAsset);
-  // useEffect(() => {
-  //   if (!loading) {
-  //     console.log(data);
-  //   }
-  // });
+  useEffect(() => {
+     if (!loading) {
+       console.log(data);
+     }
+   });
   const _renderItem = ({item, index}) => {
     return (
       <View>
