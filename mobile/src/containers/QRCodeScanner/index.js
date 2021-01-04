@@ -76,7 +76,7 @@ export default class QRCodeScanner extends Component {
                 Thông tin người nhận
               </Text>
               <View>
-                <Text style={styles.text}>Người nhận: {data.receiver}</Text>
+                <Text style={styles.text}>Người nhận: {data.name}</Text>
                 <Text style={styles.text}>ID: {data._id}</Text>
               </View>
             </View>
