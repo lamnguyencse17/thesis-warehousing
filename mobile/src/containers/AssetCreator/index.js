@@ -13,10 +13,10 @@ export default class AssetCreator extends Component {
     super(props);
     this.state = {
       _id: '',
-      name: 'Apple',
+      name: '',
       quantity: '',
       unit: '0',
-      description: 'Good',
+      description: '',
       isGenerated: false,
     };
     this.onNameEditHandle = (name) => this.setState({name: name});
@@ -25,6 +25,8 @@ export default class AssetCreator extends Component {
     this.focusQuantity = () => {
       this.quantity && this.quantity.focus();
     };
+    this.onDescriptionEditHandle = (description) =>
+      this.setState({description: description});
     this.focusDescription = () => {
       this.description && this.description.focus();
     };
@@ -45,7 +47,7 @@ export default class AssetCreator extends Component {
       unit,
       description,
     });
-    let asset = assets[0]
+    let asset = assets[0];
     if (status) {
       this.setState(
         {
@@ -111,7 +113,7 @@ export default class AssetCreator extends Component {
               text={Language.AssetInfo.description}
               ref={(comp) => (this.description = comp)}
               placeholderText={Language.AssetInfo.placeholder}
-              onChangeText={this.onQuantityEditHandle}
+              onChangeText={this.onDescriptionEditHandle}
               value={description}
             />
           </View>
