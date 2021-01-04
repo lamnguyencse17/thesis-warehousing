@@ -18,6 +18,11 @@ LedgerClient.initInstance().then(() => {
   LedgerClient.initLedger();
 });
 
+app.get("/asset/:ID/transactions", async (req, res) => {
+  const assetHistory = await LedgerClient.queryAssetHistory(req.params.ID);
+  return res.status(200).json(assetHistory);
+});
+
 app.get("/asset/:ID", async (req, res) => {
   const asset = await LedgerClient.queryAsset(req.params.ID);
   return res.status(200).json(asset);

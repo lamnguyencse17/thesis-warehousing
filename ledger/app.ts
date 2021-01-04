@@ -22,7 +22,7 @@ const channelName = "mychannel";
 const chaincodeName = "basic";
 const mspOrg1 = "Org1MSP";
 const walletPath = path.join(__dirname, "wallet");
-const org1UserId = "11";
+const org1UserId = "1";
 
 function prettyJSONString(inputString: string) {
   return JSON.stringify(JSON.parse(inputString), null, 2);
@@ -89,6 +89,14 @@ class LedgerClient {
     return JSON.parse(result);
   };
 
+  queryAssetHistory = async (ID: string) => {
+    const result = await this.contract.evaluateTransaction(
+      "GetHistoryOfAsset",
+      ID
+    );
+    return JSON.parse(result);
+  };
+
   createAsset = async (newAsset: INewAsset) => {
     const newAssetString = JSON.stringify(newAsset);
     try {
@@ -100,7 +108,7 @@ class LedgerClient {
   };
 
   transferAsset = async (
-    ID: string,
+    TXID: string,
     IDs: string,
     newOwner: string,
     oldOwner: string
@@ -108,7 +116,7 @@ class LedgerClient {
     try {
       await this.contract.submitTransaction(
         "TransferAsset",
-        ID,
+        TXID,
         IDs,
         newOwner,
         oldOwner
