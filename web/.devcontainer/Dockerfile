@@ -6,7 +6,7 @@ ENV MONGODB_URI=mongodb://localhost:27017/thesis?readPreference=primary&appname=
 ENV PORT=3000
 ENV BACKEND_SERVER=http://localhost:3000
 ENV MODE=dev
-ENV LEDGER_SERVER=http://localhost:3001
+ENV LEDGER_SERVER=http://20.195.42.89:3001
 ENV FRONTEND_SERVER=http://localhost:8080
 # Install MongoDB command line tools
 ARG MONGO_TOOLS_VERSION=4.2

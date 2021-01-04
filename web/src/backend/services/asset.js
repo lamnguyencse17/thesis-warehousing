@@ -32,30 +32,6 @@ export const createAsset = async ({
 	return { asset, status: true };
 };
 
-export const syncAsset = async (newAssets) => {
-	for (let asset of newAssets) {
-		let { _id, name, quantity, unit, description, owner } = asset;
-		let syncStatus = await assetModel.exists({
-			_id: mongoose.Types.ObjectId(_id),
-		});
-		if (!syncStatus) {
-			try {
-				let newSingleAsset = await assetModel.create({
-					_id: mongoose.Types.ObjectId(_id),
-					name,
-					quantity,
-					unit,
-					description,
-					owner: mongoose.Types.ObjectId(owner),
-				});
-				pubsub.publish("assetCreated", { assetCreated: newSingleAsset });
-			} catch (err) {
-				console.error(err);
-			}
-		}
-	}
-};
-
 export const validateTransferRight = async (sender, assets) => {
 	let parsedAssets = assets.map((asset) => mongoose.Types.ObjectId(asset));
 	const validateResult = await assetModel

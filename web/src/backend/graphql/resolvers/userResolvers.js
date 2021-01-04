@@ -14,6 +14,7 @@ export default {
 			if (!status) {
 				throw new ApolloError(message);
 			}
+			console.log(assets);
 			return assets;
 		},
 		getManyTransactionOfSelf: async (

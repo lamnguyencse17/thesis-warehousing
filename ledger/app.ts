@@ -9,18 +9,20 @@
 import { INewAsset } from "./types/asset";
 import { Gateway, Wallets } from "fabric-network";
 import FabricCAServices from "fabric-ca-client";
-import { buildCAClient, enrollAdmin, registerAndEnrollUser } from "./util/CAUtil.js";
+import {
+  buildCAClient,
+  enrollAdmin,
+  registerAndEnrollUser,
+} from "./util/CAUtil.js";
 import { buildCCPOrg1, buildWallet } from "./util/AppUtil.js";
 import path from "path";
-import eventHandlers from "./eventHandlers/eventHandlers";
-
+// import eventHandlers from "./eventHandlers/eventHandlers";
 
 const channelName = "mychannel";
 const chaincodeName = "basic";
 const mspOrg1 = "Org1MSP";
 const walletPath = path.join(__dirname, "wallet");
-const org1UserId = "4";
-
+const org1UserId = "1";
 
 function prettyJSONString(inputString: string) {
   return JSON.stringify(JSON.parse(inputString), null, 2);
@@ -55,11 +57,11 @@ class LedgerClient {
       await this.gateway.connect(this.ccp, {
         wallet: this.wallet,
         identity: org1UserId,
-        discovery: { enabled: true, asLocalhost: true }
+        discovery: { enabled: true, asLocalhost: true },
       });
       this.network = await this.gateway.getNetwork(channelName);
       this.contract = this.network.getContract(chaincodeName);
-      await this.contract.addContractListener(eventHandlers);
+      // await this.contract.addContractListener(eventHandlers);
     } catch (error) {
       console.error(`******** FAILED to run the application: ${error}`);
     }
@@ -87,6 +89,14 @@ class LedgerClient {
     return JSON.parse(result);
   };
 
+  queryAssetHistory = async (ID: string) => {
+    const result = await this.contract.evaluateTransaction(
+      "GetHistoryOfAsset",
+      ID
+    );
+    return JSON.parse(result);
+  };
+
   createAsset = async (newAsset: INewAsset) => {
     const newAssetString = JSON.stringify(newAsset);
     try {
@@ -97,9 +107,20 @@ class LedgerClient {
     }
   };
 
-  transferAsset = async (ID: string, IDs:string, newOwner: string, oldOwner: string) => {
+  transferAsset = async (
+    TXID: string,
+    IDs: string,
+    newOwner: string,
+    oldOwner: string
+  ) => {
     try {
-      await this.contract.submitTransaction("TransferAsset", ID, IDs, newOwner, oldOwner);
+      await this.contract.submitTransaction(
+        "TransferAsset",
+        TXID,
+        IDs,
+        newOwner,
+        oldOwner
+      );
       return true;
     } catch (err) {
       return false;
