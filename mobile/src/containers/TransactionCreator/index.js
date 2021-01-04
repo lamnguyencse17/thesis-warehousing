@@ -101,7 +101,7 @@ export default class TransactionCreator extends Component {
           {receiverData.length === 0 ? null : (
             <View style={styles.textReceiver}>
               <Text>ID: {receiverData._id}</Text>
-              <Text>Receiver: {receiverData.receiver}</Text>
+              <Text>Receiver: {receiverData.name}</Text>
             </View>
           )}
         </View>
