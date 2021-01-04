@@ -2,7 +2,7 @@ export default {
   EmitCode: {
     Toast: 'toast',
   },
-  server: 'http://192.168.0.119:3000/api/',
+  server: 'https://thesis-warehousing.herokuapp.com/api/',
   options: ['Cái', 'Gram', 'Kilogram', 'Tấn', 'Lít', 'Mét Khối'],
-  graphql: '192.168.0.119:3000',
+  graphql: 'thesis-warehousing.herokuapp.com',
 };
