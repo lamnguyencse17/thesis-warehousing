@@ -22,10 +22,10 @@ const YourAsset = (props) => {
   const [itemIndex, setIndexItem] = useState(-1);
   const {loading, error, data} = useQuery(queryYourAsset);
   useEffect(() => {
-     if (!loading) {
-       console.log(data);
-     }
-   });
+    if (!loading) {
+      console.log(data);
+    }
+  });
   const _renderItem = ({item, index}) => {
     return (
       <View>

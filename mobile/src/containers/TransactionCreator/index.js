@@ -53,7 +53,10 @@ export default class TransactionCreator extends Component {
     if (data.name === 'undefined') {
       return;
     }
-    this.setState({assetData: [...this.state.assetData, data]});
+    const {assetData} = this.state;
+    if (assetData.filter((asset) => asset._id === data._id).length === 0) {
+      this.setState({assetData: [...this.state.assetData, data]});
+    }
   };
 
   addDataToReceiver = (data) => {
