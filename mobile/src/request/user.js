@@ -33,7 +33,12 @@ export const getUserRequest = () => {
 export const createRegisterRequest = async ({name, email, password}) => {
   const requestUrl = `${Config.server}/auth/register`;
   try {
-    await axios.post(requestUrl, {name, email, password});
+    await axios.post(requestUrl, {
+      name,
+      email,
+      password,
+      role: {userType: 0, scope: []},
+    });
     return {status: true};
   } catch (err) {
     return {
