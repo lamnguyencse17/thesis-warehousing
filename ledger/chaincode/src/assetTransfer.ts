@@ -82,7 +82,7 @@ export class AssetTransferContract extends Contract {
       try {
         asset.ID = asset._id;
         delete asset._id;
-        await ctx.stub.putState(asset._id, Buffer.from(newAsset));
+        await ctx.stub.putState(asset.ID, Buffer.from(asset));
       } catch (err) {
         return err;
       }
